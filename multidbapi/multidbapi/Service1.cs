@@ -17,11 +17,30 @@ namespace multidbapi
                 Name = "Leo Messi"
             };
         }
+
+        [WebInvoke(Method = "GET",
+                    ResponseFormat = WebMessageFormat.Json,
+                    UriTemplate = "api/getInt/{n}")]
+        public Numero GetInt(string n)
+        {
+            int pN = Convert.ToInt32(n);
+            return new Numero()
+            {
+                n = pN,
+                multiplo = pN * 10
+            };
+        }
     }
 
     public class Person
     {
         public int Id { get; set; }
         public string Name { get; set; }
+    }
+
+    public class Numero
+    {
+        public int n { get; set; }
+        public int multiplo { get; set; }
     }
 }

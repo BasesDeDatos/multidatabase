@@ -7,5 +7,8 @@ namespace multidbapi
     {
         [OperationContract]
         Person GetData(string id);
+
+        [OperationContract]
+        Numero GetInt(string n);
     }
 }
