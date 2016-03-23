@@ -1,0 +1,5 @@
+C:\Users\JEFFREY\Desktop\multidbapi\multidbapi\bin\Release\multidbapi.dll.config
+C:\Users\JEFFREY\Desktop\multidbapi\multidbapi\bin\Release\multidbapi.dll
+C:\Users\JEFFREY\Desktop\multidbapi\multidbapi\bin\Release\multidbapi.pdb
+C:\Users\JEFFREY\Desktop\multidbapi\multidbapi\obj\Release\multidbapi.dll
+C:\Users\JEFFREY\Desktop\multidbapi\multidbapi\obj\Release\multidbapi.pdb

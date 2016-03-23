@@ -1,0 +1,6 @@
+C:\Users\JEFFREY\Desktop\multidbapi\multidbapi\bin\Debug\multidbapi.dll.config
+C:\Users\JEFFREY\Desktop\multidbapi\multidbapi\bin\Debug\multidbapi.dll
+C:\Users\JEFFREY\Desktop\multidbapi\multidbapi\bin\Debug\multidbapi.pdb
+C:\Users\JEFFREY\Desktop\multidbapi\multidbapi\obj\Debug\multidbapi.csprojResolveAssemblyReference.cache
+C:\Users\JEFFREY\Desktop\multidbapi\multidbapi\obj\Debug\multidbapi.dll
+C:\Users\JEFFREY\Desktop\multidbapi\multidbapi\obj\Debug\multidbapi.pdb
