@@ -7,7 +7,7 @@ namespace multidbapi
     {
         [WebInvoke(Method = "GET",
                     ResponseFormat = WebMessageFormat.Json,
-                    UriTemplate = "data/{id}")]
+                    UriTemplate = "api/addDatabase/{id}")]
         public Person GetData(string id)
         {
             // lookup person with the requested id 
