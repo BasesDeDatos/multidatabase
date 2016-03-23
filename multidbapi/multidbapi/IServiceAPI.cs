@@ -3,7 +3,7 @@
 namespace multidbapi
 {
     [ServiceContract]
-    public interface IService1
+    public interface ServiceInterface
     {
         [OperationContract]
         Person GetData(string id);

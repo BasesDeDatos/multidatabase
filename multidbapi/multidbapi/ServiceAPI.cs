@@ -3,11 +3,11 @@ using System.ServiceModel.Web;
 
 namespace multidbapi
 {
-    public class Service1 : IService1
+    public class ServiceModel : ServiceInterface
     {
         [WebInvoke(Method = "GET",
                     ResponseFormat = WebMessageFormat.Json,
-                    UriTemplate = "api/addDatabase/{id}")]
+                    UriTemplate = "addDatabase/{id}")]
         public Person GetData(string id)
         {
             // lookup person with the requested id 
@@ -20,7 +20,7 @@ namespace multidbapi
 
         [WebInvoke(Method = "GET",
                     ResponseFormat = WebMessageFormat.Json,
-                    UriTemplate = "api/getInt/{n}")]
+                    UriTemplate = "getInt/{n}")]
         public Numero GetInt(string n)
         {
             int pN = Convert.ToInt32(n);
