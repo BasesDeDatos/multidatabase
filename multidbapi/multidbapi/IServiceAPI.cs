@@ -9,6 +9,6 @@ namespace multidbapi
         Person GetData(string id);
 
         [OperationContract]
-        Numero GetInt(string n);
+        Instance CreateInstance(string pDatabase_type, string pUser, string pPass, string pServer, string pAlias);
     }
 }

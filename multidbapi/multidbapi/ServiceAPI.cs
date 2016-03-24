@@ -7,7 +7,7 @@ namespace multidbapi
     {
         [WebInvoke(Method = "GET",
                     ResponseFormat = WebMessageFormat.Json,
-                    UriTemplate = "addDatabase/{id}")]
+                    UriTemplate = "GetData/{id}")]
         public Person GetData(string id)
         {
             // lookup person with the requested id 
@@ -20,14 +20,19 @@ namespace multidbapi
 
         [WebInvoke(Method = "GET",
                     ResponseFormat = WebMessageFormat.Json,
-                    UriTemplate = "getInt/{n}")]
-        public Numero GetInt(string n)
+                    UriTemplate = "addDatabase/{pDatabase_type}/{pUser}/{pPass}/{pServer}/{pAlias}")]
+        public Instance CreateInstance(string pDatabase_type, string pUser, string pPass, string pServer, string pAlias)
         {
-            int pN = Convert.ToInt32(n);
-            return new Numero()
+            // lookup person with the requested id 
+            return new Instance()
             {
-                n = pN,
-                multiplo = pN * 10
+                database_type = pDatabase_type,
+                user = pUser,
+                pass = pPass,
+                server = pServer,
+                protocol = "tcp",
+                port = "4100",
+                alias = pAlias
             };
         }
     }
@@ -38,9 +43,14 @@ namespace multidbapi
         public string Name { get; set; }
     }
 
-    public class Numero
+    public class Instance
     {
-        public int n { get; set; }
-        public int multiplo { get; set; }
+        public string database_type { get; set; }
+        public string user { get; set; }
+        public string pass { get; set; }
+        public string server { get; set; }
+        public string protocol { get; set; }
+        public string port { get; set; }
+        public string alias { get; set; }
     }
 }
