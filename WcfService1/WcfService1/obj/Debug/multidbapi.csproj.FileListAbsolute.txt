@@ -32,6 +32,6 @@ E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfServ
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.AI.Web.xml
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.AI.WindowsServer.xml
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.ApplicationInsights.xml
-E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\obj\Debug\multidbapi.csprojResolveAssemblyReference.cache
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\obj\Debug\WcfService1.dll
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\obj\Debug\WcfService1.pdb
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\obj\Debug\multidbapi.csprojResolveAssemblyReference.cache
