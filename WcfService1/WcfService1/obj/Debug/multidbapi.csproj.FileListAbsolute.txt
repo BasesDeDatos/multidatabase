@@ -16,3 +16,22 @@ C:\Users\JEFFREY\Source\Repos\WcfService1\WcfService1\bin\Microsoft.AI.WindowsSe
 C:\Users\JEFFREY\Source\Repos\WcfService1\WcfService1\bin\Microsoft.ApplicationInsights.xml
 C:\Users\JEFFREY\Source\Repos\WcfService1\WcfService1\obj\Debug\WcfService1.dll
 C:\Users\JEFFREY\Source\Repos\WcfService1\WcfService1\obj\Debug\WcfService1.pdb
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\ApplicationInsights.config
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\WcfService1.dll.config
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\WcfService1.dll
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\WcfService1.pdb
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.AI.Agent.Intercept.dll
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.AI.DependencyCollector.dll
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.AI.PerfCounterCollector.dll
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.AI.ServerTelemetryChannel.dll
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.AI.Web.dll
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.AI.WindowsServer.dll
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.ApplicationInsights.dll
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.AI.DependencyCollector.xml
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.AI.ServerTelemetryChannel.xml
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.AI.Web.xml
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.AI.WindowsServer.xml
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\bin\Microsoft.ApplicationInsights.xml
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\obj\Debug\multidbapi.csprojResolveAssemblyReference.cache
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\obj\Debug\WcfService1.dll
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\WcfService1\WcfService1\obj\Debug\WcfService1.pdb
