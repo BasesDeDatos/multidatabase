@@ -43,6 +43,17 @@ namespace WcfService1
                 port = addDatabase.port,
                 alias = addDatabase.alias
             };
+            /*return new parametrosAddDatabase()
+            {
+                database_type = "database_type",
+                user = "user",
+                pass = "pass",
+                server = "server",
+                protocol = "protocol",
+                port = "port",
+                alias = "alias"
+            };*/
+            //return addDatabase.user;
         }
         
         public CompositeType GetDataUsingDataContract(CompositeType composite)
