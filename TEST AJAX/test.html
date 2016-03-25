@@ -10,7 +10,24 @@
 </head>
 	
 <body>
+    <input id="url" type="url" placeholder="URL">
+    <select id="type">
+        <option value="POST">POST</option>
+        <option value="GET">GET</option>
+    </select>
+    <label>
+        <span>contentType</span>
+        <select id="contentType">
+            <option value="application/json; charset=utf-8">application/json; charset=utf-8</option>
+            <option value="">NINGUNO</option>
+        </select>
+    </label>
     <button>Intentar de nuevo</button>
+    
+    <br>
+    <hr>
+    <br>
+
     <div id="resultado"></div>
     
     <script>
@@ -21,7 +38,9 @@
             
             function AJAX(){
                 $("#resultado").html('<img style="-webkit-user-select: none" src="http://www.gifmania.com/Gif-Animados-Web/Imagenes-Rotulos-Webs/Rotulos-Cargando/Circulo-Cargando-62160.gif">');
-                var parametros = {database_type : "parametros.database_type",
+                
+                var parametros = {
+                    database_type : "parametros.database_type",
                     user : "parametros.user",
                     pass : "parametros.pass",
                     server : "parametros.server",
@@ -31,19 +50,19 @@
                 };
 
                 $.ajax({
-                    url: "http://localhost:54607/ServiceAPI.svc/addDatabase",
-                    type: "GET",
+                    url: $("#url").val(),
+                    type: $("#type").val(),
                     crossDomain: true,
                     data: JSON.stringify(parametros),
                     dataType: "json",
-                    contentType: "application/json; charset=utf-8",
+                    contentType: $("#contentType").val(),
                     processData: true,
                     success:function(result){
                         $("#resultado").html(JSON.stringify(result));
                     },
                     error:function(xhr,status,error){
-                        $("#resultado").html(xhr.responseText);
-                    }
+                        $("#resultado").html("Status: " + status);
+                    },
                 });
             }
         })
