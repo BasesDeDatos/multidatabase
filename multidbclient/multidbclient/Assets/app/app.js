@@ -55,7 +55,11 @@ app.config(['$provide', '$routeProvider', '$httpProvider', function ($provide, $
         templateUrl: 'App/TodoManager',
         controller: 'todoManagerCtrl'
     });
-    
+    $routeProvider.when('/manager', {
+        templateUrl: 'App/Manager',
+        controller: 'managerCtrl'
+    });
+
     $routeProvider.otherwise({
         redirectTo: '/home'
     });    
