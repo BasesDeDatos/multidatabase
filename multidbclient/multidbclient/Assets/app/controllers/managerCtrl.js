@@ -1,7 +1,6 @@
-﻿angular.module('manager', ['ngCookies'])
-    .controller('managerCtrl', ['$scope' ,'$rootScope', '$http', '$cookies', '$cookieStore', '$location', '$routeParams', function ($scope, $rootScope, $http, $cookies, $cookieStore, $location, $routeParams) {
-        $scope.message = $routeParams.message;
-        $scope.signIn = function () {
+﻿angular.module('manager', [])
+    .controller('managerCtrl', ['$scope', '$http', function ($scope, $http) {
+        $scope.addDatabase = function () {
             $scope.showMessage = false;
 
             var params = {

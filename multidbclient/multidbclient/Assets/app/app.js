@@ -4,7 +4,8 @@
     'home',
     'signIn',
     'register',
-    'todoManager'
+    'todoManager',
+    'manager'
 ]);
 
 
@@ -67,8 +68,8 @@ app.config(['$provide', '$routeProvider', '$httpProvider', function ($provide, $
 
 app.run(['$http', '$cookies', '$cookieStore', function ($http, $cookies, $cookieStore) {
     //If a token exists in the cookie, load it after the app is loaded, so that the application can maintain the authenticated state.
-    $http.defaults.headers.common.Authorization = 'Bearer ' + $cookieStore.get('_Token');
-    $http.defaults.headers.common.RefreshToken = $cookieStore.get('_RefreshToken');
+    //$http.defaults.headers.common.Authorization = 'Bearer ' + $cookieStore.get('_Token');
+    //$http.defaults.headers.common.RefreshToken = $cookieStore.get('_RefreshToken');
 }]);
 
 
@@ -81,8 +82,8 @@ app.run(['$http', '$cookies', '$cookieStore', function ($http, $cookies, $cookie
 //Get updated token on page change.
 //Logout available on each page.
 app.run(['$rootScope', '$http', '$cookies', '$cookieStore', function ($rootScope, $http, $cookies, $cookieStore) {
-
-    $rootScope.logout = function () {
+/*
+   $rootScope.logout = function () {
         
         $http.post('/api/Account/Logout')
             .success(function (data, status, headers, config) {
@@ -97,7 +98,7 @@ app.run(['$rootScope', '$http', '$cookies', '$cookieStore', function ($rootScope
 
     }
 
-    $rootScope.$on('$locationChangeSuccess', function (event) {
+     $rootScope.$on('$locationChangeSuccess', function (event) {
         if ($http.defaults.headers.common.RefreshToken != null) {
             var params = "grant_type=refresh_token&refresh_token=" + $http.defaults.headers.common.RefreshToken;
             $http({
@@ -130,5 +131,6 @@ app.run(['$rootScope', '$http', '$cookies', '$cookieStore', function ($rootScope
             });
         }
     });
+    */
 }]);
 
