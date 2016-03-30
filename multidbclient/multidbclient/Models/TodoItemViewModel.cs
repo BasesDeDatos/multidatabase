@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace multidbclient.Models
+namespace nsMultiDBClient.Models
 {
     public class TodoItemViewModel
     {

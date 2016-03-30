@@ -7,10 +7,10 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using multidbclient.Providers;
-using multidbclient.Models;
+using nsMultiDBClient.Providers;
+using nsMultiDBClient.Models;
 
-namespace multidbclient
+namespace nsMultiDBClient
 {
     public partial class Startup
     {

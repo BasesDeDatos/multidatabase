@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace multidbclient.Models
+namespace nsMultiDBClient.Models
 {
     // Models used as parameters to AccountController actions.
 

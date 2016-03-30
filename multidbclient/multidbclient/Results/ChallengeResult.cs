@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace multidbclient.Results
+namespace nsMultiDBClient.Results
 {
     public class ChallengeResult : IHttpActionResult
     {

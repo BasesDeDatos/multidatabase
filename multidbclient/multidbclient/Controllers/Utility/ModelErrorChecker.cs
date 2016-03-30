@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http.ModelBinding;
 
-namespace multidbclient.Models.Utility
+namespace nsMultiDBClient.Models.Utility
 {
     static public class ModelErrorChecker
     {

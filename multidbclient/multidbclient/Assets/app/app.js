@@ -41,23 +41,23 @@ app.config(['$provide', '$routeProvider', '$httpProvider', function ($provide, $
     // Routes
     //================================================
     $routeProvider.when('/home', {
-        templateUrl: 'App/Home',
+        templateUrl: 'client/App/Home',
         controller: 'homeCtrl'
     });
     $routeProvider.when('/register', {
-        templateUrl: 'App/Register',
+        templateUrl: 'client/App/Register',
         controller: 'registerCtrl'
     });
     $routeProvider.when('/signin/:message?', {
-        templateUrl: 'App/SignIn',
+        templateUrl: 'client/App/SignIn',
         controller: 'signInCtrl'
     });
     $routeProvider.when('/todomanager', {
-        templateUrl: 'App/TodoManager',
+        templateUrl: 'client/App/TodoManager',
         controller: 'todoManagerCtrl'
     });
     $routeProvider.when('/manager', {
-        templateUrl: 'App/Manager',
+        templateUrl: 'client/App/Manager',
         controller: 'managerCtrl'
     });
 

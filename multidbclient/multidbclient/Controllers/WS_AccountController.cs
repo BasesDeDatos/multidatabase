@@ -1,4 +1,4 @@
-﻿using multidbclient.Models;
+﻿using nsMultiDBClient.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace multidbclient.Controllers
+namespace nsMultiDBClient.Controllers
 {
     public class WS_AccountController : ApiController
     {

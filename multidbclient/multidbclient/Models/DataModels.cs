@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace multidbclient.Models
+namespace nsMultiDBClient.Models
 {
     public class User : IdentityUser
     {

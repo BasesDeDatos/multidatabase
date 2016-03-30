@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace multidbclient.Models
+namespace nsMultiDBClient.Models
 {
     // Models returned by AccountController actions.
 

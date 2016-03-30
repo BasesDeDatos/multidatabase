@@ -4,9 +4,9 @@ using System.Linq;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(multidbclient.Startup))]
+[assembly: OwinStartup(typeof(nsMultiDBClient.Startup))]
 
-namespace multidbclient
+namespace nsMultiDBClient
 {
     public partial class Startup
     {

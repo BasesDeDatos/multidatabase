@@ -1,4 +1,4 @@
-﻿using multidbclient.Models;
+﻿using nsMultiDBClient.Models;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity.Owin;
@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Threading.Tasks;
 
-namespace multidbclient.Controllers
+namespace nsMultiDBClient.Controllers
 {
 
     public class WS_TodoController : ApiController

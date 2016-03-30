@@ -9,9 +9,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using multidbclient.Models;
+using nsMultiDBClient.Models;
 
-namespace multidbclient.Providers
+namespace nsMultiDBClient.Providers
 {
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {

@@ -13,13 +13,13 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using multidbclient.Models;
-using multidbclient.Providers;
-using multidbclient.Results;
-using multidbclient.Models.Utility;
+using nsMultiDBClient.Models;
+using nsMultiDBClient.Providers;
+using nsMultiDBClient.Results;
+using nsMultiDBClient.Models.Utility;
 using System.Net;
 
-namespace multidbclient.Controllers
+namespace nsMultiDBClient.Controllers
 {
     [Authorize]
     [RoutePrefix("api/Account")]

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace multidbclient.Providers
+namespace nsMultiDBClient.Providers
 {
     // sample persistence of refresh tokens
     // this is not production ready!

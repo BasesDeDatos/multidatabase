@@ -14,9 +14,9 @@
             };
 
             $http({
-                url: 'http://localhost:54607/ServiceAPI.svc/addDatabase',
+                url: 'http://localhost:8080/service/multiDBService.svc/addDatabase',
                 method: "POST",
-                headers: { 'Content-Type': 'application/json; charset=utf-8' },
+                headers: { 'Content-Type': 'application/json' },
                 data: params
             })
             .success(function (data, status, headers, config) {
