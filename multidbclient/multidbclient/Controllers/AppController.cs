@@ -24,6 +24,11 @@ namespace multidbclient.Controllers
             return PartialView();
         }
 
+        public ActionResult Manager()
+        {
+            return PartialView();
+        }
+
         [Authorize]
         public ActionResult TodoManager()
         {
