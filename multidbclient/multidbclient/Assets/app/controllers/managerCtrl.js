@@ -20,7 +20,7 @@
                 data: params
             })
             .success(function (data, status, headers, config) {
-                console.log(JSON.stringify(result));
+                console.log(JSON.stringify(data));
                 alert("revise la consola");
             })
             .error(function (data, status, headers, config) {
