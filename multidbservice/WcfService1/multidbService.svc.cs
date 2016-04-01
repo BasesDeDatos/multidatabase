@@ -5,6 +5,8 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace nsMultiDBService
 {
@@ -12,7 +14,6 @@ namespace nsMultiDBService
     // NOTE: In order to launch WCF Test Client for testing this service, please select multiDBService.svc or multiDBService.svc.cs at the Solution Explorer and start debugging.
     public class multiDBService : IMultiDBService
     {
-        
         [WebInvoke(Method = "GET",
                     ResponseFormat = WebMessageFormat.Json,
                     UriTemplate = "GetData/{id}")]
@@ -41,7 +42,9 @@ namespace nsMultiDBService
                 server = addDatabase.server,
                 protocol = addDatabase.protocol,
                 port = addDatabase.port,
-                alias = addDatabase.alias
+                alias = addDatabase.alias,
+                estadoConexion_maria = connection_maria(),
+                estadoConexion_mongo = connection_mongo()
             };
             /*return new parametrosAddDatabase()
             {
@@ -54,6 +57,7 @@ namespace nsMultiDBService
                 alias = "alias"
             };*/
             //return addDatabase.user;
+            
         }
         
         public CompositeType GetDataUsingDataContract(CompositeType composite)
@@ -67,6 +71,48 @@ namespace nsMultiDBService
                 composite.StringValue += "Suffix";
             }
             return composite;
+        }
+
+        public bool connection_maria()
+        {
+            MySql.Data.MySqlClient.MySqlConnection conn;
+            string myConnectionString;
+
+            myConnectionString = "server=127.0.0.1;uid=root;" +
+                "pwd=1029612;database=mysql;";
+
+            try
+            {
+                conn = new MySql.Data.MySqlClient.MySqlConnection();
+                conn.ConnectionString = myConnectionString;
+                conn.Open();
+                return true;
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                return false;
+            }
+        }
+
+        public string connection_mongo()
+        {
+            IMongoClient _client;
+            IMongoDatabase _database;
+            
+            _client = new MongoClient();
+            _database = _client.GetDatabase("test");
+
+            string state = _client.Cluster.Description.State.ToString();
+
+            return state;
+            /*if (state == "Disconnected")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }*/
         }
     }
 
@@ -106,6 +152,8 @@ namespace nsMultiDBService
         public string protocol { get; set; }
         public string port { get; set; }
         public string alias { get; set; }
+        public bool estadoConexion_maria { get; set; }
+        public string estadoConexion_mongo { get; set; }
     }
 
 }

@@ -22,6 +22,11 @@ namespace nsMultiDBService
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
 
+        [OperationContract]
+        bool connection_maria();
+
+        [OperationContract]
+        string connection_mongo();
         // TODO: Add your service operations here
     }
 
