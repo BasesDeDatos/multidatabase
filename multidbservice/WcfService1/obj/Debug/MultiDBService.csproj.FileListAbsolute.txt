@@ -41,3 +41,9 @@ C:\Users\JEFFREY\Desktop\multidatabase\multidbservice\WcfService1\bin\MongoDB.Bs
 C:\Users\JEFFREY\Desktop\multidatabase\multidbservice\WcfService1\bin\MongoDB.Driver.xml
 C:\Users\JEFFREY\Desktop\multidatabase\multidbservice\WcfService1\obj\Debug\multidbservice.dll
 C:\Users\JEFFREY\Desktop\multidatabase\multidbservice\WcfService1\obj\Debug\multidbservice.pdb
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbservice\WcfService1\bin\MongoDB.Bson.dll
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbservice\WcfService1\bin\MongoDB.Driver.Core.dll
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbservice\WcfService1\bin\MongoDB.Driver.dll
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbservice\WcfService1\bin\MySql.Data.dll
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbservice\WcfService1\bin\MongoDB.Bson.xml
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbservice\WcfService1\bin\MongoDB.Driver.xml
