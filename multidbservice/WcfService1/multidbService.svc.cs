@@ -58,14 +58,20 @@ namespace nsMultiDBService
             myConnectionString = "server=127.0.0.1;uid=root;" +
                 "pwd=1029612;database=mysql;";
 
-            conn = new MySql.Data.MySqlClient.MySqlConnection();
-            conn.ConnectionString = myConnectionString;
-            conn.Open();
+            try {
+                conn = new MySql.Data.MySqlClient.MySqlConnection();
+                conn.ConnectionString = myConnectionString;
+                conn.Open();
 
-            string state = conn.State.ToString();
-            conn.Close();
+                string state = conn.State.ToString();
+                conn.Close();
 
-            return state;
+                return state;
+            }
+            catch
+            {
+                return "Close";
+            }
         }
 
         public string connection_mongo()
@@ -85,13 +91,20 @@ namespace nsMultiDBService
         {
             SqlConnection conn = new SqlConnection();
 
-            conn.ConnectionString = "Server=JEFFREY-PC;Database=TEST;Trusted_Connection=true";
-            conn.Open();
+            try
+            {
+                conn.ConnectionString = "Server=JEFFREY-PC;Database=TEST;Trusted_Connection=true";
+                conn.Open();
+                string state = conn.State.ToString();
 
-            string state = conn.State.ToString();
+                conn.Close();
+                return state;
+            }
 
-            conn.Close();
-            return state;
+            catch
+            {
+                return "Close";
+            }
         }
     }
 
