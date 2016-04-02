@@ -41,3 +41,4 @@ C:\Users\JEFFREY\Desktop\multidatabase\multidbservice\WcfService1\bin\MongoDB.Bs
 C:\Users\JEFFREY\Desktop\multidatabase\multidbservice\WcfService1\bin\MongoDB.Driver.xml
 C:\Users\JEFFREY\Desktop\multidatabase\multidbservice\WcfService1\obj\Debug\multidbservice.dll
 C:\Users\JEFFREY\Desktop\multidatabase\multidbservice\WcfService1\obj\Debug\multidbservice.pdb
+C:\Users\JEFFREY\Desktop\multidatabase\multidbservice\WcfService1\obj\Debug\MultiDBService.csprojResolveAssemblyReference.cache
