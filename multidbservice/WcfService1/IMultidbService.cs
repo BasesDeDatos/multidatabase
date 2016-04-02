@@ -18,12 +18,7 @@ namespace nsMultiDBService
         
         [OperationContract]
         parametrosAddDatabase JSONparametrosAddDatabase(parametrosAddDatabase addDatabase);
-
-        /*
-        [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
-        */
-
+        
         [OperationContract]
         string connection_maria();
 

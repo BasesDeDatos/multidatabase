@@ -50,21 +50,6 @@ namespace nsMultiDBService
             };            
         }
         
-        /*
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
-        {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
-        }
-        */
-
         public string connection_maria()
         {
             MySql.Data.MySqlClient.MySqlConnection conn;
@@ -105,6 +90,7 @@ namespace nsMultiDBService
 
             string state = conn.State.ToString();
 
+            conn.Close();
             return state;
         }
     }
@@ -114,30 +100,7 @@ namespace nsMultiDBService
         public int Id { get; set; }
         public string Name { get; set; }
     }
-
- 
-    /*
-    public class CompositeType
-    {
-        bool boolValue = true;
-        string stringValue = "Hello ";
-
-        [DataMember]
-        public bool BoolValue
-        {
-            get { return boolValue; }
-            set { boolValue = value; }
-        }
-
-        [DataMember]
-        public string StringValue
-        {
-            get { return stringValue; }
-            set { stringValue = value; }
-        }
-    }
-    */
-
+    
     public class parametrosAddDatabase
     {
         public string database_type { get; set; }
