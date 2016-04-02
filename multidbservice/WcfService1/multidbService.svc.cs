@@ -7,6 +7,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Data.SqlClient;
 
 namespace nsMultiDBService
 {
@@ -44,22 +45,12 @@ namespace nsMultiDBService
                 port = addDatabase.port,
                 alias = addDatabase.alias,
                 estadoConexion_maria = connection_maria(),
-                estadoConexion_mongo = connection_mongo()
-            };
-            /*return new parametrosAddDatabase()
-            {
-                database_type = "database_type",
-                user = "user",
-                pass = "pass",
-                server = "server",
-                protocol = "protocol",
-                port = "port",
-                alias = "alias"
-            };*/
-            //return addDatabase.user;
-            
+                estadoConexion_mongo = connection_mongo(),
+                estadoConexion_sqlserver = connection_sqlserver()
+            };            
         }
         
+        /*
         public CompositeType GetDataUsingDataContract(CompositeType composite)
         {
             if (composite == null)
@@ -72,8 +63,9 @@ namespace nsMultiDBService
             }
             return composite;
         }
+        */
 
-        public bool connection_maria()
+        public string connection_maria()
         {
             MySql.Data.MySqlClient.MySqlConnection conn;
             string myConnectionString;
@@ -81,17 +73,14 @@ namespace nsMultiDBService
             myConnectionString = "server=127.0.0.1;uid=root;" +
                 "pwd=1029612;database=mysql;";
 
-            try
-            {
-                conn = new MySql.Data.MySqlClient.MySqlConnection();
-                conn.ConnectionString = myConnectionString;
-                conn.Open();
-                return true;
-            }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
-            {
-                return false;
-            }
+            conn = new MySql.Data.MySqlClient.MySqlConnection();
+            conn.ConnectionString = myConnectionString;
+            conn.Open();
+
+            string state = conn.State.ToString();
+            conn.Close();
+
+            return state;
         }
 
         public string connection_mongo()
@@ -105,14 +94,18 @@ namespace nsMultiDBService
             string state = _client.Cluster.Description.State.ToString();
 
             return state;
-            /*if (state == "Disconnected")
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }*/
+        }
+
+        public string connection_sqlserver()
+        {
+            SqlConnection conn = new SqlConnection();
+
+            conn.ConnectionString = "Server=JEFFREY-PC;Database=TEST;Trusted_Connection=true";
+            conn.Open();
+
+            string state = conn.State.ToString();
+
+            return state;
         }
     }
 
@@ -123,6 +116,7 @@ namespace nsMultiDBService
     }
 
  
+    /*
     public class CompositeType
     {
         bool boolValue = true;
@@ -142,6 +136,7 @@ namespace nsMultiDBService
             set { stringValue = value; }
         }
     }
+    */
 
     public class parametrosAddDatabase
     {
@@ -152,8 +147,9 @@ namespace nsMultiDBService
         public string protocol { get; set; }
         public string port { get; set; }
         public string alias { get; set; }
-        public bool estadoConexion_maria { get; set; }
+        public string estadoConexion_maria { get; set; }
         public string estadoConexion_mongo { get; set; }
+        public string estadoConexion_sqlserver { get; set; }
     }
 
 }

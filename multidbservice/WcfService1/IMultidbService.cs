@@ -19,15 +19,19 @@ namespace nsMultiDBService
         [OperationContract]
         parametrosAddDatabase JSONparametrosAddDatabase(parametrosAddDatabase addDatabase);
 
+        /*
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
+        */
 
         [OperationContract]
-        bool connection_maria();
+        string connection_maria();
 
         [OperationContract]
         string connection_mongo();
-        // TODO: Add your service operations here
+
+        [OperationContract]
+        string connection_sqlserver();
     }
 
 
