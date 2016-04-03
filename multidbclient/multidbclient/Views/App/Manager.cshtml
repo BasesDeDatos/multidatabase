@@ -1,25 +1,113 @@
 ﻿<h3>MANAGER</h3>
 
-<p>
-    parametros de Add Database
-</p>
-<div class="row">
-    <div class="col-md-4" ng-repeat="DB in DBConnections">
-        <h1>{{DB.alias}}</h1>
-        <h2>{{DB.user}}</h2>
-        <h3>{{DB.type}}</h3>
+<section>
+    <div class="jumbotron">
+
+        <div class="row">
+            <div class="col-md-4" ng-repeat="DB in DBConnections">
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">{{DB.alias}}</div>
+
+                    <div class="panel-body">
+                        <span><strong>Database Type: </strong>{{DB.type}}</span>
+                        <br />
+                        <span><strong>User: </strong>{{DB.user}}</span>
+                    </div>
+
+                    <div class="panel-footer">
+                        <form ng-submit="DBConection()">
+                            <div class="btn-group text-center" role="group" aria-label="...">
+
+                                <input type="hidden" ng-model="DBClicked" value="{{DB.ID}}" />
+                                <button type="submit" ng-model="DBCOption" class="btn btn-primary" value="view-tables">Ver Tablas</button>
+
+                                <button type="submit" ng-model="DBCOption" class="btn btn-danger" value="drop">Eliminar Conexión</button>
+
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+
+                <div class="panel-heading">Add New Database</div>
+
+                <form ng-submit="addDatabase()">
+                    <div class="panel-body">
+                        <div class="well-sm">
+
+                            <div class="row"><input class="form-control" type="text" ng-model="database_type" placeholder="database_type" /></div>
+                            <div class="row"><input class="form-control margin-top-5" type="text" ng-model="user" placeholder="user" /></div>
+                            <div class="row"><input class="form-control margin-top-5" type="password" ng-model="pass" placeholder="pass" /></div>
+                            <div class="row"><input class="form-control margin-top-5" type="text" ng-model="server" placeholder="server" /></div>
+                            <div class="row"><input class="form-control margin-top-5" type="text" ng-model="protocol" placeholder="protocol" /></div>
+                            <div class="row"><input class="form-control margin-top-5" type="text" ng-model="port" placeholder="port" /></div>
+                            <div class="row"><input class="form-control margin-top-5" type="text" ng-model="alias" placeholder="alias" /></div>
+
+                            <div class="row text-center"><input class="btn btn-primary margin-top-5" type="submit" value="Add" /></div>
+
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div><div class="col-md-6">
+    <div class="panel panel-default">
+
+        <div class="panel-heading">Create New Table</div>
+        <form ng-submit="addTable()">
+            <div class="panel-body">
+                <div class="well-sm">
+                    <div class="row"><input class="form-control" type="text" ng-model="nombre_table" placeholder="Table name" /></div>
+                </div>
+
+                <table class="table">
+                    <thead> 
+                        <tr>
+                            <th>Alias</th>
+                            <th>Column Name</th>
+                            <th>Type</th>
+                            <th>Null</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                <input type="text" class="table_alias" />
+                            </th>
+                            <td><input type="text" class="table_name" /></td>
+                            <td>
+                                <select class="table_type">
+                                    <option value="string">String</option>
+                                    <option value="int">Int</option>
+                                    <option value="double">Double</option>
+                                </select>
+                            </td>
+                            <td><input type="checkbox" class="table_null" value="1" /></td>
+                         </tr>
+                    </tbody>
+                </table>
+
+                <button class="btn btn-primary btn-block btn-sm margin-top-5" ng-click="addNewRow()">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true">
+                    </span> Column
+                </button>
+                <hr />
+                <div class="row text-center"><input class="btn btn-primary margin-top-5" type="submit" value="Add" /></div>
+
+            </div>
+        </form>
+
     </div>
 </div>
-<div class="row">
-    <form ng-submit="addDatabase()" class="col-md-3">
-        <div class="row"><input class="form-control margin-top-5" type="text" ng-model="database_type" placeholder="database_type" /></div>
-        <div class="row"><input class="form-control margin-top-5" type="text" ng-model="user" placeholder="user" /></div>
-        <div class="row"><input class="form-control margin-top-5" type="password" ng-model="pass" placeholder="pass" /></div>
-        <div class="row"><input class="form-control margin-top-5" type="text" ng-model="server" placeholder="server" /></div>
-        <div class="row"><input class="form-control margin-top-5" type="text" ng-model="protocol" placeholder="protocol" /></div>
-        <div class="row"><input class="form-control margin-top-5" type="text" ng-model="port" placeholder="port" /></div>
-        <div class="row"><input class="form-control margin-top-5" type="text" ng-model="alias" placeholder="alias" /></div>
-
-        <div class="row"><input class="btn btn-primary margin-top-5" type="submit" value="Enviar" /></div>
-    </form>
-</div>
+    </div>
+</section>

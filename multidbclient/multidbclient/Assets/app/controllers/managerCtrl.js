@@ -35,4 +35,10 @@
                 alert("revise la consola");
             });
         }
+
+        $scope.addNewRow = function () {
+            new_row = $("tbody tr").first().html();
+            $("tbody").append("<tr>"+new_row+"</tr>");
+            $("tbody tr").last().find("input, select").val("");
+        }
     }]);
