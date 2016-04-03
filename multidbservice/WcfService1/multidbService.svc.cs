@@ -8,6 +8,7 @@ using System.Text;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Data.SqlClient;
+using System.Collections;
 
 namespace nsMultiDBService
 {
@@ -15,19 +16,6 @@ namespace nsMultiDBService
     // NOTE: In order to launch WCF Test Client for testing this service, please select multiDBService.svc or multiDBService.svc.cs at the Solution Explorer and start debugging.
     public class multiDBService : IMultiDBService
     {
-        [WebInvoke(Method = "GET",
-                    ResponseFormat = WebMessageFormat.Json,
-                    UriTemplate = "GetData/{id}")]
-        public Person GetData(string id)
-        {
-            // lookup person with the requested id 
-            return new Person()
-            {
-                Id = Convert.ToInt32(id),
-                Name = "Leo Messi"
-            };
-        }
-
         //[Serializable]
         [WebInvoke(Method = "POST", 
                     ResponseFormat = WebMessageFormat.Json, 
@@ -35,6 +23,11 @@ namespace nsMultiDBService
                     UriTemplate = "addDatabase")]
         public parametrosAddDatabase JSONparametrosAddDatabase(parametrosAddDatabase addDatabase)
         {
+            ServerConnect db = new ServerConnect("localhost", "TEST", "prueba", "prueba");
+            ArrayList result = new ArrayList();
+            result = db.Select("holi");
+            string fila = result.ToJson();
+
             return new parametrosAddDatabase()
             {
                 database_type = addDatabase.database_type,
@@ -44,34 +37,10 @@ namespace nsMultiDBService
                 protocol = addDatabase.protocol,
                 port = addDatabase.port,
                 alias = addDatabase.alias,
-                estadoConexion_maria = connection_maria(),
+                estadoConexion_maria = fila,
                 estadoConexion_mongo = connection_mongo(),
-                estadoConexion_sqlserver = connection_sqlserver()
+                estadoConexion_sqlserver = fila
             };            
-        }
-        
-        public string connection_maria()
-        {
-            MySql.Data.MySqlClient.MySqlConnection conn;
-            string myConnectionString;
-
-            myConnectionString = "server=127.0.0.1;uid=prueba;" +
-                "pwd=prueba;database=mysql;";
-
-            try {
-                conn = new MySql.Data.MySqlClient.MySqlConnection();
-                conn.ConnectionString = myConnectionString;
-                conn.Open();
-
-                string state = conn.State.ToString();
-                conn.Close();
-
-                return state;
-            }
-            catch
-            {
-                return "Close";
-            }
         }
 
         public string connection_mongo()
@@ -86,32 +55,6 @@ namespace nsMultiDBService
 
             return state;
         }
-
-        public string connection_sqlserver()
-        {
-            SqlConnection conn = new SqlConnection();
-
-            try
-            {
-                conn.ConnectionString = "Server=localhost;Database=TEST;Trusted_Connection=true";
-                conn.Open();
-                string state = conn.State.ToString();
-
-                conn.Close();
-                return state;
-            }
-
-            catch
-            {
-                return "Close";
-            }
-        }
-    }
-
-    public class Person
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
     }
     
     public class parametrosAddDatabase
