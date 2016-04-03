@@ -8,6 +8,7 @@ using System.Text;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Data.SqlClient;
+using System.Collections;
 
 namespace nsMultiDBService
 {
@@ -35,6 +36,11 @@ namespace nsMultiDBService
                     UriTemplate = "addDatabase")]
         public parametrosAddDatabase JSONparametrosAddDatabase(parametrosAddDatabase addDatabase)
         {
+            MariaConnect db = new MariaConnect("localhost", "test", "multidbservice", "multidbservice");
+            ArrayList result = new ArrayList();
+            result = db.Select("holi");
+            string fila = result.ToJson();
+
             return new parametrosAddDatabase()
             {
                 database_type = addDatabase.database_type,
@@ -44,7 +50,7 @@ namespace nsMultiDBService
                 protocol = addDatabase.protocol,
                 port = addDatabase.port,
                 alias = addDatabase.alias,
-                estadoConexion_maria = connection_maria(),
+                estadoConexion_maria = fila,
                 estadoConexion_mongo = connection_mongo(),
                 estadoConexion_sqlserver = connection_sqlserver()
             };            
