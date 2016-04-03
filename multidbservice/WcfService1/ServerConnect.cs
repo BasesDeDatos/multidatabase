@@ -18,6 +18,7 @@ namespace nsMultiDBService
         //Constructor
         public ServerConnect(string pServer, string pDatabase, string pUid, string pPassword)
         {
+            connection = new SqlConnection();
             server = pServer;
             database = pDatabase;
             uid = pUid;
@@ -29,10 +30,10 @@ namespace nsMultiDBService
         private void Initialize()
         {
             string connectionString;
-            connectionString = "Server=" + server + ";" + "Database=" +
-            database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+            connectionString = "Server=" + server + ";Database=" + 
+            database + ";User Id=" + uid + ";Password=" + password + ";";
 
-            connection = new SqlConnection(connectionString);
+            connection.ConnectionString = connectionString;
         }
 
         //Open connection to database
@@ -43,7 +44,7 @@ namespace nsMultiDBService
                 connection.Open();
                 return true;
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 return false;
             }
@@ -57,7 +58,7 @@ namespace nsMultiDBService
                 connection.Close();
                 return true;
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 return false;
             }
@@ -68,7 +69,7 @@ namespace nsMultiDBService
             if (this.OpenConnection() == true)
             {
                 //create command and assign the query and connection from the constructor
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                SqlCommand cmd = new SqlCommand(query, connection);
 
                 //Execute command
                 cmd.ExecuteNonQuery();
@@ -89,9 +90,9 @@ namespace nsMultiDBService
             if (this.OpenConnection() == true)
             {
                 //Create Command
-                MySqlCommand cmd = new MySqlCommand(query, connection);
+                SqlCommand cmd = new SqlCommand(query, connection);
                 //Create a data reader and Execute the command
-                MySqlDataReader dataReader = cmd.ExecuteReader();
+                SqlDataReader dataReader = cmd.ExecuteReader();
 
                 //Read the data and store them in the list
                 while (dataReader.Read())
