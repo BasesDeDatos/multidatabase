@@ -2,4 +2,4 @@
 # Este archivo .gitignore ha sido creado automáticamente por Microsoft(R) Visual Studio.
 ################################################################################
 
-/multidbservice/WcfService1/obj/Debug/MultiDBService.csprojResolveAssemblyReference.cache
+/multidbclient/multidbclient/obj/*
