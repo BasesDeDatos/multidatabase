@@ -1,5 +1,10 @@
 ﻿angular.module('manager', [])
-    .controller('managerCtrl', ['$scope', '$http', function ($scope, $http) {
+    .controller('managerCtrl', ['$scope', '$http', 'DBConnections', function ($scope, $http, DBConnections) {
+
+        console.log("DEBUG FACTORY");
+        console.log(DBConnections.all());
+        $scope.DBConnections = DBConnections.all();
+
         $scope.addDatabase = function () {
             $scope.showMessage = false;
 
@@ -26,7 +31,7 @@
             .error(function (data, status, headers, config) {
                 $scope.message = data.error_description.replace(/["']{1}/gi, "");
                 $scope.showMessage = true;
-                console.log(JSON.stringify(result));
+                console.log(JSON.stringify(data));
                 alert("revise la consola");
             });
         }

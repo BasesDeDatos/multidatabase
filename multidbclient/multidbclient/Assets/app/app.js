@@ -1,6 +1,8 @@
 ﻿var app = angular.module('app', [
     'ngRoute',
     'ngCookies',
+    'app.services',
+    //pages controllers
     'home',
     'signIn',
     'register',

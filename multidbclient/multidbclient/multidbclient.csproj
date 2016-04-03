@@ -218,6 +218,7 @@
     <Content Include="Assets\app\controllers\registerCtrl.js" />
     <Content Include="Assets\app\controllers\signInCtrl.js" />
     <Content Include="Assets\app\controllers\todoManagerCtrl.js" />
+    <Content Include="Assets\app\services.js" />
     <Content Include="Assets\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Assets\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Assets\bootstrap\css\bootstrap.css" />
@@ -254,7 +255,9 @@
     <Folder Include="Views\manager\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Assets\bootstrap\css\bootstrap-theme.css.map" />
     <Content Include="Assets\bootstrap\css\bootstrap.css.map" />
     <Content Include="Assets\bootstrap\fonts\glyphicons-halflings-regular.eot" />
@@ -354,9 +357,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>33651</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:8080/client</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:8080/client</IISAppRootUrl>
+          <IISUrl>http://localhost:8080/client/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

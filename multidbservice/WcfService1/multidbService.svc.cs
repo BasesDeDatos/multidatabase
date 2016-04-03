@@ -55,8 +55,8 @@ namespace nsMultiDBService
             MySql.Data.MySqlClient.MySqlConnection conn;
             string myConnectionString;
 
-            myConnectionString = "server=127.0.0.1;uid=root;" +
-                "pwd=1029612;database=mysql;";
+            myConnectionString = "server=127.0.0.1;uid=prueba;" +
+                "pwd=prueba;database=mysql;";
 
             try {
                 conn = new MySql.Data.MySqlClient.MySqlConnection();
@@ -93,7 +93,7 @@ namespace nsMultiDBService
 
             try
             {
-                conn.ConnectionString = "Server=JEFFREY-PC;Database=TEST;Trusted_Connection=true";
+                conn.ConnectionString = "Server=localhost;Database=TEST;Trusted_Connection=true";
                 conn.Open();
                 string state = conn.State.ToString();
 

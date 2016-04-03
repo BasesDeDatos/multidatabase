@@ -4,15 +4,22 @@
     parametros de Add Database
 </p>
 <div class="row">
+    <div class="col-md-4" ng-repeat="DB in DBConnections">
+        <h1>{{DB.alias}}</h1>
+        <h2>{{DB.user}}</h2>
+        <h3>{{DB.type}}</h3>
+    </div>
+</div>
+<div class="row">
     <form ng-submit="addDatabase()" class="col-md-3">
-            <div class="row"><input class="form-control margin-top-5" type="text" ng-model="database_type" placeholder="database_type" /></div>
-            <div class="row"><input class="form-control margin-top-5" type="text" ng-model="user" placeholder="user" /></div>
-            <div class="row"><input class="form-control margin-top-5" type="password" ng-model="pass" placeholder="pass" /></div>
-            <div class="row"><input class="form-control margin-top-5" type="text" ng-model="server" placeholder="server" /></div>
-            <div class="row"><input class="form-control margin-top-5" type="text" ng-model="protocol" placeholder="protocol" /></div>
-            <div class="row"><input class="form-control margin-top-5" type="text" ng-model="port" placeholder="port" /></div>
-            <div class="row"><input class="form-control margin-top-5" type="text" ng-model="alias" placeholder="alias" /></div>
+        <div class="row"><input class="form-control margin-top-5" type="text" ng-model="database_type" placeholder="database_type" /></div>
+        <div class="row"><input class="form-control margin-top-5" type="text" ng-model="user" placeholder="user" /></div>
+        <div class="row"><input class="form-control margin-top-5" type="password" ng-model="pass" placeholder="pass" /></div>
+        <div class="row"><input class="form-control margin-top-5" type="text" ng-model="server" placeholder="server" /></div>
+        <div class="row"><input class="form-control margin-top-5" type="text" ng-model="protocol" placeholder="protocol" /></div>
+        <div class="row"><input class="form-control margin-top-5" type="text" ng-model="port" placeholder="port" /></div>
+        <div class="row"><input class="form-control margin-top-5" type="text" ng-model="alias" placeholder="alias" /></div>
 
-            <div class="row"><input class="btn btn-primary margin-top-5" type="submit" value="Enviar" /></div>
+        <div class="row"><input class="btn btn-primary margin-top-5" type="submit" value="Enviar" /></div>
     </form>
 </div>
