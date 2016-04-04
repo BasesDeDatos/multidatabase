@@ -1,9 +1,20 @@
 ﻿angular.module('manager', [])
-    .controller('managerCtrl', ['$scope', '$http', 'DBConnections', function ($scope, $http, DBConnections) {
+    .controller('managerCtrl', [
+        '$scope',
+        '$http',
+        'DBConnections',
+        'dataBases',
+        'tables',
+        'columns',
+        function ($scope, $http, DBConnections, dataBases, tables, columns) {
 
-        console.log("DEBUG FACTORY");
+        /*console.log("DEBUG FACTORY");
         console.log(DBConnections.all());
+        */
+
         $scope.DBConnections = DBConnections.all();
+        $scope.dataBases = dataBases.all();
+        $scope.tables = tables.all();
 
         $scope.addDatabase = function () {
             $scope.showMessage = false;
