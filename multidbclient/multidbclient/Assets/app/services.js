@@ -1,38 +1,30 @@
 ﻿angular.module('app.services', [])
 
-.factory("DBConnections", function () {
-  return {
-    all: function(){ 
-        return {
-            IDdbc1: {
-                ID: "IDdbc1",
-                alias: "Conexion Maria 01",
-                user: "prueba",
-                type: "Maria DB"
-            },
-            IDdbc2: {
-                ID: "IDdbc2",
-                alias: "Conexion Maria 02",
-                user: "prueba",
-                type: "Maria DB"
-            },
-            IDdbc3: {
-                ID: "IDdbc3",
-                alias: "Conexion Mongo 01",
-                user: "prueba",
-                type: "Mongo DB"
-            }
-        }
-    },
-    remove: function(ID){ }, // TODO
+.factory("DBConnections", function ($http, $q) {
     
-    get: function($key, $value){ 
-        console.log("DEBUG DBConnections.get: " + "key: " + $key + " value: " + $value);
+    return {
+        all: function(){ 
+
+            var temp = {};
+            var defer = $q.defer();
+
+            /*$http.get('http://localhost:8080/service/multiDBService.svc/getDBConnections').success(function (data) {
+                alert(data);
+                temp = data;
+                defer.resolve(data);
+            });*/
+            return {}//}//defer.promise;            
+        },
+        remove: function(ID){ }, // TODO
+    
+        get: function($key, $value){ 
+            console.log("DEBUG DBConnections.get: " + "key: " + $key + " value: " + $value);
      
-        return {};
-    },
-  };
-})
+            return {};
+        },
+    };
+        }
+)
 
 .factory("dataBases", function () {
     return {

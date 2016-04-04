@@ -23,9 +23,9 @@ namespace nsMultiDBService
                     UriTemplate = "addDatabase")]
         public parametrosAddDatabase JSONparametrosAddDatabase(parametrosAddDatabase addDatabase)
         {
-            ServerConnect db = new ServerConnect("localhost", "TEST", "prueba", "prueba");
+            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
             ArrayList result = new ArrayList();
-            result = db.Select("holi");
+            result = db.Select("db_connection");
             string fila = result.ToJson();
 
             return new parametrosAddDatabase()
@@ -41,6 +41,19 @@ namespace nsMultiDBService
                 estadoConexion_mongo = connection_mongo(),
                 estadoConexion_sqlserver = fila
             };            
+        }
+
+        [WebInvoke(Method = "GET",
+                   ResponseFormat = WebMessageFormat.Json,
+                   RequestFormat = WebMessageFormat.Json,
+                   UriTemplate = "getDBConnections")]
+        public string getDBConnections()
+        {
+            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+            ArrayList result = new ArrayList();
+            result = db.Select("db_connection");
+            string resultados = result.ToJson();
+            return resultados;
         }
 
         public string connection_mongo()

@@ -16,7 +16,12 @@ namespace nsMultiDBService
         parametrosAddDatabase JSONparametrosAddDatabase(parametrosAddDatabase addDatabase);
         
         [OperationContract]
+        string getDBConnections();
+        
+        [OperationContract]
         string connection_mongo();
+
+
     }
 
 

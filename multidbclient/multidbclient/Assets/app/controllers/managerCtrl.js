@@ -8,9 +8,9 @@
         'columns',
         function ($scope, $http, DBConnections, dataBases, tables, columns) {
 
-        /*console.log("DEBUG FACTORY");
-        console.log(DBConnections.all());
-        */
+            console.log("DEBUG FACTORY DBConnections.all()");
+            console.log(DBConnections.all());
+        
 
         $scope.DBConnections = DBConnections.all();
         $scope.dataBases = dataBases.all();
@@ -28,7 +28,7 @@
                 port: $scope.protocol,
                 alias: $scope.alias
             };
-
+/*
             $http({
                 url: 'http://localhost:8080/service/multiDBService.svc/addDatabase',
                 method: "POST",
@@ -37,6 +37,23 @@
             })
             .success(function (data, status, headers, config) {
                 console.log(JSON.stringify(data));
+                alert("revise la consola");
+            })
+            .error(function (data, status, headers, config) {
+                $scope.message = data.error_description.replace(/["']{1}/gi, "");
+                $scope.showMessage = true;
+                console.log(JSON.stringify(data));
+                alert("revise la consola");
+            });
+            */
+            $http({
+                url: 'http://localhost:8080/service/multiDBService.svc/getDBConnections',
+                method: "GET",
+                headers: { 'Content-Type': 'application/json' },
+                //data: params
+            })
+            .success(function (data, status, headers, config) {
+                console.log(jQuery.parseJSON(data));
                 alert("revise la consola");
             })
             .error(function (data, status, headers, config) {
