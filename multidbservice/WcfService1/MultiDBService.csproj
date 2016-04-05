@@ -109,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MariaConnect.cs" />
+    <Compile Include="MongoConnect.cs" />
     <Compile Include="multiDBService.svc.cs">
       <DependentUpon>multiDBService.svc</DependentUpon>
     </Compile>
