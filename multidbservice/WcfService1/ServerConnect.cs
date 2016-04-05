@@ -118,5 +118,44 @@ namespace nsMultiDBService
             }
         }
 
+        //Select statement
+        public ArrayList Select(string tableName, string conditional)
+        {
+            string query = "SELECT * " + "FROM " + tableName + " WHERE " + conditional + ";";
+            //Create a list to store the result
+            ArrayList list = new ArrayList();
+
+            //Open connection
+            if (this.OpenConnection() == true)
+            {
+                //Create Command
+                SqlCommand cmd = new SqlCommand(query, connection);
+                //Create a data reader and Execute the command
+                SqlDataReader dataReader = cmd.ExecuteReader();
+
+                //Read the data and store them in the list
+                while (dataReader.Read())
+                {
+                    //list[0].Add(dataReader["id"] + "");
+                    string[] values = new string[dataReader.FieldCount];
+                    dataReader.GetValues(values);
+                    list.Add(values);
+                }
+
+                //close Data Reader
+                dataReader.Close();
+
+                //close Connection
+                this.CloseConnection();
+
+                //return list to be displayed
+                return list;
+            }
+            else
+            {
+                return list;
+            }
+        }
+
     }
 }
