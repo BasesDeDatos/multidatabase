@@ -13,7 +13,7 @@ namespace nsMultiDBService
     public interface IMultiDBService
     {       
         [OperationContract]
-        parametrosAddDatabase JSONparametrosAddDatabase(parametrosAddDatabase addDatabase);
+        string JSONparametrosAddDatabase(parametrosAddDatabase addDatabase);
         
         [OperationContract]
         string getDBConnections();

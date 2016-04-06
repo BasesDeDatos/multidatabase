@@ -154,7 +154,7 @@
                                     <th scope="row">
                                         <select class="table_type form-control">
                                             <option value="">Connection</option>
-                                            <option ng-repeat="DB in DBConnections" value="{{DB.ID}}">{{DB.alias}}</option>
+                                            <option ng-repeat="DBC in DBConnections" value="{{DBC._v[0]}}">{{DBC._v[0]}}</option>
                                         </select>
                                     </th>
                                     <td><input type="text" class="table_name form-control" /></td>

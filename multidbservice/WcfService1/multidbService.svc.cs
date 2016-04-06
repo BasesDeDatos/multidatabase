@@ -21,14 +21,24 @@ namespace nsMultiDBService
                     ResponseFormat = WebMessageFormat.Json, 
                     RequestFormat = WebMessageFormat.Json,
                     UriTemplate = "addDatabase")]
-        public parametrosAddDatabase JSONparametrosAddDatabase(parametrosAddDatabase addDatabase)
+        public string JSONparametrosAddDatabase(parametrosAddDatabase addDatabase)
         {
             MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
-            ArrayList result = new ArrayList();
-            result = db.Select("db_connection");
-            string fila = result.ToJson();
-
-            return new parametrosAddDatabase()
+            try {
+                db.NonQuery("CALL registrar_conexion('" + addDatabase.database_type + "','"
+                                                   + addDatabase.user + "','"
+                                                   + addDatabase.pass + "','"
+                                                   + addDatabase.server + "','"
+                                                   + addDatabase.protocol + "','"
+                                                   + addDatabase.port + "','"
+                                                   + addDatabase.alias + "');");
+                return "true";
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+             /*new parametrosAddDatabase()
             {
                 database_type = addDatabase.database_type,
                 user = addDatabase.user,
@@ -40,7 +50,7 @@ namespace nsMultiDBService
                 estadoConexion_maria = fila,
                 estadoConexion_mongo = connection_mongo(),
                 estadoConexion_sqlserver = fila
-            };            
+            };*/
         }
 
         [WebInvoke(Method = "GET",
