@@ -6,22 +6,24 @@
         <div class="row">
             <h2 class="text-center">Connections</h2>
             <hr />
-            <div class="col-md-4" ng-repeat="DB in DBConnections">
+
+            <div ng-show="!DBConnections" style="background:url(http://loading.io/assets/img/default-loader.gif) no-repeat center center;width:32px;height:32px;"></div>
+            <div ng-show="DBConnections" class="col-md-4" ng-repeat="DBC in DBConnections">
                 <div class="panel panel-default">
 
-                    <div class="panel-heading">{{DB.alias}}</div>
+                    <div class="panel-heading">{{DBC._v[0]}}</div>
 
                     <div class="panel-body">
-                        <span><strong>Database Type: </strong>{{DB.type}}</span>
+                        <span><strong>Database Type: </strong>{{DBC._v[1]}}</span>
                         <br />
-                        <span><strong>User: </strong>{{DB.user}}</span>
+                        <span><strong>User: </strong>{{DBC._v[2]}}</span>
                     </div>
 
                     <div class="panel-footer">
                         <form ng-submit="DBConection()">
                             <div class="btn-group text-center" role="group" aria-label="...">
 
-                                <input type="hidden" ng-model="DBClicked" value="{{DB.ID}}" />
+                                <input type="hidden" ng-model="DBClicked" value="{{DBC._v[0]}}" />
                                 <button type="submit" ng-model="DBCOption" class="btn btn-primary" value="view-tables">Ver Tablas</button>
 
                                 <button type="submit" ng-model="DBCOption" class="btn btn-danger" value="drop">Eliminar Conexión</button>

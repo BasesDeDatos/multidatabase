@@ -1,19 +1,11 @@
 ﻿angular.module('app.services', [])
 
-.factory("DBConnections", function ($http, $q) {
-    
+.factory("DBConnections", ['$http', '$q', function ($http, $q) {
     return {
-        all: function(){ 
-
-            var temp = {};
-            var defer = $q.defer();
-
-            /*$http.get('http://localhost:8080/service/multiDBService.svc/getDBConnections').success(function (data) {
-                alert(data);
-                temp = data;
-                defer.resolve(data);
-            });*/
-            return {}//}//defer.promise;            
+        all: function () {
+            return $http.get('http://localhost:8080/service/multiDBService.svc/getDBConnections').then(function (response) { //wrap it inside another promise using then
+                return jQuery.parseJSON(response.data);  //Se parsea a JSON
+            });
         },
         remove: function(ID){ }, // TODO
     
@@ -24,10 +16,11 @@
         },
     };
         }
-)
+])
 
 .factory("dataBases", function () {
     return {
+
         all: function () {
             return {
                 IDdb1: {
