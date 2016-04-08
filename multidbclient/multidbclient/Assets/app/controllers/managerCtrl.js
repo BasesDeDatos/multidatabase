@@ -8,22 +8,31 @@
         'columns',
         function ($scope, $http, DBConnections, dataBases, tables, columns) {
 
-            DBConnections.all().then(function(response){ 
-                $scope.DBConnections = response; //Assign data received to $scope.data
-                console.log("DEBUG FACTORY DBConnections then");
-                console.log($scope.DBConnections);
-            });
-
-            console.log("DEBUG FACTORY DBConnections");
-            console.log($scope.DBConnections);
-
-            $scope.DBConnections = DBConnections;
-            $scope.dataBases = dataBases.all();
+            $scope.DBConnections = false; //se inicia en false para que muestre el loader en la página
+            $scope.dataBases = false;
             $scope.tables = tables.all();
 
-            $scope.addDatabase = function () {
-                $scope.showMessage = false;
+            function refreshDBConnections() {
+                DBConnections.all().then(function (response) { //Async call to DBConnections factory
+                    $scope.DBConnections = response; //Assign data received to $scope.data
+                });
+            }
+            refreshDBConnections();
 
+            function refreshDataBases() {
+                dataBases.all().then(function (response) { //Async call to DBConnections factory
+                    $scope.dataBases = response; //Assign data received to $scope.data
+                });
+            }
+            refreshDataBases();
+
+            function refreshTables() {
+                tables.all().then(function (response) { //Async call to DBConnections factory
+                    $scope.tables = response; //Assign data received to $scope.data
+                });
+            }
+
+            $scope.addDatabase = function () {
                 var params = {
                     database_type: $scope.database_type,
                     user: $scope.user,
@@ -33,22 +42,14 @@
                     port: $scope.protocol,
                     alias: $scope.alias
                 };
-                $http({
-                    url: 'http://localhost:8080/service/multiDBService.svc/addDatabase',
-                    method: "POST",
-                    headers: { 'Content-Type': 'application/json' },
-                    data: params
-                })
-                .success(function (data, status, headers, config) {
-                    console.log(JSON.stringify(data));
-                    alert("revise la consola");
-                })
-                .error(function (data, status, headers, config) {
-                    $scope.message = data.error_description.replace(/["']{1}/gi, "");
-                    $scope.showMessage = true;
-                    console.log(JSON.stringify(data));
-                    alert("revise la consola");
-                });
+                DBConnections.push(params);
+                refreshDBConnections();
+            }
+
+            $scope.createDatabase = function () {
+                var params = { nombre: $scope.DBname }
+                dataBases.push(params)
+                refreshDatabases();
             }
 
             $scope.addNewRow = function () {

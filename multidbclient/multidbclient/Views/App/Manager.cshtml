@@ -39,7 +39,9 @@
         <div class="row">
             <h2 class="text-center">Data Bases</h2>
             <hr />
-            <div class="col-md-4" ng-repeat="DB in dataBases">
+
+            <div ng-show="!dataBases" style="background:url(http://loading.io/assets/img/default-loader.gif) no-repeat center center;width:32px;height:32px;"></div>
+            <div ng-show="dataBases" class="col-md-4" ng-repeat="DB in dataBases">
                 <div class="panel panel-default">
 
                     <div class="panel-heading">{{DB.name}}</div>
@@ -62,6 +64,12 @@
         </div>
     </div>
 </section>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="row alert alert-danger margin-top-5" ng-show="showMessage">{{message}}</div>
+    </div>
+</div>
 
 <section>
     <div class="row">
@@ -99,7 +107,15 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <div class="row text-center"><input class="btn btn-primary margin-top-5" type="submit" value="Add" /></div>
+                        <div class="row text-center">
+                            <button type="submit"
+                                    class="btn btn-primary"
+                                    id="load"
+                                    data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>"
+                                >
+                                ADD
+                            </button>
+                        </div>
                     </div>
                 </form>
 
@@ -114,11 +130,20 @@
                 <form ng-submit="createDatabase()">
                     <div class="panel-body">
                         <div class="well-sm">
-                            <div class="row"><input class="form-control" type="text" ng-model="name" placeholder="Name" /></div>
+                            <div class="row"><input ng-required="true" class="form-control" type="text" ng-model="DBname" placeholder="Name" /></div>
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <div class="row text-center"><input class="btn btn-primary margin-top-5" type="submit" value="create" /></div>
+                        <div class="row text-center">
+                            <button type="submit"
+                                    class="btn btn-primary"
+                                    id="load"
+                                    data-loading-text="
+                                <i class='fa fa-circle-o-notch fa-spin'></i>"
+                                >
+                                ADD
+                            </button>
+                        </div>
                     </div>
                 </form>
 
@@ -131,9 +156,9 @@
                     <div class="panel-body">
                         <div class="well-sm">
 
-                            <div class="row"><input class="form-control" type="text" ng-model="nombre_table" placeholder="Table name" /></div>
+                            <div class="row"><input ng-required="true" class="form-control" type="text" ng-model="nombre_table" placeholder="Table name" /></div>
                             <div class="row">
-                                <select class="Database form-control margin-top-5">
+                                <select ng-required="true" class="Database form-control margin-top-5">
                                     <option value="">Data Base</option>
                                     <option ng-repeat="DB in dataBases" value="{{DB.ID}}">{{DB.name}}</option>
                                 </select>
@@ -152,14 +177,14 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">
-                                        <select class="table_type form-control">
+                                        <select ng-required="true" class="table_type form-control">
                                             <option value="">Connection</option>
                                             <option ng-repeat="DBC in DBConnections" value="{{DBC._v[0]}}">{{DBC._v[0]}}</option>
                                         </select>
                                     </th>
-                                    <td><input type="text" class="table_name form-control" /></td>
+                                    <td><input ng-required="true" type="text" class="table_name form-control" /></td>
                                     <td>
-                                        <select class="table_type form-control">
+                                        <select ng-required="true" class="table_type form-control">
                                             <option value="">Type</option>
                                             <option value="string">String</option>
                                             <option value="int">Int</option>
@@ -178,7 +203,14 @@
 
                     </div>
                     <div class="panel-footer">
-                        <div class="row text-center"><input class="btn btn-primary margin-top-5" type="submit" value="Add" /></div>
+                        <button type="submit"
+                                class="btn btn-primary"
+                                id="load"
+                                data-loading-text="
+                            <i class='fa fa-circle-o-notch fa-spin'></i>"
+                            >
+                            ADD
+                        </button>
                     </div>
                 </form>
 
@@ -203,7 +235,16 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <div class="row text-center"><input class="btn btn-danger margin-top-5" type="submit" value="drop" /></div>
+                        <div class="row text-center">
+                            <button type="submit"
+                                    class="btn btn-danger"
+                                    id="load"
+                                    data-loading-text="
+                                <i class='fa fa-circle-o-notch fa-spin'></i>"
+                                >
+                                ADD
+                            </button>
+                         </div>
                     </div>
                 </form>
 
