@@ -47,8 +47,8 @@
             }
 
             $scope.createDatabase = function () {
-                var params = { nombre: $scope.DBname }
-                dataBases.push(params)
+                var params = { nombre: $scope.DBname };
+                dataBases.push(params);
                 refreshDatabases();
             }
 
