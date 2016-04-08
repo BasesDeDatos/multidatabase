@@ -23,8 +23,8 @@ namespace nsMultiDBService
                     UriTemplate = "addDatabase")]
         public string JSONparametrosAddDatabase(parametrosAddDatabase addDatabase)
         {
-            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
             try {
+                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
                 db.NonQuery("CALL registrar_conexion('" + addDatabase.database_type + "','"
                                                    + addDatabase.user + "','"
                                                    + addDatabase.pass + "','"
@@ -32,25 +32,12 @@ namespace nsMultiDBService
                                                    + addDatabase.protocol + "','"
                                                    + addDatabase.port + "','"
                                                    + addDatabase.alias + "');");
-                return "true";
+                return "Conexion registrada con exito";
             }
             catch (Exception ex)
             {
                 return ex.ToString();
             }
-             /*new parametrosAddDatabase()
-            {
-                database_type = addDatabase.database_type,
-                user = addDatabase.user,
-                pass = addDatabase.pass,
-                server = addDatabase.server,
-                protocol = addDatabase.protocol,
-                port = addDatabase.port,
-                alias = addDatabase.alias,
-                estadoConexion_maria = fila,
-                estadoConexion_mongo = connection_mongo(),
-                estadoConexion_sqlserver = fila
-            };*/
         }
 
         [WebInvoke(Method = "GET",
