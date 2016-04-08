@@ -51,6 +51,23 @@
                 dataBases.push(params);
                 refreshDatabases();
             }
+            
+            $scope.addTable = function () {
+                var params = {
+                    name: $scope.nombre_table,
+                    columns: {}
+                }
+                $("table tr").each(function(){
+                    $row = $(this);
+                    params.columns.push({
+                        DB_alias: $row.find(".table_type").val(),
+                        column_name: column_name,
+                        Type: Type,
+                        Null: Null
+                    })
+                })
+                
+            }
 
             $scope.addNewRow = function () {
                 new_row = $("tbody tr").first().html();
@@ -58,4 +75,26 @@
                 $("tbody tr").last().find("input, select").val("");
             }
         }
-    ]);
+    ])
+    // I've created this directive as an example of $compile in action. 
+    .directive('add-column', ['$compile', function ($compile) { // inject $compile service as dependency
+    return {
+        restrict: 'A',
+        link: function ($scope, element, attrs) {
+            // click on the button to add new input field
+            element.find('button').bind('click', function () {
+                // I'm using Angular syntax. Using jQuery will have the same effect
+                // Create input element
+                var input = angular.element('<div><input type="text" ng-model="telephone[' + scope.inputCounter + ']"></div>');
+                // Compile the HTML and assign to scope
+                var compile = $compile(input)(scope);
+
+                // Append input to div
+               element.append(input);
+
+                // Increment the counter for the next input to be added
+                scope.inputCounter++;
+            });
+        }
+    }
+}]);
