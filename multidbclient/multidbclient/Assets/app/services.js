@@ -7,8 +7,29 @@
                 return jQuery.parseJSON(response.data);  //Se parsea a JSON
             });
         },
-        remove: function(ID){ }, // TODO
+        remove: function(params){ 
+            $scope.showMessage = false;
     
+            $('.btn').button('loading');
+            $http({
+                url: 'http://localhost:8080/service/multiDBService.svc/remove',
+                method: "DELETE",
+                headers: { 'Content-Type': 'application/json' },
+                data: params
+            })
+            .success(function (data, status, headers, config) {
+                console.log(JSON.stringify(data));
+                return jQuery.parseJSON(data.data);
+            })
+            .error(function (data, status, headers, config) {
+                $scope.message = data.error_description.replace(/["']{1}/gi, "");
+                $scope.showMessage = true;
+                console.log(JSON.stringify(data));
+            })
+            .finally(function () {
+                $('.btn').button('reset');
+            }) 
+        }, // TODO
         get: function($key, $value){ 
             console.log("DEBUG DBConnections.get: " + "key: " + $key + " value: " + $value);
      
@@ -26,7 +47,7 @@
             })
             .success(function (data, status, headers, config) {
                 console.log(JSON.stringify(data));
-                alert("revise la consola");
+                return jQuery.parseJSON(data.data);
             })
             .error(function (data, status, headers, config) {
                 $scope.message = data.error_description.replace(/["']{1}/gi, "");
@@ -53,8 +74,35 @@
                     name: "Base Ingeniería",
                 }
             }
+            /*
+            return $http.get('http://localhost:8080/service/multiDBService.svc/getDataBases').then(function (response) { //wrap it inside another promise using then
+                return jQuery.parseJSON(response.data);  //Se parsea a JSON
+            });
+            */
         },
-        remove: function (ID) { }, // TODO
+        remove: function (params) {
+            $scope.showMessage = false;
+    
+            $('.btn').button('loading');
+            $http({
+                url: 'http://localhost:8080/service/multiDBService.svc/remove',
+                method: "DELETE",
+                headers: { 'Content-Type': 'application/json' },
+                data: params
+            })
+            .success(function (data, status, headers, config) {
+                console.log(JSON.stringify(data));
+                return jQuery.parseJSON(data.data);
+            })
+            .error(function (data, status, headers, config) {
+                $scope.message = data.error_description.replace(/["']{1}/gi, "");
+                $scope.showMessage = true;
+                console.log(JSON.stringify(data));
+            })
+            .finally(function () {
+                $('.btn').button('reset');
+            }) 
+        },
         get: function ($key, $value) {
             console.log("DEBUG DBConnections.get: " + "key: " + $key + " value: " + $value);
 
@@ -72,6 +120,7 @@
             })
             .success(function (data, status, headers, config) {
                 console.log(JSON.stringify(data));
+                return jQuery.parseJSON(data.data);
             })
             .error(function (data, status, headers, config) {
                 $scope.message = data.error_description.replace(/["']{1}/gi, "");
@@ -99,12 +148,39 @@
                     name: "Puestos",
                     alias: "DB02",
                 },
+                /*
+                return $http.get('http://localhost:8080/service/multiDBService.svc/getTables').then(function (response) { //wrap it inside another promise using then
+                    return jQuery.parseJSON(response.data);  //Se parsea a JSON
+                });
+                */
+                
             }
         },
-        remove: function (ID) { }, // TODO
-
+        remove: function (params) { 
+            $scope.showMessage = false;
+    
+            $('.btn').button('loading');
+            $http({
+                url: 'http://localhost:8080/service/multiDBService.svc/remove',
+                method: "DELETE",
+                headers: { 'Content-Type': 'application/json' },
+                data: params
+            })
+            .success(function (data, status, headers, config) {
+                console.log(JSON.stringify(data));
+                return jQuery.parseJSON(data.data);
+            })
+            .error(function (data, status, headers, config) {
+                $scope.message = data.error_description.replace(/["']{1}/gi, "");
+                $scope.showMessage = true;
+                console.log(JSON.stringify(data));
+            })
+            .finally(function () {
+                $('.btn').button('reset');
+            }) 
+        }, // TODO
         get: function ($key, $value) {
-            console.log("DEBUG DBConnections.get: " + "key: " + $key + " value: " + $value);
+            console.log("DEBUG tables.get: " + "key: " + $key + " value: " + $value);
 
             return {};
         },
@@ -120,6 +196,7 @@
             })
             .success(function (data, status, headers, config) {
                 console.log(JSON.stringify(data));
+                return jQuery.parseJSON(data.data);
             })
             .error(function (data, status, headers, config) {
                 $scope.message = data.error_description.replace(/["']{1}/gi, "");
@@ -136,11 +213,33 @@
 .factory("columns", function () {
     return {
         all: function () {
-            return {
-                
-            }
+            return $http.get('http://localhost:8080/service/multiDBService.svc/getColumns').then(function (response) { //wrap it inside another promise using then
+                return jQuery.parseJSON(response.data);  //Se parsea a JSON
+            });
         },
-        remove: function (ID) { }, // TODO
+        remove: function (params) { 
+            $scope.showMessage = false;
+    
+            $('.btn').button('loading');
+            $http({
+                url: 'http://localhost:8080/service/multiDBService.svc/remove',
+                method: "DELETE",
+                headers: { 'Content-Type': 'application/json' },
+                data: params
+            })
+            .success(function (data, status, headers, config) {
+                console.log(JSON.stringify(data));
+                return jQuery.parseJSON(data.data);
+            })
+            .error(function (data, status, headers, config) {
+                $scope.message = data.error_description.replace(/["']{1}/gi, "");
+                $scope.showMessage = true;
+                console.log(JSON.stringify(data));
+            })
+            .finally(function () {
+                $('.btn').button('reset');
+            }) 
+        }, // TODO
         get: function ($key, $value) {
             console.log("DEBUG DBConnections.get: " + "key: " + $key + " value: " + $value);
 
@@ -158,6 +257,7 @@
             })
             .success(function (data, status, headers, config) {
                 console.log(JSON.stringify(data));
+                return jQuery.parseJSON(data.data);
             })
             .error(function (data, status, headers, config) {
                 $scope.message = data.error_description.replace(/["']{1}/gi, "");
@@ -175,12 +275,31 @@
 .factory("rows", function () {
     return {
         all: function () {
-            return {
-
-            }
+            return $http.get('http://localhost:8080/service/multiDBService.svc/getRows').then(function (response) { //wrap it inside another promise using then
+                return jQuery.parseJSON(response.data);  //Se parsea a JSON
+            });
         },
-        remove: function (ID) { }, // TODO
-
+        remove: function (paramas) { $scope.showMessage = false;
+            $('.btn').button('loading');
+            $http({
+                url: 'http://localhost:8080/service/multiDBService.svc/remove',
+                method: "DELETE",
+                headers: { 'Content-Type': 'application/json' },
+                data: params
+            })
+            .success(function (data, status, headers, config) {
+                console.log(JSON.stringify(data));
+                return jQuery.parseJSON(data.data);
+            })
+            .error(function (data, status, headers, config) {
+                $scope.message = data.error_description.replace(/["']{1}/gi, "");
+                $scope.showMessage = true;
+                console.log(JSON.stringify(data));
+            })
+            .finally(function () {
+                $('.btn').button('reset');
+            }) 
+        }, // TODO
         get: function ($key, $value) {
             console.log("DEBUG DBConnections.get: " + "key: " + $key + " value: " + $value);
 
@@ -191,14 +310,14 @@
 
             $('.btn').button('loading');
             $http({
-                url: 'http://localhost:8080/service/multiDBService.svc/addDatabase',
+                url: 'http://localhost:8080/service/multiDBService.svc/addRows',
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 data: params
             })
             .success(function (data, status, headers, config) {
                 console.log(JSON.stringify(data));
-                alert("revise la consola");
+                return jQuery.parseJSON(data.data);
             })
             .error(function (data, status, headers, config) {
                 $scope.message = data.error_description.replace(/["']{1}/gi, "");
