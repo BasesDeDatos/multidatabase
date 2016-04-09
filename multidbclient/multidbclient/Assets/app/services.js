@@ -1,67 +1,73 @@
 ﻿angular.module('app.services', [])
 
-.factory("DBConnections", ['$scope', '$http', '$q', function ($scope, $http, $q) {
+.factory("web_services", ['$http', function ($http) {
+    console.log($http)
     return {
-        all: function () {
-            return $http.get('http://localhost:8080/service/multiDBService.svc/getDBConnections').then(function (response) { //wrap it inside another promise using then
+        get: function (rute) {
+            return $http.get('http://localhost:8080/service/multiDBService.svc/' + rute).then(function (response) { //wrap it inside another promise using then
                 return jQuery.parseJSON(response.data);  //Se parsea a JSON
             });
         },
-        remove: function(params){ 
-            $scope.showMessage = false;
+        delete: function (rute, params) {
+            $scope.successMessage = false;
+            $scope.warningMessage = false;
     
             $('.btn').button('loading');
             $http({
-                url: 'http://localhost:8080/service/multiDBService.svc/remove',
+                url: 'http://localhost:8080/service/multiDBService.svc/' + rute,
                 method: "DELETE",
                 headers: { 'Content-Type': 'application/json' },
                 data: params
             })
             .success(function (data, status, headers, config) {
-                console.log(JSON.stringify(data));
-                return jQuery.parseJSON(data.data);
+                $scope.successMessage = "Rute: " + rute + " Status: " + status;
+                $scope.showSuccessMessage = true;
+                console.log(data);
+                return data;
             })
             .error(function (data, status, headers, config) {
-                $scope.message = data.error_description.replace(/["']{1}/gi, "");
-                $scope.showMessage = true;
+                $scope.warningMessage = data.error_description.replace(/["']{1}/gi, "");
+                $scope.showWarningMessage = true;
                 console.log(JSON.stringify(data));
             })
             .finally(function () {
                 $('.btn').button('reset');
             }) 
-        }, // TODO
-        get: function($key, $value){ 
-            console.log("DEBUG DBConnections.get: " + "key: " + $key + " value: " + $value);
-     
-            return {};
-        },
-        push: function (params) {
-            $scope.showMessage = false;
+        }, 
+        push: function (rute, params, $scope) {
+            $scope.successMessage = false;
+            $scope.warningMessage = false;
 
             $('.btn').button('loading');
             $http({
-                url: 'http://localhost:8080/service/multiDBService.svc/addDatabase',
+                url: 'http://localhost:8080/service/multiDBService.svc/' + rute,
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 data: params
             })
             .success(function (data, status, headers, config) {
-                console.log(JSON.stringify(data));
-                return jQuery.parseJSON(data.data);
+                console.log(data);
+                $scope.successMessage = "Rute: " + rute + " Status: " + status;
+                $scope.showSuccessMessage = true;
+                return data.data;
             })
             .error(function (data, status, headers, config) {
-                $scope.message = data.error_description.replace(/["']{1}/gi, "");
-                $scope.showMessage = true;
-                console.log(JSON.stringify(data));
+                $scope.warningMessage = "Rute: " + rute + " Error: "+ data.error_description.replace(/["']{1}/gi, "");
+                $scope.showWarningMessage = true;
+                console.log(data);
             })
             .finally (function () {
                 $('.btn').button('reset');
             })
-        }
+        },
+        query: function (rute, $key, $value) { // TODO
+            console.log("DEBUG web_services.query: " + "key: " + $key + " value: " + $value);
+            return {};
+        },
     };
 }])
 
-.factory("dataBases", function () {
+.factory("dataBases", ['$http', function ($http)  {
     return {
         all: function () {
             return {
@@ -132,9 +138,9 @@
             })
         }
     };
-})
+}])
 
-.factory("tables", function () {
+.factory("tables", ['$http', function ($http)  {
     return {
         all: function () {
             return {
@@ -208,9 +214,9 @@
             })
         }
     };
-})
+}])
 
-.factory("columns", function () {
+.factory("columns", ['$http', function ($http) {
     return {
         all: function () {
             return $http.get('http://localhost:8080/service/multiDBService.svc/getColumns').then(function (response) { //wrap it inside another promise using then
@@ -269,10 +275,9 @@
             })
         }
     };
-})
+}])
 
-
-.factory("rows", function () {
+.factory("rows", ['$http', function ($http) {
     return {
         all: function () {
             return $http.get('http://localhost:8080/service/multiDBService.svc/getRows').then(function (response) { //wrap it inside another promise using then
@@ -329,4 +334,4 @@
             })
         }
     };
-})
+}])

@@ -5,9 +5,9 @@
 
         <div class="row">
             <h2 class="text-center">Connections</h2>
-            <hr />
+            <br />
 
-            <div ng-show="!DBConnections" style="background:url(http://loading.io/assets/img/default-loader.gif) no-repeat center center;width:32px;height:32px;"></div>
+            <i ng-show="!DBConnections" class="fa fa-circle-o-notch fa-spin fa-4x" style="width: 100%; text-align: center"></i>
             <div ng-show="DBConnections" class="col-md-4" ng-repeat="DBC in DBConnections">
                 <div class="panel panel-default">
 
@@ -38,9 +38,9 @@
 
         <div class="row">
             <h2 class="text-center">Data Bases</h2>
-            <hr />
+            <br />
 
-            <div ng-show="!dataBases" style="background:url(http://loading.io/assets/img/default-loader.gif) no-repeat center center;width:32px;height:32px;"></div>
+            <i ng-show="!dataBases" class="fa fa-circle-o-notch fa-spin fa-4x" style="width: 100%; text-align: center"></i>
             <div ng-show="dataBases" class="col-md-4" ng-repeat="DB in dataBases">
                 <div class="panel panel-default">
 
@@ -66,8 +66,9 @@
 </section>
 
 <div class="row">
-    <div class="col-md-3">
-        <div class="row alert alert-danger margin-top-5" ng-show="showMessage">{{message}}</div>
+    <div class="col-md-8 col-md-push-2">
+        <div class="row alert alert-danger margin-top-5 text-center" ng-show="showWarningMessage">{{warningMessage}}</div>
+        <div class="row alert alert-success margin-top-5 text-center" ng-show="showSuccessMessage">{{successMessage}}</div>
     </div>
 </div>
 
@@ -156,9 +157,9 @@
                     <div class="panel-body">
                         <div class="well-sm">
 
-                            <div class="row"><input ng-required="true" class="form-control" type="text" ng-model="nombre_table" placeholder="Table name" /></div>
+                            <div class="row"><input ng-required="true" class="form-control" type="text" ng-model="table_name" placeholder="Table name" /></div>
                             <div class="row">
-                                <select ng-required="true" class="Database form-control margin-top-5">
+                                <select ng-required="true" ng-model="database_id" class="form-control margin-top-5">
                                     <option value="">Data Base</option>
                                     <option ng-repeat="DB in dataBases" value="{{DB.ID}}">{{DB.name}}</option>
                                 </select>
@@ -177,7 +178,7 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">
-                                        <select ng-required="true" class="table_type form-control">
+                                        <select ng-required="true" class="table_alias form-control">
                                             <option value="">Connection</option>
                                             <option ng-repeat="DBC in DBConnections" value="{{DBC._v[0]}}">{{DBC._v[0]}}</option>
                                         </select>
