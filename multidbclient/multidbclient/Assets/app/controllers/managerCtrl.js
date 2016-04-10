@@ -38,7 +38,7 @@
             }
 
             $scope.createDatabase = function () {
-                var params = { nombre: $scope.DBname };
+                var params = { name: $scope.DB_name };
                 web_services.push("createDatabase", params, $scope);
                 web_services.get('getDatabases').then(function (response) { //Async call to DBConnections factory
                     $scope.databases = response; //Assign data received to $scope.data
@@ -61,7 +61,7 @@
                     })
                 })
                 console.log(params);
-                web_services.push("getTables", params, $scope); 
+                web_services.push("createTable", params, $scope); 
                 web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
                     $scope.tables = response; //Assign data received to $scope.data
                 });

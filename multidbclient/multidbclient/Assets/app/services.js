@@ -23,16 +23,27 @@
                 headers: { 'Content-Type': 'application/json' },
                 data: params
             })
-            .success(function (data, status, headers, config) {
-                $scope.successMessage = "Rute: " + rute + " Status: " + status;
+            .success(function (response, status, headers, config) {
+                console.log(rute);
+                console.log(response);
+
+                var data = jQuery.parseJSON(response.data);
+
+                $scope.successMessage = "Rute: " + rute + " Status: " + data.message;
                 $scope.showSuccessMessage = true;
-                console.log(data);
+                console.log(response);
                 return data;
             })
-            .error(function (data, status, headers, config) {
-                $scope.warningMessage = data.error_description.replace(/["']{1}/gi, "");
+            .error(function (response, status, headers, config) {
+                console.log(rute);
+                console.log(response);
+
+                var data = jQuery.parseJSON(response.data);
+
+                $scope.warningMessage = "Rute: " + rute + " Status: " + data.message + "<br />" + response.error_description.replace(/["']{1}/gi, "");
                 $scope.showWarningMessage = true;
-                console.log(JSON.stringify(data));
+                console.log(response);
+                return response
             })
             .finally(function () {
                 $('.btn').button('reset');
@@ -49,16 +60,27 @@
                 headers: { 'Content-Type': 'application/json' },
                 data: params
             })
-            .success(function (data, status, headers, config) {
-                console.log(data);
-                $scope.successMessage = "Rute: " + rute + " Status: " + status;
+            .success(function (response, status, headers, config) {
+                console.log(rute);
+                console.log(response);
+
+                var data = jQuery.parseJSON(response.data);
+
+                $scope.successMessage = "Rute: " + rute + " Status: " + data.message;
                 $scope.showSuccessMessage = true;
-                return data.data;
+                console.log(response);
+                return response;
             })
-            .error(function (data, status, headers, config) {
-                $scope.warningMessage = "Rute: " + rute + " Error: "+ data.error_description.replace(/["']{1}/gi, "");
+            .error(function (response, status, headers, config) {
+                console.log(rute);
+                console.log(response);
+
+                var data = jQuery.parseJSON(response.data);
+
+                $scope.warningMessage = "Rute: " + rute + " Status: " + data.message + "<br />" + response.error_description.replace(/["']{1}/gi, "");
                 $scope.showWarningMessage = true;
-                console.log(data);
+                console.log(response);
+                return data
             })
             .finally (function () {
                 $('.btn').button('reset');

@@ -16,12 +16,11 @@ namespace nsMultiDBService
     // NOTE: In order to launch WCF Test Client for testing this service, please select multiDBService.svc or multiDBService.svc.cs at the Solution Explorer and start debugging.
     public class multiDBService : IMultiDBService
     {
-        //[Serializable]
         [WebInvoke(Method = "POST", 
                     ResponseFormat = WebMessageFormat.Json, 
                     RequestFormat = WebMessageFormat.Json,
                     UriTemplate = "addDatabase")]
-        public string JSONparametrosAddDatabase(parametrosAddDatabase addDatabase)
+        public string addDatabase(parametrosAddDatabase addDatabase)
         {
             try {
                 MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
@@ -34,20 +33,51 @@ namespace nsMultiDBService
                                                    + addDatabase.alias + "');");
 
                 /*ArrayList filas = new ArrayList();
-
                 string prueba = "";
-
                 filas = db.Select2("db_connection");
-
                 for (int i = 0; i < filas.Count; i++) prueba += filas[i];
-
-
                 return prueba;*/
-                return "Conexion exitosa";
+                return "{\"message\": \"Conexion creada exitosamente\"}";
             }
             catch (Exception ex)
             {
-                return ex.ToString();
+                return "{\"message\": \"" + ex.ToString() + "\"}";
+            }
+        }
+
+        [WebInvoke(Method = "POST",
+                    ResponseFormat = WebMessageFormat.Json,
+                    RequestFormat = WebMessageFormat.Json,
+                    UriTemplate = "createDatabase")]
+        public string createDatabase(parametrosCreateDatabase createDatabase) {
+            try
+            {
+                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+                db.NonQuery("CALL add_data_base('" + createDatabase.name + "');");
+                return "{\"message\": \"Base de datos creada exitosamente\"}";
+            }
+            catch (Exception ex)
+            {
+                return "{\"message\": \""+ ex.ToString() + "\"}";
+            }
+        }
+
+        [WebInvoke(Method = "POST",
+                    ResponseFormat = WebMessageFormat.Json,
+                    RequestFormat = WebMessageFormat.Json,
+                    UriTemplate = "createTable")]
+        public string createTable(parametrosCreateTable createTable)
+        {
+            try
+            {
+                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+                db.NonQuery("CALL add_table('" + createTable.table_name + "',"+
+                                                "'" + createTable.database_id + "');");
+                return "{\"message\": \"Base de datos creada exitosamente\"}";
+            }
+            catch (Exception ex)
+            {
+                return "{\"message\": \"" + ex.ToString() + "\"}";
             }
         }
 
@@ -78,7 +108,7 @@ namespace nsMultiDBService
         public string getTables()
         {
             MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
-            return db.Select2("tables");
+            return db.ReaderQuery("get_tables(NULL)");
         }
 
         public string connection_mongo()
@@ -94,7 +124,7 @@ namespace nsMultiDBService
             return state;
         }
     }
-    
+
     public class parametrosAddDatabase
     {
         public string database_type { get; set; }
@@ -107,6 +137,16 @@ namespace nsMultiDBService
         public string estadoConexion_maria { get; set; }
         public string estadoConexion_mongo { get; set; }
         public string estadoConexion_sqlserver { get; set; }
+    }
+    public class parametrosCreateDatabase
+    {
+        public string name { get; set; }
+    }
+
+    public class parametrosCreateTable {
+        public string table_name { get; set; }
+        public string database_id { get; set; }
+        public string columns { get; set; }
     }
 
 }

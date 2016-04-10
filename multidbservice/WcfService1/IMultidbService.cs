@@ -11,9 +11,13 @@ namespace nsMultiDBService
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IMultiDBService" in both code and config file together.
     [ServiceContract]
     public interface IMultiDBService
-    {       
+    {
         [OperationContract]
-        string JSONparametrosAddDatabase(parametrosAddDatabase addDatabase);
+        string addDatabase(parametrosAddDatabase addDatabase);
+        [OperationContract]
+        string createDatabase(parametrosCreateDatabase createDatabase);
+        [OperationContract]
+        string createTable(parametrosCreateTable createTable);
         
         [OperationContract]
         string getDBConnections();

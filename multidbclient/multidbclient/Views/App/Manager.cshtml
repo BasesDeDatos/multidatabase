@@ -41,20 +41,16 @@
             <br />
 
             <i ng-show="!databases" class="fa fa-circle-o-notch fa-spin fa-4x" style="width: 100%; text-align: center"></i>
-            <div ng-show="databases" class="col-md-4" ng-repeat="DB in databases">
+            <div ng-show="databases" class="col-md-3" ng-repeat="DB in databases">
                 <div class="panel panel-default">
 
                     <div class="panel-heading">{{DB.name}}</div>
 
                     <div class="panel-footer">
-                        <form ng-submit="DBConection()">
-                            <div class="btn-group text-center" role="group" aria-label="...">
-
-                                <input type="hidden" ng-model="DBClicked" value="{{DB.ID}}" />
-                                <button type="submit" ng-model="DBCOption" class="btn btn-primary" value="view-tables">Ver Tablas</button>
-
-                                <button type="submit" ng-model="DBCOption" class="btn btn-danger" value="drop">Drop Table</button>
-
+                        <form ng-submit="viewTables()">
+                            <div class="row text-center">
+                                <input type="hidden" ng-model="DB_ID" value="{{DB.ID}}" />
+                                <button type="submit" class="btn btn-primary">Ver Tablas</button>
                             </div>
                         </form>
                     </div>
@@ -84,7 +80,12 @@
                         <div class="well-sm">
 
                             <div class="row">
-                                <input ng-required="true" class="form-control" type="text" ng-model="database_type" placeholder="database_type" />
+                                <select ng-required="true" ng-model="database_type" class="form-control margin-top-5">
+                                    <option value="">database_type</option>
+                                    <option value="mariaDB">mariaDB</option>
+                                    <option value="mongoDB">mongoDB</option>
+                                    <option value="SQLServer">SQLServer</option>
+                                </select>
                             </div>
                             <div class="row">
                                 <input ng-required="true" class="form-control margin-top-5" type="text" ng-model="user" placeholder="user" />
@@ -130,8 +131,8 @@
                 <form ng-submit="createDatabase()">
                     <div class="panel-body">
                         <div class="well-sm">
-                            <div class="row"><input ng-required="true" class="form-control" type="text" ng-model="DBname" placeholder="Name" /></div>
-                        </div>
+                            <div class="row"><input ng-required="true" class="form-control" type="text" ng-model="DB_name" placeholder="Name" /></div>
+                        </div>table
                     </div>
                     <div class="panel-footer">
                         <div class="row text-center">
@@ -151,7 +152,7 @@ id                                    data-loading-text="
             <div class="panel panel-default">
 
                 <div class="panel-heading">Create Table</div>
-                <form ng-submit="addTable()">
+                <form ng-submit="createTable()">
                     <div class="panel-body">
                         <div class="well-sm">
 
@@ -232,7 +233,7 @@ id                                    data-loading-text="
                             <div class="row">
                                 <select class="Database form-control margin-top-5">
                                     <option value="">Table</option>
-                                    <option ng-repeat="table in tables" value="{{table.ID}}">{{table.name}}</option>
+                                    <option ng-repeat="table in tables" value="{{table.ID_table}}">{{table.database_name}}.{{table.table_name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -243,7 +244,7 @@ id                                    data-loading-text="
                                     class="btn btn-danger"
                                     data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>"
                                 >
-                                ADD
+                                DROP
                             </button>
                          </div>
                     </div>
