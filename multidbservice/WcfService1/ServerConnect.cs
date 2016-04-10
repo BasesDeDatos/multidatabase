@@ -98,7 +98,7 @@ namespace nsMultiDBService
                 while (dataReader.Read())
                 {
                     //list[0].Add(dataReader["id"] + "");
-                    string[] values = new string[dataReader.FieldCount];
+                    object[] values = new object[dataReader.FieldCount];
                     dataReader.GetValues(values);
                     list.Add(values);
                 }
@@ -137,7 +137,7 @@ namespace nsMultiDBService
                 while (dataReader.Read())
                 {
                     //list[0].Add(dataReader["id"] + "");
-                    string[] values = new string[dataReader.FieldCount];
+                    object[] values = new object[dataReader.FieldCount];
                     dataReader.GetValues(values);
                     list.Add(values);
                 }

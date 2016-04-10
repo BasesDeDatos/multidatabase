@@ -32,7 +32,17 @@ namespace nsMultiDBService
                                                    + addDatabase.protocol + "','"
                                                    + addDatabase.port + "','"
                                                    + addDatabase.alias + "');");
-                return "Conexion registrada con exito";
+
+                ArrayList filas = new ArrayList();
+
+                string prueba = "";
+
+                filas = db.Select2("db_connection");
+
+                for (int i = 0; i < filas.Count; i++) prueba += filas[i];
+
+
+                return prueba;
             }
             catch (Exception ex)
             {
