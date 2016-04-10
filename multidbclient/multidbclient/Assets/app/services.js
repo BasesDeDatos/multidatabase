@@ -4,12 +4,13 @@
     console.log($http)
     return {
         get: function (rute) {
-            return $http.get('http://localhost:8080/service/multiDBService.svc/' + rute).then(function (response) { //wrap it inside another promise using then
-                console.log(rute);
-                console.log(response.data);
-                console.log(jQuery.parseJSON(response.data));
-                return jQuery.parseJSON(response.data);  //Se parsea a JSON
-            });
+            return $http.get('http://localhost:8080/service/multiDBService.svc/' + rute)
+                .then(function (response) { //wrap it inside another promise using then
+                    console.log(rute);
+                    console.log(response.data);
+                    console.log(jQuery.parseJSON(response.data));
+                    return jQuery.parseJSON(response.data);  //Se parsea a JSON
+                });
         },
         delete: function (rute, params, $scope) {
             $scope.successMessage = false;

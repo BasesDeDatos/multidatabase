@@ -11,25 +11,25 @@
             <div ng-show="DBConnections" class="col-md-4" ng-repeat="DBC in DBConnections">
                 <div class="panel panel-default">
 
-                    <div class="panel-heading">{{DBC._v[0]}}</div>
+                    <div class="panel-heading">{{DBC.alias}}</div>
 
                     <div class="panel-body">
-                        <span><strong>Database Type: </strong>{{DBC._v[1]}}</span>
+                        <span><strong>Database Type: </strong>{{DBC.database_type}}</span>
                         <br />
-                        <span><strong>User: </strong>{{DBC._v[2]}}</span>
+                        <span><strong>User: </strong>{{DBC.user}}</span>
+                        <br />
+                        <span><strong>Server: </strong>{{DBC.server}}</span>
                     </div>
 
                     <div class="panel-footer">
-                        <form ng-submit="DBConection()">
-                            <div class="btn-group text-center" role="group" aria-label="...">
+                        <div class="btn-group text-center" role="group" aria-label="...">
 
-                                <input type="hidden" ng-model="DBClicked" value="{{DBC._v[0]}}" />
-                                <button type="submit" ng-model="DBCOption" class="btn btn-primary" value="view-tables">Ver Tablas</button>
+                            <input type="hidden" ng-model="DBClicked" value="{{DBC.ID}}" />
+                            <button type="submit" ng-model="DBCOption" class="btn btn-primary" value="view-tables">Ver Tablas</button>
 
-                                <button type="submit" ng-model="DBCOption" class="btn btn-danger" value="drop">Eliminar Conexión</button>
+                            <button type="submit" ng-model="DBCOption" class="btn btn-danger" value="drop">Eliminar Conexión</button>
 
-                            </div>
-                        </form>
+                        </div>
                     </div>
 
                 </div>
@@ -40,8 +40,8 @@
             <h2 class="text-center">Data Bases</h2>
             <br />
 
-            <i ng-show="!dataBases" class="fa fa-circle-o-notch fa-spin fa-4x" style="width: 100%; text-align: center"></i>
-            <div ng-show="dataBases" class="col-md-4" ng-repeat="DB in dataBases">
+            <i ng-show="!databases" class="fa fa-circle-o-notch fa-spin fa-4x" style="width: 100%; text-align: center"></i>
+            <div ng-show="databases" class="col-md-4" ng-repeat="DB in databases">
                 <div class="panel panel-default">
 
                     <div class="panel-heading">{{DB.name}}</div>
@@ -111,7 +111,6 @@
                         <div class="row text-center">
                             <button type="submit"
                                     class="btn btn-primary"
-                                    id="load"
                                     data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>"
                                 >
                                 ADD
@@ -138,8 +137,7 @@
                         <div class="row text-center">
                             <button type="submit"
                                     class="btn btn-primary"
-                                    id="load"
-                                    data-loading-text="
+id                                    data-loading-text="
                                 <i class='fa fa-circle-o-notch fa-spin'></i>"
                                 >
                                 ADD
@@ -161,7 +159,7 @@
                             <div class="row">
                                 <select ng-required="true" ng-model="database_id" class="form-control margin-top-5">
                                     <option value="">Data Base</option>
-                                    <option ng-repeat="DB in dataBases" value="{{DB.ID}}">{{DB.name}}</option>
+                                    <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -180,7 +178,7 @@
                                     <th scope="row">
                                         <select ng-required="true" class="table_alias form-control">
                                             <option value="">Connection</option>
-                                            <option ng-repeat="DBC in DBConnections" value="{{DBC._v[0]}}">{{DBC._v[0]}}</option>
+                                            <option ng-repeat="DBC in DBConnections" value="{{DBC.ID}}">{{DBC.alias}}</option>
                                         </select>
                                     </th>
                                     <td><input ng-required="true" type="text" class="table_name form-control" /></td>
@@ -197,21 +195,25 @@
                             </tbody>
                         </table>
 
-                        <button class="btn btn-primary btn-block btn-sm margin-top-5" ng-click="addNewRow()">
+                        <button class="btn btn-primary btn-block btn-sm margin-top-5" ng-click="addNewRow()" data-loading-text="
+                            <i class='fa fa-circle-o-notch fa-spin'></i>"
+                            >
                             <span class="glyphicon glyphicon-plus" aria-hidden="true">
                             </span> Column
                         </button>
 
                     </div>
                     <div class="panel-footer">
-                        <button type="submit"
-                                class="btn btn-primary"
-                                id="load"
-                                data-loading-text="
-                            <i class='fa fa-circle-o-notch fa-spin'></i>"
-                            >
-                            ADD
-                        </button>
+                        
+                        <div class="row text-center">
+                            <button type="submit"
+                                    class="btn btn-primary"
+                                    data-loading-text="
+                                <i class='fa fa-circle-o-notch fa-spin'></i>"
+                                >
+                                ADD
+                            </button>
+                        </div>
                     </div>
                 </form>
 
@@ -239,9 +241,7 @@
                         <div class="row text-center">
                             <button type="submit"
                                     class="btn btn-danger"
-                                    id="load"
-                                    data-loading-text="
-                                <i class='fa fa-circle-o-notch fa-spin'></i>"
+                                    data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>"
                                 >
                                 ADD
                             </button>

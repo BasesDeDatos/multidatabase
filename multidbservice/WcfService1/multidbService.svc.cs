@@ -58,10 +58,7 @@ namespace nsMultiDBService
         public string getDBConnections()
         {
             MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
-            ArrayList result = new ArrayList();
-            result = db.Select("db_connection");
-            string resultados = result.ToJson();
-            return resultados;
+            return db.Select2("db_connection");
         }
 
         [WebInvoke(Method = "GET",
@@ -71,11 +68,17 @@ namespace nsMultiDBService
         public string getDatabases()
         {
             MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
-            //ArrayList result = new ArrayList();
-            string result;
-            result = db.Select2("data_bases");
-            string resultados = result.ToJson();
-            return resultados;
+            return db.Select2("data_bases");
+        }
+
+        [WebInvoke(Method = "GET",
+                  ResponseFormat = WebMessageFormat.Json,
+                  RequestFormat = WebMessageFormat.Json,
+                  UriTemplate = "getTables")]
+        public string getTables()
+        {
+            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+            return db.Select2("tables");
         }
 
         public string connection_mongo()

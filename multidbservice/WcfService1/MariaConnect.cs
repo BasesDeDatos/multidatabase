@@ -159,7 +159,7 @@ namespace nsMultiDBService
         {
             string query = "SELECT * FROM " + tableName + ";";
             //ArrayList result = new ArrayList();
-            string result = "NUL";
+            string result = "NULL";
 
             //Open connection
             if (this.OpenConnection() == true)
@@ -222,15 +222,15 @@ namespace nsMultiDBService
         public string returnJSON(MySqlDataReader reader)
         {
 
-            string result = "[{";
+            string result = "{";
             int columnCount = reader.FieldCount;
             int counter = 0;
             while (reader.Read())
             {
-                result += counter + ": {";
+                result += "\"" + counter + "\": {";
                 for (int x = 0; x < columnCount; x++)
                 {
-                    result += reader.GetName(x) + ":\"";
+                    result += "\"" + reader.GetName(x) + "\":";
                     string stringValue = "";
                     if (!reader.IsDBNull(x))
                     {
@@ -240,13 +240,13 @@ namespace nsMultiDBService
                     {
                         stringValue = "NULL";
                     }
-                    result += stringValue + "\"";
+                    result += "\""+ stringValue + "\"";
                     if (x < columnCount - 1) result += ",";
                 }
                 result += "},";
                 counter++;
             }
-            result = result.TrimEnd(result[result.Length - 1]) + "}]";
+            result = result.TrimEnd(result[result.Length - 1]) + "}";
             return result;
         }
     }
