@@ -8,7 +8,7 @@
                 return jQuery.parseJSON(response.data);  //Se parsea a JSON
             });
         },
-        delete: function (rute, params) {
+        delete: function (rute, params, $scope) {
             $scope.successMessage = false;
             $scope.warningMessage = false;
     

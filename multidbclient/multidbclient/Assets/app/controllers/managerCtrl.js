@@ -6,11 +6,19 @@
         function ($scope, $http, web_services) {
 
             $scope.DBConnections = false; //se inicia en false para que muestre el loader en la página
-            $scope.dataBases = false;
-            //$scope.tables = tables.all();
+            $scope.databases = false;
+            $scope.tables = false;
 
             web_services.get('getDBConnections').then(function (response) { //Async call to DBConnections factory
                 $scope.DBConnections = response; //Assign data received to $scope.data
+            });
+
+            web_services.get('getDatabases').then(function (response) { //Async call to DBConnections factory
+                $scope.databases = response; //Assign data received to $scope.data
+            });
+
+            web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
+                $scope.tables = response; //Assign data received to $scope.data
             });
 
             $scope.addDatabase = function () {
@@ -24,16 +32,20 @@
                     alias: $scope.alias
                 };
                 web_services.push("addDatabase", params, $scope);
-                refresh($scope.DBConnections, 'getDBConnections');
+                web_services.get('getDBConnections').then(function (response) { //Async call to DBConnections factory
+                    $scope.DBConnections = response; //Assign data received to $scope.data
+                });
             }
 
             $scope.createDatabase = function () {
                 var params = { nombre: $scope.DBname };
                 web_services.push("createDatabase", params, $scope);
-                refresh($scope.dataBases, 'getDatabases');
+                web_services.get('getDatabases').then(function (response) { //Async call to DBConnections factory
+                    $scope.databases = response; //Assign data received to $scope.data
+                });
             }
             
-            $scope.addTable = function () {
+            $scope.createTable = function () {
                 var params = {
                     table_name: $scope.table_name,
                     database_id: $scope.database_id,
@@ -49,8 +61,14 @@
                     })
                 })
                 console.log(params);
-                //web_services.push("ruta", params, $scope); 
-                //refreshTables();
+                web_services.push("getTables", params, $scope); 
+                web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
+                    $scope.tables = response; //Assign data received to $scope.data
+                });
+            }
+
+            $scope.dropTable = function () {
+                web_services.delete('dropTables', {}, $scope);
             }
 
             $scope.addNewRow = function () {
