@@ -255,3 +255,98 @@ id                                    data-loading-text="
         <div class="clearfix"></div>
     </div>
 </section>
+<section> <!-- QUERIES -->
+    <div class="row"></div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Queries</div>
+        <div class="panel-body">
+            <div id="querydiv">
+                <form>
+                    <!--query  -->
+                    <select>
+                        <option value="select"> select </option>
+                        <option value="delete"> delete </option>
+                        <option value="update"> update </option>
+                        <option> drop </option>
+                    </select>
+                    <!-- COLUMNA -->
+                    <select>
+                        <option value="">column</option>
+                        <option value="columna 1">columna 1</option>
+                        <option value="columna 2">columna 2</option>
+                        <option value="*"> * </option>
+                    </select>
+                    from
+                    <!-- TABLA -->
+                    <select>
+                        <option> table </option>
+                        <option> tabla 1</option>
+                        <option> tabla 2 </option>
+                    </select>
+                    <br>
+                    <br>
+                    <!--JOIN DIV -->
+                    <div id="join_div">
+
+                    </div>
+                    <br>
+                    <!-- WHERE -->
+                    <div id="where_div">
+                        where
+                        <select disabled>
+                            <option value="">column</option>
+                            <option value="columna 1">columna 1</option>
+                            <option value="columna 2">columna 2</option>
+                        </select>
+                        =
+                        <input type="text" disabled>
+                    </div>
+                    <br>
+                    <br>
+                </form>
+            </div>
+            <input type="checkbox" id="where_check" value="value" />
+            <label for="chk">Where? </label>
+            <br />
+            <script>
+        $(document).ready(function ($) {
+            $('#where_check').change(function ($) {
+                if ($('#where_check').is(':checked')) {
+                    enableElements($('#where_div').children());
+                } else {
+                    disableElements($('#where_div').children());
+                }
+            });
+        });
+
+    function disableElements(el) {
+        for (var i = 0; i < el.length; i++) {
+            el[i].disabled = true;
+            disableElements(el[i].children);
+        }
+    }
+
+    function enableElements(el) {
+        for (var i = 0; i < el.length; i++) {
+            el[i].disabled = false;
+
+            enableElements(el[i].children);
+        }
+    }
+            </script>
+            <div class="panel-footer">
+                <div class="row text-center">
+                    <button type="submit"
+                            class="btn btn-danger"
+                            id="load"
+                            data-loading-text="
+                                <i class='fa fa-circle-o-notch fa-spin'></i>"
+                                >
+                               SUBMIT
+                            </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
