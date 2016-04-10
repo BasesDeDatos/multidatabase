@@ -155,10 +155,11 @@ namespace nsMultiDBService
             }
         }
 
-        public ArrayList Select2(string tableName)
+        public string Select2(string tableName)
         {
             string query = "SELECT * FROM " + tableName + ";";
-            ArrayList result = new ArrayList();
+            //ArrayList result = new ArrayList();
+            string result = "NUL";
 
             //Open connection
             if (this.OpenConnection() == true)
@@ -186,7 +187,7 @@ namespace nsMultiDBService
             }
         }
 
-        private ArrayList returnJSON(MySqlDataReader reader)
+        /*private ArrayList returnJSON(MySqlDataReader reader)
         {
 
             ArrayList list = new ArrayList();
@@ -201,7 +202,7 @@ namespace nsMultiDBService
                     string stringValue = "";
                     if (!reader.IsDBNull(x))
                     {
-                        stringValue = (string)reader.GetValue(x);
+                        stringValue = "'" + reader.GetValue(x).ToString() + "'";
                     }
                     else
                     {
@@ -216,6 +217,37 @@ namespace nsMultiDBService
             }
 
             return list;
+        }*/
+
+        public string returnJSON(MySqlDataReader reader)
+        {
+
+            string result = "[{";
+            int columnCount = reader.FieldCount;
+            int counter = 0;
+            while (reader.Read())
+            {
+                result += counter + ": {";
+                for (int x = 0; x < columnCount; x++)
+                {
+                    result += reader.GetName(x) + ":\"";
+                    string stringValue = "";
+                    if (!reader.IsDBNull(x))
+                    {
+                        stringValue = reader.GetValue(x).ToString();
+                    }
+                    else
+                    {
+                        stringValue = "NULL";
+                    }
+                    result += stringValue + "\"";
+                    if (x < columnCount - 1) result += ",";
+                }
+                result += "},";
+                counter++;
+            }
+            result = result.TrimEnd(result[result.Length - 1]) + "}]";
+            return result;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace nsMultiDBService
                                                    + addDatabase.port + "','"
                                                    + addDatabase.alias + "');");
 
-                ArrayList filas = new ArrayList();
+                /*ArrayList filas = new ArrayList();
 
                 string prueba = "";
 
@@ -42,7 +42,8 @@ namespace nsMultiDBService
                 for (int i = 0; i < filas.Count; i++) prueba += filas[i];
 
 
-                return prueba;
+                return prueba;*/
+                return "Conexion exitosa";
             }
             catch (Exception ex)
             {
@@ -59,6 +60,20 @@ namespace nsMultiDBService
             MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
             ArrayList result = new ArrayList();
             result = db.Select("db_connection");
+            string resultados = result.ToJson();
+            return resultados;
+        }
+
+        [WebInvoke(Method = "GET",
+                   ResponseFormat = WebMessageFormat.Json,
+                   RequestFormat = WebMessageFormat.Json,
+                   UriTemplate = "getDatabases")]
+        public string getDatabases()
+        {
+            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+            //ArrayList result = new ArrayList();
+            string result;
+            result = db.Select2("data_bases");
             string resultados = result.ToJson();
             return resultados;
         }

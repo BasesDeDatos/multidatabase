@@ -105,6 +105,5 @@ C:\Users\JEFFREY\Desktop\multidatabase\multidbclient\multidbclient\bin\System.We
 C:\Users\JEFFREY\Desktop\multidatabase\multidbclient\multidbclient\bin\System.Web.WebPages.Deployment.xml
 C:\Users\JEFFREY\Desktop\multidatabase\multidbclient\multidbclient\bin\System.Web.WebPages.Razor.xml
 C:\Users\JEFFREY\Desktop\multidatabase\multidbclient\multidbclient\bin\System.Web.Optimization.xml
-C:\Users\JEFFREY\Desktop\multidatabase\multidbclient\multidbclient\obj\Debug\MultiDBClient.csprojResolveAssemblyReference.cache
 C:\Users\JEFFREY\Desktop\multidatabase\multidbclient\multidbclient\obj\Debug\multidbclient.dll
 C:\Users\JEFFREY\Desktop\multidatabase\multidbclient\multidbclient\obj\Debug\multidbclient.pdb
