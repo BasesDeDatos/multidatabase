@@ -17,9 +17,9 @@
                 $scope.databases = response; //Assign data received to $scope.data
             });
 
-            web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
+            /*web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
                 $scope.tables = response; //Assign data received to $scope.data
-            });
+            });*/
 
             $scope.addDatabase = function () {
                 var params = {
@@ -84,6 +84,12 @@
                 new_row = $("tbody tr").first().html();
                 $("tbody").append("<tr>"+new_row+"</tr>");
                 $("tbody tr").last().find("input, select").val("");
+            }
+
+            $scope.get_tables = function (ID_database) {
+                web_services.get('getTables', { ID: ID_database }).then(function (response) { //Async call to DBConnections factory
+                    return response; //Assign data received to $scope.data
+                });
             }
         }
     ])

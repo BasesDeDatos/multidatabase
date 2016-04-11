@@ -231,7 +231,7 @@ id                                    data-loading-text="
                     <div class="panel-body">
                         <div class="well-sm">
                             <div class="row">
-                                <select class="Database form-control margin-top-5">
+                                <select class="form-control margin-top-5">
                                     <option value="">Table</option>
                                     <option ng-repeat="table in tables" value="{{table.ID_table}}">{{table.database_name}}.{{table.table_name}}</option>
                                 </select>
@@ -265,29 +265,34 @@ id                                    data-loading-text="
                 <form>
                     <div class="row">
                         <!--query  -->
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <select class="form-control">
-                                <option value="select"> select </option>
-                                <option value="delete"> delete </option>
-                                <option value="update"> update </option>
-                                <option value="drop"> drop </option>
+                                <option value="select">select</option>
+                                <option value="delete">delete</option>
+                                <option value="update">update</option>
+                                <option value="drop">drop</option>
                             </select>
                         </div>
-                        <!-- COLUMNA -->
-                        <div class="col-md-4">
-                            <select class="form-control">
-                                <option value="">column</option>
-                                <option value="columna 1">columna 1</option>
-                                <option value="columna 2">columna 2</option>
-                                <option value="*"> * </option>
+                        <!-- DATABASE -->
+                        <div class="col-md-3">
+                            <select ng-model="query_DB" class="form-control">
+                                <option value="">Data Base</option>
+                                <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
                             </select>
                         </div>
                         <!-- TABLA -->
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <select class="form-control">
                                 <option> FROM </option>
-                                <option> tabla 1</option>
-                                <option> tabla 2 </option>
+                                <option ng-repeat="table in get_tables(query_DB)" value="{{table.ID}}">{{table.table_name}}</option>
+                            </select>
+                        </div>
+                        <!-- COLUMNA -->
+                        <div class="col-md-3">
+                            <select class="form-control">
+                                <option value="">column</option>
+                                <option value="*"> * </option>
+                                <option ng-repeat="column in columns" value="{{column.ID}}">{{column.column_name}}</option>
                             </select>
                         </div>
                     </div>

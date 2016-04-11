@@ -26,7 +26,7 @@ namespace nsMultiDBService
         string getDatabases();
 
         [OperationContract]
-        string getTables();
+        string getTables(parametroID ID_database);
 
         [OperationContract]
         string connection_mongo();

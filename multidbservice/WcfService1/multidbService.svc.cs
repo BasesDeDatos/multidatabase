@@ -104,11 +104,11 @@ namespace nsMultiDBService
         [WebInvoke(Method = "GET",
                   ResponseFormat = WebMessageFormat.Json,
                   RequestFormat = WebMessageFormat.Json,
-                  UriTemplate = "getTables")]
-        public string getTables()
+                  UriTemplate = "getTables?request=:ID_database")]
+        public string getTables(parametroID ID_database)
         {
             MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
-            return db.ReaderQuery("get_tables(NULL)");
+            return db.ReaderQuery("get_tables(" + ID_database.ID + ")");
         }
 
         public string connection_mongo()
@@ -147,6 +147,11 @@ namespace nsMultiDBService
         public string table_name { get; set; }
         public string database_id { get; set; }
         public string columns { get; set; }
+    }
+
+    public class parametroID
+    {
+        public string ID { get; set; }
     }
 
 }
