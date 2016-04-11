@@ -4,3 +4,7 @@
 
 /multidbclient/multidbclient/obj/*
 /multidbservice/WcfService1/obj/Debug/MultiDBService.csprojResolveAssemblyReference.cache
+
+#Binarios
+*.dll
+*.pdb
