@@ -17,9 +17,9 @@
                 $scope.databases = response; //Assign data received to $scope.data
             });
 
-            /*web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
+            web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
                 $scope.tables = response; //Assign data received to $scope.data
-            });*/
+            });
 
             $scope.addDatabase = function () {
                 var params = {

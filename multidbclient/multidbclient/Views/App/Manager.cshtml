@@ -141,7 +141,7 @@
 id                                    data-loading-text="
                                 <i class='fa fa-circle-o-notch fa-spin'></i>"
                                 >
-                                ADD
+                                CREATE
                             </button>
                         </div>
                     </div>
@@ -212,7 +212,7 @@ id                                    data-loading-text="
                                     data-loading-text="
                                 <i class='fa fa-circle-o-notch fa-spin'></i>"
                                 >
-                                ADD
+                                CREATE
                             </button>
                         </div>
                     </div>
@@ -284,7 +284,7 @@ id                                    data-loading-text="
                         <div class="col-md-3">
                             <select class="form-control">
                                 <option> FROM </option>
-                                <option ng-repeat="table in get_tables(query_DB)" value="{{table.ID}}">{{table.table_name}}</option>
+                                <option ng-repeat="table in tables" value="{{table.ID}}">{{table.table_name}}</option>
                             </select>
                         </div>
                         <!-- COLUMNA -->
