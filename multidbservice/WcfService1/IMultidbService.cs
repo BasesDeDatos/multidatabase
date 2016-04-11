@@ -27,6 +27,8 @@ namespace nsMultiDBService
 
         [OperationContract]
         string getTables();
+        [OperationContract]
+        string getColumns();
 
         [OperationContract]
         string connection_mongo();

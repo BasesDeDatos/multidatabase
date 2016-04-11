@@ -266,34 +266,62 @@ id                                    data-loading-text="
                     <div class="row">
                         <!--query  -->
                         <div class="col-md-3">
-                            <select class="form-control">
-                                <option value="select">select</option>
-                                <option value="delete">delete</option>
-                                <option value="update">update</option>
-                                <option value="drop">drop</option>
-                            </select>
+                            <div class="input-group">
+                                <span class="input-group-addon">Query</span>
+                                <select class="form-control">
+                                    <option value="select">select</option>
+                                    <option value="delete">delete</option>
+                                    <option value="update">update</option>
+                                    <option value="drop">drop</option>
+                                </select>
+                            </div>
                         </div>
                         <!-- DATABASE -->
                         <div class="col-md-3">
-                            <select ng-model="query_DB" class="form-control">
-                                <option value="">Data Base</option>
-                                <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
-                            </select>
+                            <div class="input-group">
+                                <span class="input-group-addon">Source</span>
+                                <select ng-model="query_DB" class="query_DB form-control">
+                                    <option value="">Data Base</option>
+                                    <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
+                                </select>
+                            </div>
                         </div>
                         <!-- TABLA -->
                         <div class="col-md-3">
-                            <select class="form-control">
-                                <option> FROM </option>
-                                <option ng-repeat="table in tables" value="{{table.ID}}">{{table.table_name}}</option>
-                            </select>
+                            <div class="input-group">
+                                <span class="input-group-addon">From</span>
+                                <select ng-model="query_table" class="query_table form-control">
+                                    <option value="">Table</option>
+                                    <option ng-repeat="table in tables" value="{{table.ID_table}}" class="{{table.ID_database}}">{{table.table_name}}</option>
+                                </select>
+                                <span class="input-group-addon btn btn-primary"
+                                      id="basic-addon1"
+                                      ng-click="addNewRow()"
+                                      data-loading-text="
+                                    <i class='fa fa-circle-o-notch fa-spin'></i>"
+                                    >
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> join
+                                </span>
+                            </div>
                         </div>
                         <!-- COLUMNA -->
                         <div class="col-md-3">
-                            <select class="form-control">
-                                <option value="">column</option>
-                                <option value="*"> * </option>
-                                <option ng-repeat="column in columns" value="{{column.ID}}">{{column.column_name}}</option>
-                            </select>
+                            <div class="input-group">
+                                <span class="input-group-addon">Column</span>
+                                <select ng-model="query_columns" class="query_columns form-control">
+                                    <option value="">column</option>
+                                    <option value="*"> * </option>
+                                    <option ng-repeat="column in columns" value="{{column.ID}}" class="{{column.ID_tabla}}">({{column.columnType}}) {{column.columnName}}</option>
+                                </select>
+                                <span class="input-group-addon btn btn-primary"
+                                      id="basic-addon1"
+                                      ng-click="addNewRow()"
+                                      data-loading-text="
+                                    <i class='fa fa-circle-o-notch fa-spin'></i>"
+                                    >
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <br>
@@ -305,14 +333,23 @@ id                                    data-loading-text="
                     <br>
                     <!-- WHERE -->
                     <div id="where_div">
-                        where
-                        <select disabled>
-                            <option value="">column</option>
-                            <option value="columna 1">columna 1</option>
-                            <option value="columna 2">columna 2</option>
-                        </select>
-                        =
-                        <input type="text" disabled>
+                        <div class="input-group">
+                            <span class="input-group-addon">Where</span>
+                                <select disabled ng-model="query_columns" class="query_where_columns form-control">
+                                    <option value="">column</option>
+                                    <option ng-repeat="column in columns" value="{{column.ID}}" class="{{column.ID_tabla}}">({{column.columnType}}) {{column.columnName}}</option>
+                                </select>
+                                <span class="input-group-addon">=</span>
+                                <input type="text" class="form-control" disabled>
+                            <span class="input-group-addon btn btn-primary"
+                                  id="basic-addon1"
+                                  ng-click="addNewRow()"
+                                  data-loading-text="
+                                <i class='fa fa-circle-o-notch fa-spin'></i>"
+                                >
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            </span>
+                        </div>
                     </div>
                     <br>
                     <br>
@@ -321,32 +358,6 @@ id                                    data-loading-text="
             <input type="checkbox" id="where_check" value="value" />
             <label for="chk">Where? </label>
             <br />
-            <script>
-        $(document).ready(function ($) {
-            $('#where_check').change(function ($) {
-                if ($('#where_check').is(':checked')) {
-                    enableElements($('#where_div').children());
-                } else {
-                    disableElements($('#where_div').children());
-                }
-            });
-        });
-
-    function disableElements(el) {
-        for (var i = 0; i < el.length; i++) {
-            el[i].disabled = true;
-            disableElements(el[i].children);
-        }
-    }
-
-    function enableElements(el) {
-        for (var i = 0; i < el.length; i++) {
-            el[i].disabled = false;
-
-            enableElements(el[i].children);
-        }
-    }
-            </script>
             <div class="panel-footer">
                 <div class="row text-center">
                     <button type="submit"

@@ -8,6 +8,7 @@
             $scope.DBConnections = false; //se inicia en false para que muestre el loader en la página
             $scope.databases = false;
             $scope.tables = false;
+            $scope.columns = false;
 
             web_services.get('getDBConnections').then(function (response) { //Async call to DBConnections factory
                 $scope.DBConnections = response; //Assign data received to $scope.data
@@ -19,6 +20,10 @@
 
             web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
                 $scope.tables = response; //Assign data received to $scope.data
+            });
+
+            web_services.get('getColumns').then(function (response) { //Async call to DBConnections factory
+                $scope.columns = response; //Assign data received to $scope.data
             });
 
             $scope.addDatabase = function () {
@@ -90,6 +95,42 @@
                 web_services.get('getTables', { ID: ID_database }).then(function (response) { //Async call to DBConnections factory
                     return response; //Assign data received to $scope.data
                 });
+            }
+
+            $(".query_DB").change(function () {
+                $(".query_table").val("");
+                $(".query_table option:not(:first)").hide();
+                $(".query_table ." + $(".query_DB").val()).show();
+			});
+
+
+            $(".query_table").change(function () {
+                $(".query_columns").val("");
+                $(".query_columns option:not(:first)").hide();
+                $(".query_columns ." + $(".query_table").val()).show();
+            });
+
+            $('#where_check').change(function () {
+                if ($('#where_check').is(':checked')) {
+                    enableElements($('#where_div').children());
+                } else {
+                    disableElements($('#where_div').children());
+                }
+            });
+
+            function disableElements(el) {
+                for (var i = 0; i < el.length; i++) {
+                    el[i].disabled = true;
+                    disableElements(el[i].children);
+                }
+            }
+
+            function enableElements(el) {
+                for (var i = 0; i < el.length; i++) {
+                    el[i].disabled = false;
+
+                    enableElements(el[i].children);
+                }
             }
         }
     ])

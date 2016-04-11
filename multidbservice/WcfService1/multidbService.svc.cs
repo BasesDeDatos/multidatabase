@@ -111,6 +111,16 @@ namespace nsMultiDBService
             return db.ReaderQuery("get_tables(NULL)");
         }
 
+        [WebInvoke(Method = "GET",
+                  ResponseFormat = WebMessageFormat.Json,
+                  RequestFormat = WebMessageFormat.Json,
+                  UriTemplate = "getColumns")]
+        public string getColumns()
+        {
+            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+            return db.ReaderQuery("get_columns(NULL)");
+        }
+
         public string connection_mongo()
         {
             IMongoClient _client;
