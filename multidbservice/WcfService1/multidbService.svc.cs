@@ -98,7 +98,7 @@ namespace nsMultiDBService
         public string getDatabases()
         {
             MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
-            return db.Select2("data_bases");
+            return db.ReaderQuery("get_databases(NULL)");
         }
 
         [WebInvoke(Method = "GET",
