@@ -66,7 +66,7 @@ namespace nsMultiDBService
         {
             var collection = databaseInstance.GetCollection<BsonDocument>(table);
             var filter = Builders<BsonDocument>.Filter.Eq(column, condition);
-            collection.UpdateOneAsync(filter, document);
+            collection.ReplaceOneAsync(filter, document);
         }
 
         public List<BsonDocument> Select(string table)
