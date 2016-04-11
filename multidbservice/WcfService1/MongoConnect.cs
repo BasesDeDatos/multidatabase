@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Threading.Tasks;
+using MongoDB.Driver.Core;
 
 namespace nsMultiDBService
 {
@@ -38,24 +40,41 @@ namespace nsMultiDBService
             databaseInstance = client.GetDatabase(database);
         }
 
-        /*
-        public ArrayList Select(string table)
+        /*var documnt = new BsonDocument
+            {
+                {"Brand","Dell"},
+                {"Price","400"},
+                {"Ram","8GB"},
+                {"HardDisk","1TB"},
+                {"Screen","16inch"}
+            };*/
+
+        public void Insert(BsonDocument document, string table)
+        {
+            var collection = databaseInstance.GetCollection<BsonDocument>(table);
+            collection.InsertOneAsync(document);
+        }
+
+        public void Delete(string table, string column, string condition)
+        {
+            var collection = databaseInstance.GetCollection<BsonDocument>(table);
+            var filter = Builders<BsonDocument>.Filter.Eq(column, condition);
+            collection.DeleteManyAsync(filter);
+        }
+
+        public void Update(string table, string column, string condition, BsonDocument document)
+        {
+            var collection = databaseInstance.GetCollection<BsonDocument>(table);
+            var filter = Builders<BsonDocument>.Filter.Eq(column, condition);
+            collection.UpdateOneAsync(filter, document);
+        }
+
+        public List<BsonDocument> Select(string table)
         {
             var collection = databaseInstance.GetCollection<BsonDocument>(table);
             var filter = new BsonDocument();
-            var count = 0;
-            ArrayList result = new ArrayList();
-            while (await cursor.MoveNextAsync())
-            {
-                var batch = cursor.Current;
-                foreach (var document in batch)
-                {
-                    result.Add(document.ToString());
-                    count++;
-                }
-            }
-            return result;
-        }*/
-
+            var result = collection.Find(filter).ToListAsync();
+            return result.Result;
+        }
     }
 }
