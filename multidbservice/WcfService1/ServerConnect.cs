@@ -157,5 +157,99 @@ namespace nsMultiDBService
             }
         }
 
+        public string Select2(string tableName)
+        {
+            string query = "SELECT * FROM " + tableName + ";";
+            //ArrayList result = new ArrayList();
+            string result = "NULL";
+
+            //Open connection
+            if (this.OpenConnection() == true)
+            {
+                //Create Command
+                SqlCommand cmd = new SqlCommand(query, connection);
+                //Create a data reader and Execute the command
+                SqlDataReader dataReader = cmd.ExecuteReader();
+
+                //Read the data and store them in the list
+                result = returnJSON(dataReader);
+
+                //close Data Reader
+                dataReader.Close();
+
+                //close Connection
+                this.CloseConnection();
+
+                //return list to be displayed
+                return result;
+            }
+            else
+            {
+                return result;
+            }
+        }
+
+        /*private ArrayList returnJSON(MySqlDataReader reader)
+        {
+
+            ArrayList list = new ArrayList();
+            int columnCount = reader.FieldCount;
+            while (reader.Read())
+            {
+                string result = "";
+                result += "{";
+                for (int x = 0; x < columnCount; x++)
+                {
+                    result += reader.GetName(x) + ":";
+                    string stringValue = "";
+                    if (!reader.IsDBNull(x))
+                    {
+                        stringValue = "'" + reader.GetValue(x).ToString() + "'";
+                    }
+                    else
+                    {
+                        stringValue = "NULL";
+                    }
+                    result += stringValue;
+                    if (x < columnCount - 1) result += ",";
+                }
+                result += "}";
+
+                list.Add(result);
+            }
+
+            return list;
+        }*/
+
+        public string returnJSON(SqlDataReader reader)
+        {
+
+            string result = "{";
+            int columnCount = reader.FieldCount;
+            int counter = 0;
+            while (reader.Read())
+            {
+                result += "\"" + counter + "\": {";
+                for (int x = 0; x < columnCount; x++)
+                {
+                    result += "\"" + reader.GetName(x) + "\":";
+                    string stringValue = "";
+                    if (!reader.IsDBNull(x))
+                    {
+                        stringValue = reader.GetValue(x).ToString();
+                    }
+                    else
+                    {
+                        stringValue = "NULL";
+                    }
+                    result += "\"" + stringValue + "\"";
+                    if (x < columnCount - 1) result += ",";
+                }
+                result += "},";
+                counter++;
+            }
+            result = result.TrimEnd(result[result.Length - 1]) + "}";
+            return result;
+        }
     }
 }
