@@ -132,7 +132,7 @@
                     <div class="panel-body">
                         <div class="well-sm">
                             <div class="row"><input ng-required="true" class="form-control" type="text" ng-model="DB_name" placeholder="Name" /></div>
-                        </div>table
+                        </div>
                     </div>
                     <div class="panel-footer">
                         <div class="row text-center">
@@ -263,27 +263,34 @@ id                                    data-loading-text="
         <div class="panel-body">
             <div id="querydiv">
                 <form>
-                    <!--query  -->
-                    <select>
-                        <option value="select"> select </option>
-                        <option value="delete"> delete </option>
-                        <option value="update"> update </option>
-                        <option> drop </option>
-                    </select>
-                    <!-- COLUMNA -->
-                    <select>
-                        <option value="">column</option>
-                        <option value="columna 1">columna 1</option>
-                        <option value="columna 2">columna 2</option>
-                        <option value="*"> * </option>
-                    </select>
-                    from
-                    <!-- TABLA -->
-                    <select>
-                        <option> table </option>
-                        <option> tabla 1</option>
-                        <option> tabla 2 </option>
-                    </select>
+                    <div class="row">
+                        <!--query  -->
+                        <div class="col-md-4">
+                            <select class="form-control">
+                                <option value="select"> select </option>
+                                <option value="delete"> delete </option>
+                                <option value="update"> update </option>
+                                <option value="drop"> drop </option>
+                            </select>
+                        </div>
+                        <!-- COLUMNA -->
+                        <div class="col-md-4">
+                            <select class="form-control">
+                                <option value="">column</option>
+                                <option value="columna 1">columna 1</option>
+                                <option value="columna 2">columna 2</option>
+                                <option value="*"> * </option>
+                            </select>
+                        </div>
+                        <!-- TABLA -->
+                        <div class="col-md-4">
+                            <select class="form-control">
+                                <option> FROM </option>
+                                <option> tabla 1</option>
+                                <option> tabla 2 </option>
+                            </select>
+                        </div>
+                    </div>
                     <br>
                     <br>
                     <!--JOIN DIV -->

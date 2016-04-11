@@ -41,7 +41,7 @@ namespace nsMultiDBService
             }
             catch (Exception ex)
             {
-                return "{\"message\": \"" + ex.ToString() + "\"}";
+                return "{\"messageError\": \"" + ex.ToString() + "\"}";
             }
         }
 
@@ -58,7 +58,7 @@ namespace nsMultiDBService
             }
             catch (Exception ex)
             {
-                return "{\"message\": \""+ ex.ToString() + "\"}";
+                return "{\"messageError\": \"" + ex.ToString() + "\"}";
             }
         }
 
@@ -73,11 +73,11 @@ namespace nsMultiDBService
                 MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
                 db.NonQuery("CALL add_table('" + createTable.table_name + "',"+
                                                 "'" + createTable.database_id + "');");
-                return "{\"message\": \"Base de datos creada exitosamente\"}";
+                return "{\"message\": \"Tabla creada exitosamente\"}";
             }
             catch (Exception ex)
             {
-                return "{\"message\": \"" + ex.ToString() + "\"}";
+                return "{\"messageError\": \"" + ex.ToString() + "\"}";
             }
         }
 

@@ -1,94 +1,71 @@
 ﻿angular.module('app.services', [])
 
 .factory("web_services", ['$http', function ($http) {
-    console.log($http)
+    function $HTTPCALL(rute, method, params, $scope) {
+        $scope.showSuccessMessage = false;
+        $scope.showWarningMessage = false;
+
+        $('.btn').button('loading');
+        return $http({
+            url: 'http://localhost:8080/service/multiDBService.svc/' + rute,
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            data: params
+        })
+        .success(function (data, status, headers, config) {
+            console.log(rute + " success:");
+            console.log(data);
+            var data = jQuery.parseJSON(data);
+            $scope.successMessage = "Rute:" + rute + " Message: " + data.message;
+            $scope.showSuccessMessage = true;
+
+            return data;
+        })
+        .error(function (data, status, headers, config) {
+            console.log(rute + " error:");
+            console.log(data);
+            var data = jQuery.parseJSON(data);
+            $scope.warningMessage = "Rute: " + rute + " Status: " + data.message + response.error_description.replace(/["']{1}/gi, "");
+            $scope.showWarningMessage = true;
+
+            return data
+        })
+        .finally(function () {
+            $('.btn').button('reset');
+        })
+        .then(function (response) { //wrap it inside another promise using then
+            console.log(rute + " then:");
+            console.log(response);
+
+            var data = jQuery.parseJSON(response.data);
+
+            if (rute != "GET") {
+                if (data.messageError) { 
+                    $scope.warningMessage = "Rute:" + rute + " Error: " + data.message;
+                    $scope.showWarningMessage = true;
+                } else {
+                    $scope.successMessage = "Rute:" + rute + " Message: " + data.message;
+                    $scope.showSuccessMessage = true;
+                }
+                
+            }
+
+            return data;
+        })
+    }
     return {
-        get: function (rute) {
-            return $http.get('http://localhost:8080/service/multiDBService.svc/' + rute)
-                .then(function (response) { //wrap it inside another promise using then
-                    console.log(rute);
-                    console.log(response.data);
-                    console.log(jQuery.parseJSON(response.data));
-                    return jQuery.parseJSON(response.data);  //Se parsea a JSON
-                });
+        get: function (rute, params) {
+            return $HTTPCALL(rute, "GET", params, {});
+        },
+        post: function (rute, params, $scope) {
+            return $HTTPCALL(rute, "POST", params, $scope);
         },
         delete: function (rute, params, $scope) {
-            $scope.successMessage = false;
-            $scope.warningMessage = false;
-    
-            $('.btn').button('loading');
-            $http({
-                url: 'http://localhost:8080/service/multiDBService.svc/' + rute,
-                method: "DELETE",
-                headers: { 'Content-Type': 'application/json' },
-                data: params
-            })
-            .success(function (response, status, headers, config) {
-                console.log(rute);
-                console.log(response);
-
-                var data = jQuery.parseJSON(response.data);
-
-                $scope.successMessage = "Rute: " + rute + " Status: " + data.message;
-                $scope.showSuccessMessage = true;
-                console.log(response);
-                return data;
-            })
-            .error(function (response, status, headers, config) {
-                console.log(rute);
-                console.log(response);
-
-                var data = jQuery.parseJSON(response.data);
-
-                $scope.warningMessage = "Rute: " + rute + " Status: " + data.message + "<br />" + response.error_description.replace(/["']{1}/gi, "");
-                $scope.showWarningMessage = true;
-                console.log(response);
-                return response
-            })
-            .finally(function () {
-                $('.btn').button('reset');
-            }) 
-        }, 
-        push: function (rute, params, $scope) {
-            $scope.successMessage = false;
-            $scope.warningMessage = false;
-
-            $('.btn').button('loading');
-            $http({
-                url: 'http://localhost:8080/service/multiDBService.svc/' + rute,
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                data: params
-            })
-            .success(function (response, status, headers, config) {
-                console.log(rute);
-                console.log(response);
-
-                var data = jQuery.parseJSON(response.data);
-
-                $scope.successMessage = "Rute: " + rute + " Status: " + data.message;
-                $scope.showSuccessMessage = true;
-                console.log(response);
-                return response;
-            })
-            .error(function (response, status, headers, config) {
-                console.log(rute);
-                console.log(response);
-
-                var data = jQuery.parseJSON(response.data);
-
-                $scope.warningMessage = "Rute: " + rute + " Status: " + data.message + "<br />" + response.error_description.replace(/["']{1}/gi, "");
-                $scope.showWarningMessage = true;
-                console.log(response);
-                return data
-            })
-            .finally (function () {
-                $('.btn').button('reset');
-            })
+            return $HTTPCALL(rute, "DELETE", params, $scope);
         },
         query: function (rute, $key, $value) { // TODO
             console.log("DEBUG web_services.query: " + "key: " + $key + " value: " + $value);
-            return {};
+            return $HTTPCALL(rute, "DELETE", params, $scope);
         },
     };
 }])

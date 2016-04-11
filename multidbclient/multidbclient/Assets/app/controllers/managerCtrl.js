@@ -31,18 +31,21 @@
                     port: $scope.protocol,
                     alias: $scope.alias
                 };
-                web_services.push("addDatabase", params, $scope);
-                web_services.get('getDBConnections').then(function (response) { //Async call to DBConnections factory
-                    $scope.DBConnections = response; //Assign data received to $scope.data
+                web_services.post("addDatabase", params, $scope).finally(function () {
+                    web_services.get('getDBConnections').then(function (response) { //Async call to DBConnections factory
+                        $scope.DBConnections = response; //Assign data received to $scope.data
+                    });
                 });
             }
 
             $scope.createDatabase = function () {
                 var params = { name: $scope.DB_name };
-                web_services.push("createDatabase", params, $scope);
-                web_services.get('getDatabases').then(function (response) { //Async call to DBConnections factory
-                    $scope.databases = response; //Assign data received to $scope.data
+                web_services.post("createDatabase", params, $scope).finally(function () {
+                    web_services.get('getDatabases').then(function (response) { //Async call to DBConnections factory
+                        $scope.databases = response; //Assign data received to $scope.data
+                    });
                 });
+                
             }
             
             $scope.createTable = function () {
@@ -53,7 +56,7 @@
                 }
                 $("table tbody tr").each(function () {
                     $row = $(this);
-                    params.columns.push({
+                    params.columns.post({
                         DB_alias: $row.find(".table_alias").val(),
                         column_name: $row.find(".table_name").val(),
                         Type: $row.find(".table_type").val(),
@@ -61,14 +64,20 @@
                     })
                 })
                 console.log(params);
-                web_services.push("createTable", params, $scope); 
-                web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
-                    $scope.tables = response; //Assign data received to $scope.data
+                web_services.post("createTable", params, $scope).finally(function () {
+                    web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
+                        $scope.tables = response; //Assign data received to $scope.data
+                    });
                 });
+                
             }
 
             $scope.dropTable = function () {
-                web_services.delete('dropTables', {}, $scope);
+                web_services.delete('dropTables', {}, $scope).finally(function () {
+                    web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
+                        $scope.tables = response; //Assign data received to $scope.data
+                    });
+                });
             }
 
             $scope.addNewRow = function () {
@@ -78,26 +87,3 @@
             }
         }
     ])
-
-    // I've created this directive as an example of $compile in action. 
-    /*.directive('add-column', ['$compile', function ($compile) { // inject $compile service as dependency
-        return {
-            restrict: 'A',
-            link: function ($scope, element, attrs) {
-                // click on the button to add new input field
-                element.find('button').bind('click', function () {
-                    // I'm using Angular syntax. Using jQuery will have the same effect
-                    // Create input element
-                    var input = angular.element('<div><input type="text" ng-model="telephone[' + scope.inputCounter + ']"></div>');
-                    // Compile the HTML and assign to scope
-                    var compile = $compile(input)(scope);
-
-                    // Append input to div
-                   element.append(input);
-
-                    // Increment the counter for the next input to be added
-                    scope.inputCounter++;
-                });
-            }
-        }
-    }]);*/
