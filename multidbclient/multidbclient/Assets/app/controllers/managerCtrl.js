@@ -62,7 +62,7 @@
             }
             $("table tbody tr").each(function () {
                 $row = $(this);
-                params.columns.post({
+                params.columns.push({
                     DB_alias: $row.find(".table_alias").val(),
                     column_name: $row.find(".table_name").val(),
                     Type: $row.find(".table_type").val(),
@@ -79,7 +79,7 @@
         }
 
         $scope.dropTable = function () {
-            web_services.delete('dropTables', {}, $scope).finally(function () {
+            web_services.delete('dropTable', { ID: $scope.drop_table_ID }, $scope).then(function () {
                 web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
                     $scope.tables = response; //Assign data received to $scope.data
                 });
@@ -98,17 +98,35 @@
             });
         }
 
+        $('#tablesModal').on('show.bs.modal', function (event) {
+
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var database_ID = button.data('database_id') // Extract info from data-* attributes
+            var database_name = button.data('database_name') 
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+
+            var $scope = angular.element(modal).scope();
+
+            $scope.$apply(function () {
+                $scope.database_ID_active = database_ID;
+            });
+
+            modal.find('.modal-title').text('Tables of ' + database_name)
+        })
+
+        $(".query_DB").trigger('change');
         $(".query_DB").change(function () {
-            $(".query_table").val("").change();
+            $(".query_table").val("").trigger('change');
             if ($(this).val() != "") {
                 $(".query_table option:not(:first)").hide();
                 $(".query_table ." + $(this).val()).show();
             }
 		});
 
-
         $(".query_table").change(function () {
-            $(".query_columns").val("").change();
+            $(".query_columns").val("").trigger('change');
             if ($(this).val() != "") {
                 $(".query_columns option:not(:first)").hide();
                 $(".query_columns ." + $(this).val()).show();

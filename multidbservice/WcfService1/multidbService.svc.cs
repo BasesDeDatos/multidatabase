@@ -121,6 +121,24 @@ namespace nsMultiDBService
             return db.ReaderQuery("get_columns(NULL)");
         }
 
+        [WebInvoke(Method = "DELETE",
+                  ResponseFormat = WebMessageFormat.Json,
+                  RequestFormat = WebMessageFormat.Json,
+                  UriTemplate = "dropTable")]
+        public string dropTable(parametroID dropTable)
+        {
+            try
+            {
+                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+                db.NonQuery("DELETE FROM TABLAS WHERE ID =" + dropTable.ID);
+                return "{\"message\": \"Tabla borrada exitosamente\"}";
+            }
+            catch (Exception ex)
+            {
+                return "{\"messageError\": \"" + ex.ToString() + "\"}";
+            }
+        }
+
         public string connection_mongo()
         {
             IMongoClient _client;

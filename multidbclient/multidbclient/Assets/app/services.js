@@ -12,15 +12,6 @@
             headers: { 'Content-Type': 'application/json' },
             data: params
         })
-        .success(function (data, status, headers, config) {
-            console.log(rute + " success:");
-            console.log(data);
-            var data = jQuery.parseJSON(data);
-            $scope.successMessage = "Rute:" + rute + " Message: " + data.message;
-            $scope.showSuccessMessage = true;
-
-            return data;
-        })
         .error(function (data, status, headers, config) {
             console.log(rute + " error:");
             console.log(data);
@@ -33,21 +24,24 @@
         .finally(function () {
             $('.btn').button('reset');
         })
-        .then(function (response) { //wrap it inside another promise using then
+        .then(function (data) { //wrap it inside another promise using then
             console.log(rute + " then:");
-            console.log(response);
+            console.log(data);
 
-            var data = jQuery.parseJSON(response.data);
+            try {
+                var data = jQuery.parseJSON(data.data);
 
-            if (rute != "GET") {
-                if (data.messageError) { 
-                    $scope.warningMessage = "Rute:" + rute + " Error: " + data.message;
-                    $scope.showWarningMessage = true;
-                } else {
+                if (data.message != "") {
                     $scope.successMessage = "Rute:" + rute + " Message: " + data.message;
                     $scope.showSuccessMessage = true;
+                } else if (data.messageError != "") {
+                    $scope.warningMessage = "Rute:" + rute + " Error: " + data.messageError;
+                    $scope.showWarningMessage = true;
                 }
-                
+            }
+            catch (e) {
+                $scope.warningMessage = data;
+                $scope.showWarningMessage = true;
             }
 
             return data;

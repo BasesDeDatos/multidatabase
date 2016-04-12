@@ -21,14 +21,15 @@ namespace nsMultiDBService
         
         [OperationContract]
         string getDBConnections();
-
         [OperationContract]
         string getDatabases();
-
         [OperationContract]
         string getTables();
         [OperationContract]
         string getColumns();
+
+        [OperationContract]
+        string dropTable(parametroID dropTable);
 
         [OperationContract]
         string connection_mongo();
