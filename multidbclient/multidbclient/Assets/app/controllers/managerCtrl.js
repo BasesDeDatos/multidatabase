@@ -10,6 +10,19 @@
         $scope.databases = false;
         $scope.tables = false;
         $scope.columns = false;
+        $scope.columnsxTable = function (id_table) {
+            var return_listColumns = [];
+            for (var key in $scope.columns) {
+                // skip loop if the property is from prototype
+                if (!$scope.columns.hasOwnProperty(key)) continue;
+
+                var column = $scope.columns[key];
+                if (column.ID_tabla == id_table){
+                    return_listColumns.push({name : column.column_name});
+                }
+            }
+            return return_listColumns;
+        }
 
         web_services.get('getDBConnections').then(function (response) { //Async call to DBConnections factory
             $scope.DBConnections = response; //Assign data received to $scope.data
