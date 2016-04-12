@@ -190,7 +190,7 @@ namespace nsMultiDBService
         {
             string query = "SELECT * FROM " + tableName + ";";
             //ArrayList result = new ArrayList();
-            string result = "NULL";
+            string result = "{}";
 
             //Open connection
             if (this.OpenConnection() == true)
@@ -278,6 +278,9 @@ namespace nsMultiDBService
                 counter++;
             }
             result = result.TrimEnd(result[result.Length - 1]) + "}";
+            if (result == "}") {
+                result = "{}";
+            }
             return result;
         }
     }
