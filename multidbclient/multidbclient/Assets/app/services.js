@@ -4,13 +4,15 @@
     function $HTTPCALL(rute, method, params, $scope) {
         $scope.showSuccessMessage = false;
         $scope.showWarningMessage = false;
+        console.log(rute + " params:");
+        console.log(params);
 
         $('.btn').button('loading');
         return $http({
             url: 'http://localhost:8080/service/multiDBService.svc/' + rute,
             method: method,
             headers: { 'Content-Type': 'application/json' },
-            data: params
+            data: JSON.stringify(params)
         })
         .error(function (data, status, headers, config) {
             console.log(rute + " error:");

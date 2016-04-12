@@ -69,7 +69,6 @@
                     Null: $row.find(".table_null").val()
                 })
             })
-            console.log(params);
             web_services.post("createTable", params, $scope).finally(function () {
                 web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
                     $scope.tables = response; //Assign data received to $scope.data

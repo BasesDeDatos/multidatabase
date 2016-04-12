@@ -17,7 +17,7 @@ namespace nsMultiDBService
         [OperationContract]
         string createDatabase(parametrosCreateDatabase createDatabase);
         [OperationContract]
-        string createTable(parametrosCreateTable createTable);
+        parametrosCreateTable createTable(parametrosCreateTable createTable);
         
         [OperationContract]
         string getDBConnections();

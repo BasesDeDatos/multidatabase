@@ -66,19 +66,21 @@ namespace nsMultiDBService
                     ResponseFormat = WebMessageFormat.Json,
                     RequestFormat = WebMessageFormat.Json,
                     UriTemplate = "createTable")]
-        public string createTable(parametrosCreateTable createTable)
+        public parametrosCreateTable createTable(parametrosCreateTable p)
         {
-            try
+            return p;
+            /*try
             {
                 MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
                 db.NonQuery("CALL add_table('" + createTable.table_name + "',"+
                                                 "'" + createTable.database_id + "');");
-                return "{\"message\": \"Tabla creada exitosamente\"}";
+                string columns = createTable.colmns.ToString();
+                return "{\"message\": \"" + columns + "\"}";
             }
             catch (Exception ex)
             {
                 return "{\"messageError\": \"" + ex.ToString() + "\"}";
-            }
+            }*/
         }
 
         [WebInvoke(Method = "GET",
@@ -174,7 +176,14 @@ namespace nsMultiDBService
     public class parametrosCreateTable {
         public string table_name { get; set; }
         public string database_id { get; set; }
-        public string columns { get; set; }
+        public List<parametrosColumn> colmns { get; set; }
+    }
+
+    public class parametrosColumn {
+        public string DB_alias { get; set; }
+        public string column_name { get; set; }
+        public string Type { get; set; }
+        public string Null { get; set; }
     }
 
     public class parametroID
