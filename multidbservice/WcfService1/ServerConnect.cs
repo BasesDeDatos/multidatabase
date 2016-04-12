@@ -249,6 +249,10 @@ namespace nsMultiDBService
                 counter++;
             }
             result = result.TrimEnd(result[result.Length - 1]) + "}";
+            if (result == "}")
+            {
+                result = "{}";
+            }
             return result;
         }
     }
