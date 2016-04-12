@@ -1,4 +1,4 @@
-﻿using MongoDB.Bson;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections;
@@ -69,12 +69,18 @@ namespace nsMultiDBService
             collection.ReplaceOneAsync(filter, document);
         }
 
-        public List<BsonDocument> Select(string table)
+        public string Select(string table)
         {
             var collection = databaseInstance.GetCollection<BsonDocument>(table);
             var filter = new BsonDocument();
             var result = collection.Find(filter).ToListAsync();
-            return result.Result;
+            string resultado = "{";
+            for (int i = 0; i < result.Result.Count; i++)
+            {
+                resultado += "\"" + i + "\": " + result.Result[i].ToJson();
+            }
+            resultado += "}";
+            return resultado;
         }
     }
 }
