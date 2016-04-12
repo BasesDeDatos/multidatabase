@@ -110,11 +110,11 @@ namespace nsMultiDBService
         }
 
         //Select statement
-        public ArrayList Select(string tableName)
+        public int Select(string function)
         {
-            string query = "SELECT * " + "FROM " + tableName;
+            string query = "SELECT " + function;
             //Create a list to store the result
-            ArrayList list = new ArrayList();
+            int values = -1;
 
             //Open connection
             if (this.OpenConnection() == true)
@@ -128,9 +128,8 @@ namespace nsMultiDBService
                 while (dataReader.Read())
                 {
                     //list[0].Add(dataReader["id"] + "");
-                    object[] values = new object[dataReader.FieldCount];
-                    dataReader.GetValues(values);
-                    list.Add(values);
+                     values = dataReader.GetInt32(0);
+                    
                 }
 
                 //close Data Reader
@@ -140,11 +139,11 @@ namespace nsMultiDBService
                 this.CloseConnection();
 
                 //return list to be displayed
-                return list;
+                return values;
             }
             else
             {
-                return list;
+                return values;
             }
         }
 

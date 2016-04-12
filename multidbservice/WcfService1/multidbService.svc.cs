@@ -9,6 +9,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Data.SqlClient;
 using System.Collections;
+using System.Diagnostics;
 
 namespace nsMultiDBService
 {
@@ -66,21 +67,29 @@ namespace nsMultiDBService
                     ResponseFormat = WebMessageFormat.Json,
                     RequestFormat = WebMessageFormat.Json,
                     UriTemplate = "createTable")]
-        public parametrosCreateTable createTable(parametrosCreateTable p)
+        public string createTable(parametrosCreateTable createTable)
         {
-            return p;
-            /*try
+            try
             {
                 MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
-                db.NonQuery("CALL add_table('" + createTable.table_name + "',"+
-                                                "'" + createTable.database_id + "');");
-                string columns = createTable.colmns.ToString();
-                return "{\"message\": \"" + columns + "\"}";
+                var id_table = db.Select("add_table('" + createTable.table_name + "',"+
+                                                "" + createTable.database_id + ");");
+                
+                foreach (parametrosColumn column in createTable.columns)
+                {
+                   db.NonQuery("CALL add_Column(" + id_table + "," +
+                                                "'" + column.DB_alias + "'," +
+                                                "'" + column.column_name + "',"+
+                                                "'" + column.Type + "'," +
+                                                "'" + column.Null + "'" +
+                                                ");");
+                }
+                return "{\"message\": \"" + "SE CREO LA TABLA EXITOSAMENTE!" + "\"}";
             }
             catch (Exception ex)
             {
                 return "{\"messageError\": \"" + ex.ToString() + "\"}";
-            }*/
+            }
         }
 
         [WebInvoke(Method = "GET",
@@ -176,7 +185,7 @@ namespace nsMultiDBService
     public class parametrosCreateTable {
         public string table_name { get; set; }
         public string database_id { get; set; }
-        public List<parametrosColumn> colmns { get; set; }
+        public List<parametrosColumn> columns { get; set; }
     }
 
     public class parametrosColumn {

@@ -73,6 +73,9 @@
                 web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
                     $scope.tables = response; //Assign data received to $scope.data
                 });
+                web_services.get('getColumns').then(function (response) { //Async call to DBConnections factory
+                    $scope.columns = response; //Assign data received to $scope.data
+                });
             });
                 
         }
