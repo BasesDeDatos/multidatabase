@@ -217,37 +217,28 @@ namespace nsMultiDBService
             }
         }
 
-        /*private ArrayList returnJSON(MySqlDataReader reader)
+        public Dictionary<string, object> Select3(string tableName, string conditional)
         {
+            string query = "SELECT * " + "FROM " + tableName + " WHERE " + conditional + ";";
+            Dictionary<string, object> result = new Dictionary<string, object>();
 
-            ArrayList list = new ArrayList();
-            int columnCount = reader.FieldCount;
-            while (reader.Read())
+            if (this.OpenConnection() == true)
             {
-                string result = "";
-                result += "{";
-                for (int x = 0; x < columnCount; x++)
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                for (int i = 0; i < dataReader.FieldCount; i++)
                 {
-                    result += reader.GetName(x) + ":";
-                    string stringValue = "";
-                    if (!reader.IsDBNull(x))
-                    {
-                        stringValue = "'" + reader.GetValue(x).ToString() + "'";
-                    }
-                    else
-                    {
-                        stringValue = "NULL";
-                    }
-                    result += stringValue;
-                    if (x < columnCount - 1) result += ",";
+                    result.Add(dataReader.GetName(i), dataReader.GetValue(i));
                 }
-                result += "}";
 
-                list.Add(result);
+                return result;
             }
-
-            return list;
-        }*/
+            else
+            {
+                return result;
+            }
+        }
 
         public string returnJSON(MySqlDataReader reader)
         {
