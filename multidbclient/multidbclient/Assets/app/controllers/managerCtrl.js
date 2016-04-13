@@ -107,6 +107,19 @@
             $("tbody tr").last().find("input, select").val("");
         }
 
+        $scope.addNewRowTable = function () {
+            new_row = $(".cont_query_table").html();
+            $(".cont_new_query_table").append(new_row);
+            $(".cont_new_query_table").last().find("select").val("");
+        }
+
+        $scope.addNewRowColumn = function () {
+            new_row = $("tbody tr").first().html();
+            $("tbody").append("<tr>" + new_row + "</tr>");
+
+            $("tbody tr").last().find("input, select").val("");
+        }
+
         $scope.get_tables = function (ID_database) {
             web_services.get('getTables', { ID: ID_database }).then(function (response) { //Async call to DBConnections factory
                 return response; //Assign data received to $scope.data
