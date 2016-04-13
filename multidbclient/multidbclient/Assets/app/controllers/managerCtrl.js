@@ -34,6 +34,7 @@
 
         web_services.get('getTables').then(function (response) { //Async call to DBConnections factory
             $scope.tables = response; //Assign data received to $scope.data
+            $(".query_DB").trigger('change');
         });
 
         web_services.get('getColumns').then(function (response) { //Async call to DBConnections factory
@@ -90,7 +91,6 @@
                     $scope.columns = response; //Assign data received to $scope.data
                 });
             });
-                
         }
 
         $scope.dropTable = function () {
@@ -109,23 +109,47 @@
 
         $scope.addNewRowTable = function () {
             new_row = $(".cont_query_table").html();
-            $(".cont_new_query_table").append(new_row);
+            $(".cont_new_query_table").append("<div class='margin-top-5'>" + new_row + "</div>");
             $(".cont_new_query_table").last().find("select").val("");
         }
 
         $scope.addNewRowColumn = function () {
-            new_row = $("tbody tr").first().html();
-            $("tbody").append("<tr>" + new_row + "</tr>");
-
-            $("tbody tr").last().find("input, select").val("");
+            new_row = $(".cont_query_column").html();
+            $(".cont_new_query_column").append("<div class='margin-top-5'>" + new_row + "</div>");
+            $(".cont_new_query_column").last().find("select").val("");
         }
 
-        $scope.get_tables = function (ID_database) {
-            web_services.get('getTables', { ID: ID_database }).then(function (response) { //Async call to DBConnections factory
-                return response; //Assign data received to $scope.data
+        $scope.addNewRowWhere = function () {
+            new_row = $(".cont_query_column").html();
+            $(".cont_new_query_column").append("<div class='margin-top-5'>" + new_row + "</div>");
+            $(".cont_new_query_column").last().find("select").val("");
+        }
+
+        $scope.executeQuery = function () {
+            var params = {
+                query: $scope.query,
+                source: $scope.source,
+                tableXcolumn: [],
+                filter: {
+                    column: $scope.columnFilter,
+                    method: $scope.methodFilter,
+                    byValue: $scope.byValueFilter,
+                },
+                order: [],
+            }
+
+            $(".query_columns .query_column").each(function () {
+                params.tableXcolumn.push({
+                    table: $(this).find("option:selected").attr("id_table"),
+                    column: $(this).find("option:selected").attr("id_column"),
+                })
+            });
+
+            web_services.post("executeQuery", params, $scope).finally(function () {
+                console.log("FINALLY QUERY!!!")
             });
         }
-
+        
         $('#tablesModal').on('show.bs.modal', function (event) {
 
             var button = $(event.relatedTarget) // Button that triggered the modal
@@ -144,22 +168,33 @@
             modal.find('.modal-title').text('Tables of ' + database_name)
         })
 
-        $(".query_DB").trigger('change');
-        $(".query_DB").change(function () {
-            $(".query_table").val("").trigger('change');
-            if ($(this).val() != "") {
-                $(".query_table option:not(:first)").hide();
-                $(".query_table ." + $(this).val()).show();
-            }
-		});
+        init_eventosChange_query();
+        function init_eventosChange_query(){
+            $(".query_DB").change(function () {
+                $(".query_table").val("").trigger('change');
+                if ($(this).val() != "") {
+                    $(".query_table option:not(:first)").hide();
+                    $(".query_table ." + $(this).val()).show();
+                }
+            });
 
-        $(".query_table").change(function () {
-            $(".query_columns").val("").trigger('change');
-            if ($(this).val() != "") {
-                $(".query_columns option:not(:first)").hide();
-                $(".query_columns ." + $(this).val()).show();
-            }
-        });
+            $(".query_table").change(function () {
+                $(".query_column option:not(:first)").hide();
+                var select_ID = "";
+                $(".query_table").each(function () {
+                    select_ID += $(this).val()
+                    if ($(this).val() != "") {
+                        $(".query_column ." + $(this).val()).show();
+                    }
+                })
+
+                //Si no hay ninguna opcion seleccionada en ningun select 
+                if (select_ID != "") {
+                    $(".query_column").val("");
+                }
+            });
+        }
+        
 
         $('#where_check').change(function () {
             if ($('#where_check').is(':checked')) {
