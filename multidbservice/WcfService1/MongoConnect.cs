@@ -18,13 +18,15 @@ namespace nsMultiDBService
         private string database;
         private string uid;
         private string password;
+        private string port;
 
-        public MongoConnect(string pServer, string pDatabase, string pUid, string pPassword)
+        public MongoConnect(string pServer, string pDatabase, string pUid, string pPassword, string pPort)
         {
             server = pServer;
             database = pDatabase;
             uid = pUid;
             password = pPassword;
+            port = pPort;
 
             Initialize();
         }
@@ -34,7 +36,7 @@ namespace nsMultiDBService
         {
             string connectionString;
             connectionString = "mongodb://" + uid + ":" + password +
-            "@" + server + "/" + database;
+            "@" + server + ":" + port + "/" + database;
             
             client = new MongoClient(connectionString);
             databaseInstance = client.GetDatabase(database);

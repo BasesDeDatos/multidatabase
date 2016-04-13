@@ -14,15 +14,17 @@ namespace nsMultiDBService
         private string database;
         private string uid;
         private string password;
+        private string port;
 
         //Constructor
-        public ServerConnect(string pServer, string pDatabase, string pUid, string pPassword)
+        public ServerConnect(string pServer, string pDatabase, string pUid, string pPassword, string pPort)
         {
             connection = new SqlConnection();
             server = pServer;
             database = pDatabase;
             uid = pUid;
             password = pPassword;
+            port = pPort;
             Initialize();
         }
 
@@ -30,7 +32,7 @@ namespace nsMultiDBService
         private void Initialize()
         {
             string connectionString;
-            connectionString = "Server=" + server + ";Database=" + 
+            connectionString = "Server=" + server + ", " + port + ";Database=" + 
             database + ";User Id=" + uid + ";Password=" + password + ";";
 
             connection.ConnectionString = connectionString;
