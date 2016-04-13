@@ -33,11 +33,6 @@ namespace nsMultiDBService
                                                    + addDatabase.port + "','"
                                                    + addDatabase.alias + "');");
 
-                /*ArrayList filas = new ArrayList();
-                string prueba = "";
-                filas = db.Select2("db_connection");
-                for (int i = 0; i < filas.Count; i++) prueba += filas[i];
-                return prueba;*/
                 return "{\"message\": \"Conexion creada exitosamente\"}";
             }
             catch (Exception ex)
@@ -150,17 +145,20 @@ namespace nsMultiDBService
             }
         }
 
-        public string connection_mongo()
+        [WebInvoke(Method = "POST",
+                  ResponseFormat = WebMessageFormat.Json,
+                  RequestFormat = WebMessageFormat.Json,
+                  UriTemplate = "executeQuery")]
+        public parametrosQuery executeQuery(parametrosQuery query)
         {
-            IMongoClient _client;
-            IMongoDatabase _database;
-            
-            _client = new MongoClient();
-            _database = _client.GetDatabase("test");
-
-            string state = _client.Cluster.Description.State.ToString();
-
-            return state;
+            try
+            {
+                return query;
+            }
+            catch (Exception ex)
+            {
+                return query;
+            }
         }
     }
 
@@ -198,6 +196,33 @@ namespace nsMultiDBService
     public class parametroID
     {
         public string ID { get; set; }
+    }
+
+    public class parametrosQuery
+    {
+        public string source { get; set; }
+        public List<tableXcolumn> tablesXcolumns { get; set; }
+        public List<filter> filter { get; set; }
+        public List<order> order { get; set; }
+    }
+
+    public class tableXcolumn
+    {
+        public string table { get; set; }
+        public string column { get; set; }
+    }
+
+    public class filter
+    {
+        public string column { get; set; }
+        public string method { get; set; }
+        public string byValue { get; set; }
+    }
+
+    public class order
+    {
+        public string method { get; set; }
+        public string byValue { get; set; }
     }
 
 }
