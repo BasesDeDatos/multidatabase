@@ -14,14 +14,16 @@ namespace nsMultiDBService
         private string database;
         private string uid;
         private string password;
+        private string port;
 
         //Constructor
-        public MariaConnect(string pServer, string pDatabase, string pUid, string pPassword)
+        public MariaConnect(string pServer, string pDatabase, string pUid, string pPassword, string pPort)
         {
             server = pServer;
             database = pDatabase;
             uid = pUid;
             password = pPassword;
+            port = pPort;
             Initialize();
         }
 
@@ -29,7 +31,7 @@ namespace nsMultiDBService
         private void Initialize()
         {
             string connectionString;
-            connectionString = "SERVER=" + server + ";" + "DATABASE=" +
+            connectionString = "SERVER=" + server + "; Port=" + port + "; DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
 
             connection = new MySqlConnection(connectionString);

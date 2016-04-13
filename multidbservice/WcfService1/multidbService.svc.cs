@@ -24,7 +24,7 @@ namespace nsMultiDBService
         public string addDatabase(parametrosAddDatabase addDatabase)
         {
             try {
-                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
                 db.NonQuery("CALL registrar_conexion('" + addDatabase.database_type + "','"
                                                    + addDatabase.user + "','"
                                                    + addDatabase.pass + "','"
@@ -53,7 +53,7 @@ namespace nsMultiDBService
         public string createDatabase(parametrosCreateDatabase createDatabase) {
             try
             {
-                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
                 db.NonQuery("CALL add_data_base('" + createDatabase.name + "');");
                 return "{\"message\": \"Base de datos creada exitosamente\"}";
             }
@@ -71,7 +71,7 @@ namespace nsMultiDBService
         {
             try
             {
-                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
                 var id_table = db.Select("add_table('" + createTable.table_name + "',"+
                                                 "" + createTable.database_id + ");");
                 
@@ -98,7 +98,7 @@ namespace nsMultiDBService
                    UriTemplate = "getDBConnections")]
         public string getDBConnections()
         {
-            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
             return db.Select2("db_connection");
         }
 
@@ -108,7 +108,7 @@ namespace nsMultiDBService
                    UriTemplate = "getDatabases")]
         public string getDatabases()
         {
-            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
             return db.ReaderQuery("get_databases(NULL)");
         }
 
@@ -118,7 +118,7 @@ namespace nsMultiDBService
                   UriTemplate = "getTables")]
         public string getTables()
         {
-            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
             return db.ReaderQuery("get_tables(NULL)");
         }
 
@@ -128,7 +128,7 @@ namespace nsMultiDBService
                   UriTemplate = "getColumns")]
         public string getColumns()
         {
-            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
             return db.ReaderQuery("get_columns(NULL)");
         }
 
@@ -140,7 +140,7 @@ namespace nsMultiDBService
         {
             try
             {
-                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba");
+                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
                 db.NonQuery("DELETE FROM TABLAS WHERE ID =" + dropTable.ID);
                 return "{\"message\": \"Tabla borrada exitosamente\"}";
             }
