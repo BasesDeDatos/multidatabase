@@ -59,7 +59,7 @@
         </div>
 
         <div class="modal fade" id="tablesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -67,13 +67,13 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-4" ng-repeat="table in tables" ng-show="database_ID_active == table.ID_database">
+                            <div class="col-md-6" ng-repeat="table in tables" ng-show="database_ID_active == table.ID_database">
                                 <div class="panel panel-default">
                                     <div class="panel-heading text-center"><i class="fa fa-table" aria-hidden="true"></i> {{table.table_name}}</div>
                                     <div class="panel-body">
                                         <!--VIENE LA LISTA -->
                                         <ul class="list-group">
-                                            <li class="list-group-item" ng-repeat="column in columns" ng-show="column.ID_tabla == table.ID_table">{{ column.column_name}}</li>
+                                            <li class="list-group-item" ng-repeat="column in columns" ng-show="column.ID_tabla == table.ID_table"><strong><small>( {{ column.column_type}} )</small></strong> {{ column.column_name}}</li>
 
                                         </ul>
                                     </div>
