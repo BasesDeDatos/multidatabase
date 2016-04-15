@@ -326,7 +326,7 @@
 
                                             <select disabled ng-model="columnFilter" class="query_where_columns query_column form-control">
                                                 <option value="">column</option>
-                                                <option ng-repeat="column in columns" value="{{column.ID}}" class="{{column.ID_tabla}}">({{column.column_type}})  {{column.table_name}}.{{column.column_name}}</option>
+                                                <option ng-repeat="column in columns" type="{{column.column_type}}" value="{{column.ID}}" class="{{column.ID_tabla}}">({{column.column_type}})  {{column.table_name}}.{{column.column_name}}</option>
                                             </select>
 
                                             <select disabled ng-model="methodFilter" class="input-group-addon text-center form-control">
@@ -336,7 +336,7 @@
                                                 <option value=">">></option>
                                             </select>
 
-                                            <input type="text" ng-model="byValueFilter" class="form-control" disabled>
+                                            <input type="text" ng-model="byValueFilter" class="byValueFilter form-control" disabled>
 
                                             <span class="input-group-addon btn btn-primary"
                                                   id="basic-addon1"

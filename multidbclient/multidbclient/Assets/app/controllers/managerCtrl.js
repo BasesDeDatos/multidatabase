@@ -110,19 +110,16 @@
         $scope.addNewRowTable = function () {
             new_row = $(".cont_query_table").html();
             $(".cont_new_query_table").append("<div class='margin-top-5'>" + new_row + "</div>");
-            $(".cont_new_query_table").last().find("select").val("");
+            $(".cont_new_query_table .query_table").last().find("select").val("");
         }
 
         $scope.addNewRowColumn = function () {
             new_row = $(".cont_query_column").html();
             $(".cont_new_query_column").append("<div class='margin-top-5'>" + new_row + "</div>");
-            $(".cont_new_query_column").last().find("select").val("");
+            $(".cont_new_query_column .query_column").last().val("");
         }
 
         $scope.addNewRowWhere = function () {
-            new_row = $(".cont_query_column").html();
-            $(".cont_new_query_column").append("<div class='margin-top-5'>" + new_row + "</div>");
-            $(".cont_new_query_column").last().find("select").val("");
         }
 
         $scope.executeQuery = function () {
@@ -195,6 +192,13 @@
             });
         }
         
+        $('.query_where_columns').change(function () {
+            switch ($(this).find("option:selected").attr("type")) {
+                case "string": $('.byValueFilter').attr("type", "text"); break;
+                case "int": $('.byValueFilter').attr("type", "number"); break;
+                case "double": $('.byValueFilter').attr("type", "number"); break;
+            }
+        });
 
         $('#where_check').change(function () {
             if ($('#where_check').is(':checked')) {
