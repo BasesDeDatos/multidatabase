@@ -31,10 +31,9 @@ namespace nsMultiDBService
         [OperationContract]
         string dropTable(parametroID dropTable);
 
+
         [OperationContract]
-        string connection_mongo();
-
-
+        parametrosQuery executeQuery(parametrosQuery query);
     }
 
 
