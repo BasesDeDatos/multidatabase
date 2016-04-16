@@ -110,6 +110,7 @@
 
 <section>
     <div class="row">
+        <!-- ADD DATABASE-->
         <div class="col-md-3">
             <div class="panel panel-default">
 
@@ -138,11 +139,8 @@
                     </div>
                     <div class="panel-footer">
                         <div class="row text-center">
-                            <button type="submit"
-                                    class="btn btn-primary"
-                                    data-loading-text="
-                                <i class='fa fa-circle-o-notch fa-spin'></i>"
-                                >
+                            <button type="submit"class="btn btn-primary"
+                                    data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">
                                 ADD
                             </button>
                         </div>
@@ -151,6 +149,7 @@
 
             </div>
         </div>
+        <!-- CREATE DATABASE-->
         <div class="col-md-6">
 
             <div class="panel panel-default">
@@ -165,15 +164,12 @@
                         <div class="text-center">
                             <button type="submit"
                                     class="btn btn-primary"
-                                    id data-loading-text="
-                                <i class='fa fa-circle-o-notch fa-spin'></i>"
-                                >
+                                     data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">
                                 CREATE
                             </button>
                         </div>
                     </div>
                 </form>
-
             </div>
 
             <div class="panel panel-default">
@@ -322,9 +318,7 @@
     <div class="row"></div>
     <div class="panel panel-default">
         <div class="panel-heading">Queries</div>
-
         <form ng-submit="executeQuery()">
-
             <div class="panel-body">
                 <div id="querydiv">
                     <div class="row">
@@ -466,61 +460,73 @@
 </section>
 <!-- PARA INSERTAR DATOS-->
 <section>
-    <div class="row"></div>
-    <div class="panel panel-default">
-        <div class="panel-heading">INSERT DATA</div>
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">INSERT DATA</div>
+            <div class="panel-body">
+                
+                <form ng-submit="">
+                    <div class="input-group">
+                        <span class="input-group-addon">Connection</span>
+                        <select class="form-control">
+                            <option>Connection</option>
+                        </select>
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <span class="input-group-addon">Data Base</span>
+                        <select class="form-control">
+                            <option>DB</option>
+                        </select>
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <span class="input-group-addon">Table</span>
+                        <select class="form-control">
+                            <option>Table</option>
+                        </select>
+                    </div>
+                    <br />
+                    <div class="center-block">
+                        <table class="table-bordered">
+                            <thead>
+                                <tr>
+                                    <!-- Row del nombre de las columnas-->
+                                    <th>Column 1</th>
+                                    <th>Column 2</th>
+                                    <th>Column 3</th>
+                                </tr>
+                            </thead>
 
-        <div class="input-group">
-            <span class="input-group-addon">Connection</span>
-            <select class="form-control">
-                <option>Connection</option>
-            </select>
-        </div>
-        <div class="input-group">
-            <span class="input-group-addon">Data Base</span>
-            <select class="form-control">
-                <option>DB</option>
-            </select>
-        </div>
-        <div class="input-group">
-            <span class="input-group-addon">Table</span>
-            <select class="form-control">
-                <option>Table</option>
-            </select>
-        </div>
-      
-        <table class="table-bordered">
+                            <tr>
+                                <td>
+                                    <input type="number" />
+                                </td>
+                                <td>
+                                    <input type="text" />
 
-            <tr>
-                <!-- Row del nombre de las columnas-->
-                <th>Column 1</th>
-                <th>Column 2</th>
-                <th>Column 3</th>
-            </tr>
-            <tr>
-                <td>
-                    <input type="number" />
-                </td>
-                <td>
-                    <input type="text" />
+                                </td>
+                                <td>
+                                    <input type="number" />
+                                </td>
+                            </tr>
 
-                </td>
-                <td>
-                    <input type="number" />
-                </td>
-            </tr>
-
-        </table>
-        <div class="panel-footer">
-            <div class="text-center">
-                <button type="submit"
-                        class="btn btn-primary"
-                        id data-loading-text="
-                                <i class='fa fa-circle-o-notch fa-spin'></i>"
-                                >
+                        </table>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary"
+                                    data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">
                                 INSERT
                             </button>
+                        </div>
+                    </div>
+                </form>
+                
+                
+                
             </div>
+            
         </div>
     </div>
 </section>
