@@ -67,7 +67,7 @@ namespace nsMultiDBService
             try
             {
                 MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
-                var id_table = db.Select("add_table('" + createTable.table_name + "',"+
+                var id_table = db.GetValueFunction("add_table('" + createTable.table_name + "',"+
                                                 "" + createTable.database_id + ");");
                 
                 foreach (parametrosColumn column in createTable.columns)
@@ -149,16 +149,53 @@ namespace nsMultiDBService
                   ResponseFormat = WebMessageFormat.Json,
                   RequestFormat = WebMessageFormat.Json,
                   UriTemplate = "executeQuery")]
-        public parametrosQuery executeQuery(parametrosQuery query)
+        public List<List<Dictionary<string, object>>> executeQuery(parametrosQuery query)
         {
             try
             {
-                return query;
+                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
+                string procedure;
+                List<List<Dictionary<string, object>>> listaResultados = new List<List<Dictionary<string, object>>>();
+                foreach (tableXcolumn txc in query.tablesXcolumns)
+                {
+                    procedure= "get_tuplas(" + txc.column + ")";
+                    List<Dictionary<string, object> > resultados = db.CallProcedure(procedure);
+                    foreach (Dictionary<string, object> resultado in resultados)
+                    {
+                        switch (resultado["database_type"].ToString())
+                        {
+                            case "mariaDB":
+                                listaResultados.Add(executeQueryMaria(resultado));
+                                break;
+                            case "SQLServer":
+                                //executeQueryServer(resultado);
+                                break;
+                            case "mongoDB":
+                                //executeQueryMongo(resultado);
+                                break;
+                        }
+                    }
+                }
+                return listaResultados;
             }
             catch (Exception ex)
             {
-                return query;
+                throw ex;
             }
+        }
+
+        public List<Dictionary<string, object>> executeQueryMaria(Dictionary<string, object> datos)
+        {
+            string server = datos["server"].ToString();
+            string database = "multidb_datos";
+            string uid = datos["user"].ToString();
+            string pass = datos["pass"].ToString();
+            string port = datos["port"].ToString();
+
+
+            MariaConnect db = new MariaConnect(server, database, uid, pass, port);
+
+            return db.Select3(datos["column_type"].ToString(), "data_id = " + datos["ID_data"]);
         }
     }
 

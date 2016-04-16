@@ -81,7 +81,7 @@ namespace nsMultiDBService
             }
         }
 
-        //Select statement
+        //GetValueFunction statement
         public ArrayList Select(string tableName)
         {
             string query = "SELECT * " + "FROM " + tableName;
@@ -120,7 +120,7 @@ namespace nsMultiDBService
             }
         }
 
-        //Select statement
+        //GetValueFunction statement
         public ArrayList Select(string tableName, string conditional)
         {
             string query = "SELECT * " + "FROM " + tableName + " WHERE " + conditional + ";";

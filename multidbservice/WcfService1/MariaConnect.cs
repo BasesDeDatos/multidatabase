@@ -111,8 +111,8 @@ namespace nsMultiDBService
             }
         }
 
-        //Select statement
-        public int Select(string function)
+        //GetValueFunction statement
+        public int GetValueFunction(string function)
         {
             string query = "SELECT " + function;
             //Create a list to store the result
@@ -149,7 +149,7 @@ namespace nsMultiDBService
             }
         }
 
-        public ArrayList Select(string tableName, string conditional)
+        public ArrayList GetValueFunction(string tableName, string conditional)
         {
             string query = "SELECT * " + "FROM " + tableName + " WHERE " + conditional + ";";
             //Create a list to store the result
@@ -219,26 +219,47 @@ namespace nsMultiDBService
             }
         }
 
-        public Dictionary<string, object> Select3(string tableName, string conditional)
+        public List<Dictionary<string, object>> Select3(string tableName, string conditional)
         {
             string query = "SELECT * " + "FROM " + tableName + " WHERE " + conditional + ";";
-            Dictionary<string, object> result = new Dictionary<string, object>();
+            List<Dictionary<string, object>> resultado = new List<Dictionary<string, object>>();
 
             if (this.OpenConnection() == true)
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
-                for (int i = 0; i < dataReader.FieldCount; i++)
-                {
-                    result.Add(dataReader.GetName(i), dataReader.GetValue(i));
-                }
-
-                return result;
+                return returnObjectList(dataReader);
             }
             else
             {
-                return result;
+                return resultado;
+            }
+        }
+
+        public List<Dictionary<string, object> > CallProcedure(string procedure)
+        {
+            string query = "CALL " + procedure + ";";
+            //Dictionary<string, object> result = new Dictionary<string, object>();
+            List<Dictionary<string, object>> resultado = new List<Dictionary<string, object>>();
+
+            try
+            {
+                if (this.OpenConnection() == true)
+                {
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                    return returnObjectList(dataReader);
+                }
+                else
+                {
+                    return resultado;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -274,6 +295,22 @@ namespace nsMultiDBService
                 result = "{}";
             }
             return result;
+        }
+
+        public List<Dictionary<string, object> > returnObjectList(MySqlDataReader dataReader)
+        {
+            List<Dictionary<string, object> > resultados = new List<Dictionary<string, object> >();
+            while (dataReader.Read())
+            {
+                Dictionary<string, object> resultado = new Dictionary<string, object>();
+                for (int i = 0; i < dataReader.FieldCount; i++)
+                {
+                    resultado.Add(dataReader.GetName(i), dataReader.GetValue(i));
+                }
+                resultados.Add(resultado);
+            }
+
+            return resultados;
         }
     }
 }
