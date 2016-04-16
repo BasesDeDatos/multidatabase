@@ -243,7 +243,7 @@
             </div>
 
         </div>
-
+        <!--- DROP TABLE-->
         <div class="col-md-3">
             <div class="panel panel-default">
 
@@ -263,14 +263,54 @@
                                     data-loading-text="
                                 <i class='fa fa-circle-o-notch fa-spin'></i>"
                                 >
-                                
-
+                                DROP
                             </button>
                         </div>
                     </div>
                 </form>
 
             </div>
+        </div>
+        <!-- UPDATE COLUMN-->
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Update Column</div>
+                <form ng-submit="">
+                    <div class="panel-body">
+                        <label>Connection</label>
+                        <select class="form-control">
+                            <option>Connection</option>
+                        </select>
+                        <label>Database</label>
+                        <select class="form-control">
+                            <option>DB</option>
+                        </select>
+                        <label>Table</label>
+                        <select class="form-control">
+                            <option>Table</option>
+                        </select>
+                        <label>Column</label>
+                        <select class="form-control">
+                            <option>Column</option>
+                        </select>
+                        <label>New data</label>
+                        <input type="text" />
+
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row text-center">
+                            <button type="submit"
+                                    class="btn btn-danger"
+                                    data-loading-text="
+                                <i class='fa fa-circle-o-notch fa-spin'></i>"
+                                >
+                        UPDATE!
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
         </div>
 
         <div class="clearfix"></div>
@@ -405,10 +445,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--JOIN DIV -->
-                    <div id="join_div">
-
-                    </div>
                 </div>
 
             </div>
@@ -427,4 +463,37 @@
         </form>
 
     </div>
+</section>
+<!-- PARA INSERTAR DATOS-->
+<section>
+    <h4>INSERT DATA</h4>
+    <label> Connection</label>
+    <select>
+        <option>Connection</option>
+    </select>
+    <label>Data Base</label>
+    <select>
+        <option>DB</option>
+    </select>
+    <label>Table</label>
+    <select>
+        <option>Table</option>
+    </select>
+    <table class="table-bordered">
+        
+        <tr> <!-- Row del nombre de las columnas-->
+            <th>Column 1</th>
+            <th>Column 2</th>
+            <th>Column 3</th>
+        </tr>
+        <tr>
+
+        </tr>
+        <tr>
+
+        </tr>
+        <tr>
+
+        </tr>
+    </table>
 </section>
