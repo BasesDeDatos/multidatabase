@@ -219,7 +219,7 @@ namespace nsMultiDBService
             }
         }
 
-        public List<Dictionary<string, object>> Select3(string tableName, string conditional)
+        public List<Dictionary<string, object>> SelectListDictionary(string tableName, string conditional)
         {
             string query = "SELECT * " + "FROM " + tableName + " WHERE " + conditional + ";";
             List<Dictionary<string, object>> resultado = new List<Dictionary<string, object>>();

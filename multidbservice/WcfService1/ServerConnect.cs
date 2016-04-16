@@ -191,37 +191,23 @@ namespace nsMultiDBService
             }
         }
 
-        /*private ArrayList returnJSON(MySqlDataReader reader)
+        public List<Dictionary<string, object>> SelectListDictionary(string tableName, string conditional)
         {
+            string query = "SELECT * " + "FROM " + tableName + " WHERE " + conditional + ";";
+            List<Dictionary<string, object>> resultado = new List<Dictionary<string, object>>();
 
-            ArrayList list = new ArrayList();
-            int columnCount = reader.FieldCount;
-            while (reader.Read())
+            if (this.OpenConnection() == true)
             {
-                string result = "";
-                result += "{";
-                for (int x = 0; x < columnCount; x++)
-                {
-                    result += reader.GetName(x) + ":";
-                    string stringValue = "";
-                    if (!reader.IsDBNull(x))
-                    {
-                        stringValue = "'" + reader.GetValue(x).ToString() + "'";
-                    }
-                    else
-                    {
-                        stringValue = "NULL";
-                    }
-                    result += stringValue;
-                    if (x < columnCount - 1) result += ",";
-                }
-                result += "}";
+                SqlCommand cmd = new SqlCommand(query, connection);
+                SqlDataReader dataReader = cmd.ExecuteReader();
 
-                list.Add(result);
+                return returnObjectList(dataReader);
             }
-
-            return list;
-        }*/
+            else
+            {
+                return resultado;
+            }
+        }
 
         public string returnJSON(SqlDataReader reader)
         {
@@ -256,6 +242,22 @@ namespace nsMultiDBService
                 result = "{}";
             }
             return result;
+        }
+
+        public List<Dictionary<string, object>> returnObjectList(SqlDataReader dataReader)
+        {
+            List<Dictionary<string, object>> resultados = new List<Dictionary<string, object>>();
+            while (dataReader.Read())
+            {
+                Dictionary<string, object> resultado = new Dictionary<string, object>();
+                for (int i = 0; i < dataReader.FieldCount; i++)
+                {
+                    resultado.Add(dataReader.GetName(i), dataReader.GetValue(i));
+                }
+                resultados.Add(resultado);
+            }
+
+            return resultados;
         }
     }
 }

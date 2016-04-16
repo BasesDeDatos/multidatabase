@@ -164,34 +164,34 @@ namespace nsMultiDBService
                     List<Dictionary<string, object> > resultados = db.CallProcedure(procedure);
                     foreach (Dictionary<string, object> resultado in resultados)
                     {
-                        switch (resultado["database_type"].ToString())
-                        {
-                            case "mariaDB":
-                                int ID_tupla = Convert.ToInt32(resultado["ID_tupla"]);
-                                List<Dictionary<string, object>> dataQuery = executeQueryMaria(resultado);
-                                
-                                string column_name = resultado["column_name"].ToString();
-                                Dictionary<string, object> row = new Dictionary<string, object>();
-                                var value = dataQuery[0]["data"];
+                        List<Dictionary<string, object>> dataQuery = new List<Dictionary<string, object>>();
+                        Dictionary<string, object> row = new Dictionary<string, object>();
 
-                                if (listaResultados.TryGetValue(ID_tupla, out row))
-                                {
-                                    listaResultados[ID_tupla][column_name] = value;
-                                }
-                                else
-                                {
-                                    Dictionary<string, object> valor = new Dictionary<string, object>();
-                                    valor.Add(column_name, value);
-                                    listaResultados.Add(ID_tupla, valor);
-                                }
+                        int ID_tupla = Convert.ToInt32(resultado["ID_tupla"]);
+                        string column_name = resultado["column_name"].ToString();
+                        object value = new object();
+
+                        //Si la entrada ID_tupla no se ha agregado al diccionario, se crea una entrada Dictionary<string, object> y se agrega
+                        if (!listaResultados.TryGetValue(ID_tupla, out row))
+                        {
+                            Dictionary<string, object> valor = new Dictionary<string, object>();
+                            listaResultados.Add(ID_tupla, valor);
+                        }
+
+                        switch(resultado["database_type"].ToString()){
+                            case "mariaDB":
+                                dataQuery = executeQueryMaria(resultado);
+                                value = dataQuery[0]["data"];
                                 break;
                             case "SQLServer":
-                                //executeQueryServer(resultado);
+                                dataQuery = executeQueryServer(resultado);
+                                value = dataQuery[0]["data"];
                                 break;
                             case "mongoDB":
-                                //executeQueryMongo(resultado);
                                 break;
                         }
+
+                        listaResultados[ID_tupla][column_name] = value;
                     }
                 }
                 
@@ -211,12 +211,19 @@ namespace nsMultiDBService
             string pass = datos["pass"].ToString();
             string port = datos["port"].ToString();
 
-
             MariaConnect db = new MariaConnect(server, database, uid, pass, port);
+            return db.SelectListDictionary(datos["column_type"].ToString(), "data_id = " + datos["ID_data"]);
+        }
+        public List<Dictionary<string, object>> executeQueryServer(Dictionary<string, object> datos)
+        {
+            string server = datos["server"].ToString();
+            string database = "multidb_datos";
+            string uid = datos["user"].ToString();
+            string pass = datos["pass"].ToString();
+            string port = datos["port"].ToString();
 
-            Debug.WriteLine(server + database + uid + pass + port);
-
-            return db.Select3(datos["column_type"].ToString(), "data_id = " + datos["ID_data"]);
+            ServerConnect db = new ServerConnect(server, database, uid, pass, port);
+            return db.SelectListDictionary(datos["column_type"].ToString(), "data_id = " + datos["ID_data"]);
         }
     }
 
