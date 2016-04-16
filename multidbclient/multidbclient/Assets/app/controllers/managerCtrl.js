@@ -48,7 +48,7 @@
                 pass: $scope.pass,
                 server: $scope.server,
                 protocol: $scope.protocol,
-                port: $scope.protocol,
+                port: $scope.port,
                 alias: $scope.alias
             };
             web_services.post("addDatabase", params, $scope).finally(function () {
