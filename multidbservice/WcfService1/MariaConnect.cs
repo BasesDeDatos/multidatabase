@@ -250,12 +250,13 @@ namespace nsMultiDBService
                     MySqlCommand cmd = new MySqlCommand(query, connection);
                     MySqlDataReader dataReader = cmd.ExecuteReader();
 
-                    return returnObjectList(dataReader);
+                    resultado = returnObjectList(dataReader);
+
+                    dataReader.Close();
+                    this.CloseConnection();
+
                 }
-                else
-                {
-                    return resultado;
-                }
+                return resultado;
             }
             catch (Exception ex)
             {

@@ -151,14 +151,14 @@ namespace nsMultiDBService
                   UriTemplate = "executeQuery")]
         public string executeQuery(parametrosQuery query)
         {
-            try
-            {
+            //try
+            //{
                 MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
                 string procedure;
 
                 Dictionary<int, Dictionary<string, object>> listaResultados = new Dictionary<int, Dictionary<string, object>>();
 
-                foreach (tableXcolumn txc in query.tablesXcolumns)
+                foreach (tableXcolumn txc in query.tableXcolumn)
                 {
                     procedure= "get_tuplas(" + txc.column + ")";
                     List<Dictionary<string, object> > resultados = db.CallProcedure(procedure);
@@ -169,8 +169,21 @@ namespace nsMultiDBService
                             case "mariaDB":
                                 int ID_tupla = Convert.ToInt32(resultado["ID_tupla"]);
                                 List<Dictionary<string, object>> dataQuery = executeQueryMaria(resultado);
+                                
                                 string column_name = resultado["column_name"].ToString();
-                                listaResultados[ID_tupla][column_name] = dataQuery[0]["data"];
+                                Dictionary<string, object> row = new Dictionary<string, object>();
+                                var value = dataQuery[0]["data"];
+
+                                if (listaResultados.TryGetValue(ID_tupla, out row))
+                                {
+                                    listaResultados[ID_tupla][column_name] = value;
+                                }
+                                else
+                                {
+                                    Dictionary<string, object> valor = new Dictionary<string, object>();
+                                    valor.Add(column_name, value);
+                                    listaResultados.Add(ID_tupla, valor);
+                                }
                                 break;
                             case "SQLServer":
                                 //executeQueryServer(resultado);
@@ -183,11 +196,11 @@ namespace nsMultiDBService
                 }
                 
                 return JsonConvert.SerializeObject(listaResultados);
-            }
-            catch (Exception ex)
+            //}
+            /*catch (Exception ex)
             {
                 throw ex;
-            }
+            }*/
         }
 
         public List<Dictionary<string, object>> executeQueryMaria(Dictionary<string, object> datos)
@@ -201,11 +214,12 @@ namespace nsMultiDBService
 
             MariaConnect db = new MariaConnect(server, database, uid, pass, port);
 
+            Debug.WriteLine(server + database + uid + pass + port);
+
             return db.Select3(datos["column_type"].ToString(), "data_id = " + datos["ID_data"]);
         }
     }
 
-    public DictionaryToJson()
     public class parametrosAddDatabase
     {
         public string database_type { get; set; }
@@ -245,7 +259,7 @@ namespace nsMultiDBService
     public class parametrosQuery
     {
         public string source { get; set; }
-        public List<tableXcolumn> tablesXcolumns { get; set; }
+        public List<tableXcolumn> tableXcolumn { get; set; }
         public List<filter> filter { get; set; }
         public List<order> order { get; set; }
     }

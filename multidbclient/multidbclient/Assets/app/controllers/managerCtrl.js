@@ -195,8 +195,8 @@
         $('.query_where_columns').change(function () {
             switch ($(this).find("option:selected").attr("type")) {
                 case "string": $('.byValueFilter').attr("type", "text").attr("step", ""); break;
-                case "int": $('.byValueFilter').attr("type", "number").attr("step", "1"); break;
-                case "double": $('.byValueFilter').attr("type", "number").attr("step", "any"); break;
+                case "entero": $('.byValueFilter').attr("type", "number").attr("step", "1"); break;
+                case "doble": $('.byValueFilter').attr("type", "number").attr("step", "any"); break;
             }
         });
 
