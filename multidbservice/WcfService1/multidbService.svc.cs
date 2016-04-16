@@ -33,6 +33,18 @@ namespace nsMultiDBService
                                                    + addDatabase.port + "','"
                                                    + addDatabase.alias + "');");
 
+                /*
+                MongoConnect db2 = new MongoConnect("localhost", "multidb_datos", "prueba", "prueba", "27017");
+                var documnt = new BsonDocument
+                {
+                    {"Brand","Dell"},
+                    {"Price","400"},
+                    {"Ram","8GB"},
+                    {"HardDisk","1TB"},
+                    {"Screen","16inch"}
+                };
+                db2.Insert(documnt, "string");
+                */
                 return "{\"message\": \"Conexion creada exitosamente\"}";
             }
             catch (Exception ex)
@@ -186,6 +198,8 @@ namespace nsMultiDBService
                             value = dataQuery[0]["data"];
                             break;
                         case "mongoDB":
+                            dataQuery = executeQueryMongo(resultado);
+                            value = dataQuery[0]["data"];
                             break;
                     }
 
@@ -218,6 +232,18 @@ namespace nsMultiDBService
             ServerConnect db = new ServerConnect(server, database, uid, pass, port);
 
             return db.SelectListDictionary(datos["column_type"].ToString(), "data_id = " + datos["ID_data"]);
+        }
+        public List<Dictionary<string, object>> executeQueryMongo(Dictionary<string, object> datos)
+        {
+            string server = datos["server"].ToString();
+            string database = "multidb_datos";
+            string uid = datos["user"].ToString();
+            string pass = datos["pass"].ToString();
+            string port = datos["port"].ToString();
+
+            MongoConnect db = new MongoConnect(server, database, uid, pass, port);
+
+            return db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString());
         }
     }
 
