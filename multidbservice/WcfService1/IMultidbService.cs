@@ -33,7 +33,7 @@ namespace nsMultiDBService
 
 
         [OperationContract]
-        List<List<Dictionary<string, object>>> executeQuery(parametrosQuery query);
+        Dictionary<int, Dictionary<string, object>> executeQuery(parametrosQuery query);
 
         [OperationContract]
         List<Dictionary<string, object>> executeQueryMaria(Dictionary<string, object> datos);

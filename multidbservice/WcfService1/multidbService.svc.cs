@@ -149,13 +149,15 @@ namespace nsMultiDBService
                   ResponseFormat = WebMessageFormat.Json,
                   RequestFormat = WebMessageFormat.Json,
                   UriTemplate = "executeQuery")]
-        public List<List<Dictionary<string, object>>> executeQuery(parametrosQuery query)
+        public Dictionary<int, Dictionary<string, object>> executeQuery(parametrosQuery query)
         {
             try
             {
                 MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
                 string procedure;
-                List<List<Dictionary<string, object>>> listaResultados = new List<List<Dictionary<string, object>>>();
+
+                Dictionary<int, Dictionary<string, object>> listaResultados = new Dictionary<int, Dictionary<string, object>>();
+
                 foreach (tableXcolumn txc in query.tablesXcolumns)
                 {
                     procedure= "get_tuplas(" + txc.column + ")";
@@ -165,7 +167,10 @@ namespace nsMultiDBService
                         switch (resultado["database_type"].ToString())
                         {
                             case "mariaDB":
-                                listaResultados.Add(executeQueryMaria(resultado));
+                                int ID_tupla = Convert.ToInt32(resultado["ID_tupla"]);
+                                List<Dictionary<string, object>> dataQuery = executeQueryMaria(resultado);
+                                string column_name = resultado["column_name"].ToString();
+                                listaResultados[ID_tupla][column_name] = dataQuery[0]["data"];
                                 break;
                             case "SQLServer":
                                 //executeQueryServer(resultado);

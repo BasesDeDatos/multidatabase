@@ -42,7 +42,7 @@
                 }
             }
             catch (e) {
-                $scope.warningMessage = data;
+                $scope.warningMessage = e + " " + data;
                 $scope.showWarningMessage = true;
             }
 
