@@ -10,7 +10,7 @@ using MongoDB.Driver;
 using System.Data.SqlClient;
 using System.Collections;
 using System.Diagnostics;
-
+using Newtonsoft.Json;
 namespace nsMultiDBService
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "multiDBService" in code, svc and config file together.
@@ -149,7 +149,7 @@ namespace nsMultiDBService
                   ResponseFormat = WebMessageFormat.Json,
                   RequestFormat = WebMessageFormat.Json,
                   UriTemplate = "executeQuery")]
-        public Dictionary<int, Dictionary<string, object>> executeQuery(parametrosQuery query)
+        public string executeQuery(parametrosQuery query)
         {
             try
             {
@@ -181,7 +181,8 @@ namespace nsMultiDBService
                         }
                     }
                 }
-                return listaResultados;
+                
+                return JsonConvert.SerializeObject(listaResultados);
             }
             catch (Exception ex)
             {
@@ -204,6 +205,7 @@ namespace nsMultiDBService
         }
     }
 
+    public DictionaryToJson()
     public class parametrosAddDatabase
     {
         public string database_type { get; set; }
