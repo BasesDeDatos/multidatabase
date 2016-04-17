@@ -107,7 +107,6 @@ C:\Users\fede\Source\Repos\multidatabase2\multidbclient\multidbclient\bin\System
 C:\Users\fede\Source\Repos\multidatabase2\multidbclient\multidbclient\obj\Debug\MultiDBClient.csprojResolveAssemblyReference.cache
 C:\Users\fede\Source\Repos\multidatabase2\multidbclient\multidbclient\obj\Debug\multidbclient.dll
 C:\Users\fede\Source\Repos\multidatabase2\multidbclient\multidbclient\obj\Debug\multidbclient.pdb
-E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\bin\System.Web.Mvc.xml
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\bin\multidbclient.dll.config
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\bin\multidbclient.dll
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\bin\multidbclient.pdb
@@ -154,10 +153,12 @@ E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidb
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\bin\System.Web.Http.xml
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\bin\System.Web.Http.Owin.xml
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\bin\System.Web.Http.WebHost.xml
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\bin\System.Web.Mvc.xml
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\bin\System.Web.Razor.xml
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\bin\System.Web.WebPages.xml
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\bin\System.Web.WebPages.Deployment.xml
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\bin\System.Web.WebPages.Razor.xml
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\bin\System.Web.Optimization.xml
+E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\obj\Debug\MultiDBClient.csprojResolveAssemblyReference.cache
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\obj\Debug\multidbclient.dll
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbclient\multidbclient\obj\Debug\multidbclient.pdb
