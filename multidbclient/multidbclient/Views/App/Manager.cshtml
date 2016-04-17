@@ -316,7 +316,7 @@
 <section>
     <!-- QUERIES -->
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Queries</div>
 
@@ -441,55 +441,38 @@
 
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">INSERT DATA</div>
                 <div class="panel-body">
 
                     <form ng-submit="" id="formInsert">
                         <div class="input-group">
-                            <span class="input-group-addon">Connection</span>
-                            <select class="form-control">
-                                <option>Connection</option>
-                            </select>
-                        </div>
-                        <br />
-                        <div class="input-group">
-                            <span class="input-group-addon">Data Base</span>
-                            <select class="form-control">
-                                <option>DB</option>
+                            <select ng-model="source" class="query_DB form-control">
+                                <option value="">Data Base</option>
+                                <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
                             </select>
                         </div>
                         <br />
                         <div class="input-group">
                             <span class="input-group-addon">Table</span>
-                            <select class="form-control">
-                                <option>Table</option>
+                            <select class="query_table form-control">
+                                <option value="">Table</option>
+                                <option ng-repeat="table in tables" value="{{table.ID_table}}" class="{{table.ID_database}}">{{table.DB_name}}.{{table.table_name}}</option>
                             </select>
+                        </div>
                         </div>
                         <br />
                         <div class="center-block">
                             <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <!-- Row del nombre de las columnas-->
-                                        <th>Column 1</th>
-                                        <th>Column 2</th>
-                                        <th>Column 3</th>
+                                <thead> <!-- Se repiten llas columnas y se muetras el nombre-->
+                                    <tr ng-repeat="" id_column="{{column.ID}}">
+                                        {{column.column_name}}
                                     </tr>
                                 </thead>
 
-                                <tr>
-                                    <td>
-                                        <input type="number" />
-                                    </td>
-                                    <td>
-                                        <input type="text" />
-
-                                    </td>
-                                    <td>
-                                        <input type="number" />
-                                    </td>
+                                <tr ng-repeat=""> <!-- Se repite n columnas veces que tenga la tabla seleccionada-->
+                                   <td><input /></td> 
                                 </tr>
 
                             </table>
@@ -512,35 +495,28 @@
 
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">UPDATE DATA</div>
                 <div class="panel-body">
 
                     <form ng-submit="" id="formUpdate">
                         <div class="input-group">
-                            <span class="input-group-addon">Connection</span>
-                            <select class="form-control">
-                                <option>Connection</option>
-                            </select>
-                        </div>
-                        <br />
-                        <div class="input-group">
-                            <span class="input-group-addon">Data Base</span>
-                            <select class="form-control">
-                                <option>DB</option>
+                            <select ng-model="source" class="query_DB form-control">
+                                <option value="">Data Base</option>
+                                <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
                             </select>
                         </div>
                         <br />
                         <div class="input-group">
                             <span class="input-group-addon">Table</span>
-                            <select class="form-control">
-                                <option>Table</option>
+                            <select class="query_table form-control">
+                                <option value="">Table</option>
+                                <option ng-repeat="table in tables" value="{{table.ID_table}}" class="{{table.ID_database}}">{{table.DB_name}}.{{table.table_name}}</option>
                             </select>
                         </div>
                         <br />
-                        <div class="center-block">
-                            <table class="table table-bordered">
+                            <table class="table table-condensed  table-responsive">
                                 <thead>
                                     <tr>
                                         <!-- Row del nombre de las columnas-->
@@ -564,8 +540,6 @@
                                 </tr>
 
                             </table>
-                        </div>
-
                     </form>
                 </div>
 
@@ -586,6 +560,3 @@
     </div>
 </section>
 <!-- PARA INSERTAR DATOS-->
-<section>
-    
-</section>
