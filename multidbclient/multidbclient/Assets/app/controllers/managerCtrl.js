@@ -150,6 +150,23 @@
             });
         }
         
+        $scope.query_insertData = function () {
+            var params = {
+                source: $scope.source_insertData,
+                valueXcolumn: [],
+            }
+
+            $(".table_body_columnsInsert input").each(function () {
+                params.valueXcolumn.push({
+                    value: $(this).find("option:selected").attr("id_table"),
+                    column: $(this).find("option:selected").attr("id_column"),
+                })
+            });
+
+            web_services.post("executeQuery", params, $scope).finally(function () {
+                console.log("FINALLY QUERY!!!")
+            });
+        }
         $('#tablesModal').on('show.bs.modal', function (event) {
 
             var button = $(event.relatedTarget) // Button that triggered the modal
@@ -225,5 +242,23 @@
                 enableElements(el[i].children);
             }
         }
+        //Funcion que prepara el insert! jojojo 
+        $("#button_insertData").click(function () {
+            $(".insert_form").keyup(function () {
+                $(this).closest('tr').find("input").each(function () {
+                    alert(this.value)
+                });
+            });
+        });
+       
+        $('.query_table_insertdata').change(function () {
+            var id_tabla = $(this).val();
+            $(".query_columninsertdata").hide();
+            if (id_tabla != "") {
+                $(".query_columninsertdata." + id_tabla).show();
+            }
+        });
+        
     }
+   
 ])

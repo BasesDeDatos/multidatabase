@@ -317,13 +317,12 @@
 <section>
     <!-- QUERIES -->
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Queries</div>
 
                 <div class="panel-body">
                     <form ng-submit="executeQuery()" id="formQuery">
-
                         <!--query  -->
                         <div class="input-group">
                             <span class="input-group-addon">Query</span>
@@ -382,9 +381,7 @@
                                 <span class="input-group-addon btn btn-primary"
                                         id="basic-addon1"
                                         ng-click="addNewRowColumn()"
-                                        data-loading-text="
-                                    <i class='fa fa-circle-o-notch fa-spin'></i>"
-                                    >
+                                        data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                 </span>
                             </div>
@@ -442,14 +439,15 @@
 
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">INSERT DATA</div>
                 <div class="panel-body">
+                    <form ng-submit="query_insertData()" class="insert_form" id="insert_form">
 
-                    <form ng-submit="" id="formInsert">
+
                         <div class="input-group">
-                            <select ng-model="source" class="query_DB form-control">
+                            <select ng-model="source_insertData" class="query_DB form-control">
                                 <option value="">Data Base</option>
                                 <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
                             </select>
@@ -457,35 +455,38 @@
                         <br />
                         <div class="input-group">
                             <span class="input-group-addon">Table</span>
-                            <select class="query_table form-control">
+                            <select class="query_table_insertdata form-control" ng-model="table_datainsert">
                                 <option value="">Table</option>
                                 <option ng-repeat="table in tables" value="{{table.ID_table}}" class="{{table.ID_database}}">{{table.DB_name}}.{{table.table_name}}</option>
                             </select>
                         </div>
-                        </div>
+
                         <br />
-                        <div class="center-block">
-                            <table class="table table-bordered">
-                                <thead> <!-- Se repiten llas columnas y se muetras el nombre-->
-                                    <tr ng-repeat="" id_column="{{column.ID}}">
-                                        {{column.column_name}}
-                                    </tr>
-                                </thead>
-
-                                <tr ng-repeat=""> <!-- Se repite n columnas veces que tenga la tabla seleccionada-->
-                                   <td><input /></td> 
+                        <table class="table table-bordered table-responsive">
+                            <thead>
+                                <!-- Se repiten las columnas y se muestra el nombre-->
+                                <tr>
+                                    <td ng-repeat="column in columns" id_column="{{column.ID}}" class="query_columninsertdata {{column.ID_tabla}}" ng-show="table_datainsert">
+                                       <small> <strong>{{column.column_type}}</strong></small> {{column.column_name}} 
+                                    </td>
                                 </tr>
-
-                            </table>
-                        </div>
-
+                            </thead>
+                            <tbody class="table_body_columnsInsert">
+                                <!-- row de las inserciones -->
+                                <tr>
+                                    <td ng-repeat="column in columns" class="query_columninsertdata {{column.ID_tabla}}">
+                                        <input class="form-control" type="{{column.column_type == 'string'? 'text': 'number'}}" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </form>
                 </div>
-
                 <div class="panel-footer">
                     <div class="text-center">
-                        <button type="submit"
-                                form="formInsert"
+                        <button id="button_insertData"
+                                type="submit"
+                                form="insert_form"
                                 class="btn btn-primary"
                                 data-loading-text="
                             <i class='fa fa-circle-o-notch fa-spin'></i>">
@@ -494,16 +495,18 @@
                     </div>
                 </div>
 
+                
+
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">UPDATE DATA</div>
                 <div class="panel-body">
 
                     <form ng-submit="" id="formUpdate">
                         <div class="input-group">
-                            <select ng-model="source" class="query_DB form-control">
+                            <select ng-model="source_updatedata" class="query_DB form-control">
                                 <option value="">Data Base</option>
                                 <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
                             </select>
