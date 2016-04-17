@@ -168,7 +168,7 @@ namespace nsMultiDBService
 
                     //int ID_tupla = Convert.ToInt32(resultado["ID_tupla"]);
                     string ID_tupla = resultado["ID_tupla"].ToString();
-                    string column_name = resultado["column_name"].ToString();
+                    string column_name = resultado["table_name"].ToString() + "." + resultado["column_name"].ToString();
                     object value = new object();
 
                     //Si la entrada ID_tupla no se ha agregado al diccionario, se crea una entrada Dictionary<string, object> y se agrega
