@@ -587,10 +587,8 @@
             </div>
             <div class="modal-body">
                 <i ng-show="!queryResult" class="fa fa-circle-o-notch fa-spin fa-4x" style="width: 100%; text-align: center"></i>
-                <pre class="" ng-show="queryResult && ROW">
-                    {{queryResult}}
-                </pre>
-                <table class="table table-bordered table-hover" ng-show="queryResult && !ROW">
+                <pre class="" ng-show="queryResult && RAW == true" ng-bind-html-unsafe="queryResult"></pre>
+                <table class="table table-bordered table-hover" ng-show="queryResult &&  !RAW == true">
                     <thead>
                         <tr>
                             <th ng-repeat="column in columnsActive">{{column}}</th>
