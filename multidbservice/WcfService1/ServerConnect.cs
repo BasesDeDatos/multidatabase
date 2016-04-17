@@ -203,6 +203,7 @@ namespace nsMultiDBService
 
                 List<Dictionary<string, object>> resultList = returnObjectList(dataReader);
 
+                dataReader.Close();
                 this.CloseConnection();
 
                 return resultList;
