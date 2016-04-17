@@ -19,11 +19,11 @@
             console.log(data);
             try{
                 var data = jQuery.parseJSON(data);
-                $scope.warningMessage = "Rute: " + rute + " Status: " + data.message + data.error_description.replace(/["']{1}/gi, "");
+                $scope.warningMessage = "Rute: " + rute + " Status: " + data.message + data.message.replace(/["']{1}/gi, "");
                 $scope.showWarningMessage = true;
             }
             catch(e) {
-                $scope.warningMessage = "Rute: " + rute + " Status: " + data + data.error_description.replace(/["']{1}/gi, "");
+                $scope.warningMessage = "Rute: " + rute + " Status: " + data + data.replace(/["']{1}/gi, "");
                 $scope.showWarningMessage = true;
             }
         })

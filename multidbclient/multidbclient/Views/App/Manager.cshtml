@@ -350,7 +350,12 @@
                                 <div class="cont_query_table">
                                     <select class="query_table form-control">
                                         <option value="">Table</option>
-                                        <option ng-repeat="table in tables" value="{{table.ID_table}}" class="{{table.ID_database}}">{{table.DB_name}}.{{table.table_name}}</option>
+                                        <option ng-repeat="table in tables"
+                                                value="{{table.ID_table}}"
+                                                name_table="{{table.table_name}}"
+                                                class="{{table.ID_database}}">
+                                            {{table.DB_name}}.{{table.table_name}}
+                                        </option>
                                     </select>
                                 </div>
                                 <span class="table_ input-group-addon btn btn-primary"
@@ -367,33 +372,36 @@
                         <hr />
                         <!-- COLUMNA -->
                         <div class="query_columns">
-                            <span class="input-group-addon">Column</span>
-                            <div class="cont_query_column">
-                                <select class="query_column form-control">
-                                    <option value="">column</option>
-                                    <option ng-repeat="column in columns"
-                                            value="{{column.ID}}"
-                                            class="{{column.ID_tabla}}"
-                                            id_table="{{column.ID_tabla}}"
-                                            id_column="{{column.ID}}">
-                                        {{column.table_name}}.{{column.column_name}}
-                                    </option>
-                                </select>
+                            <div class="input-group">
+
+                                <span class="input-group-addon">Column</span>
+                                <div class="cont_query_column">
+                                    <select class="query_column form-control">
+                                        <option value="">column</option>
+                                        <option ng-repeat="column in columns"
+                                                value="{{column.ID}}"
+                                                class="{{column.ID_tabla}}"
+                                                id_table="{{column.ID_tabla}}"
+                                                name_table="{{column.table_name}}"
+                                                id_column="{{column.ID}}"
+                                                name_column="{{column.column_name}}">
+                                            {{column.table_name}}.{{column.column_name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <span class="input-group-addon btn btn-primary"
+                                      id="basic-addon1"
+                                      ng-click="addNewRowColumn()"
+                                      data-loading-text="
+                                    <i class='fa fa-circle-o-notch fa-spin'></i>">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </span>
+                                <div class="cont_new_query_column"></div>
                             </div>
-                            <span class="input-group-addon btn btn-primary"
-                                  id="basic-addon1"
-                                  ng-click="addNewRowColumn()"
-                                  data-loading-text="
-                                <i class='fa fa-circle-o-notch fa-spin'></i>">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                            </span>
-                            <div class="cont_new_query_column"></div>
                         </div>
 
-                    </div>
                         <hr />
                         <!-- Where -->
-                        
                         <div id="where_div" class="margin-top-5">
                             <div class="input-group margin-top-5">
                                 <span class="input-group-addon">Where</span>
@@ -578,8 +586,21 @@
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
-
-            </div>
+                <i ng-show="!queryResult" class="fa fa-circle-o-notch fa-spin fa-4x" style="width: 100%; text-align: center"></i>
+                <div ng-show="queryResult">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="header in queryResult.headers">{{header}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="row in queryResult.rows">
+                                <td ng-repeat="column in row">{{column}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>

@@ -113,13 +113,14 @@
         $scope.addNewRowTable = function () {
             new_row = $(".cont_query_table").html();
             $(".cont_new_query_table").append("<div class='margin-top-5'>" + new_row + "</div>");
-            $(".cont_new_query_table .query_table").last().find("select").val("");
+            $(".cont_new_query_table .query_table").last().val("");
         }
 
         $scope.addNewRowColumn = function () {
             new_row = $(".cont_query_column").html();
             $(".cont_new_query_column").append("<div class='margin-top-5'>" + new_row + "</div>");
             $(".cont_new_query_column .query_column").last().val("");
+            init_eventosChange_query;
         }
 
         $scope.addNewRowWhere = function () {
@@ -145,7 +146,8 @@
                 })
             });
 
-            web_services.post("executeQuery", params, $scope).finally(function () {
+            web_services.post("executeQuery", params, $scope).then(function (result) {
+                $scope.queryResult = result;
                 console.log("FINALLY QUERY!!!")
             });
         }
@@ -196,18 +198,41 @@
 
             var $scope = angular.element(modal).scope();
             $scope.$apply(function () {
+                $scope.queryResult = false;
                 tables = "";
+                tables_len = $(".query_columns .query_column").length;
                 columns = "";
+                columns_len = $(".query_tables .query_table").length;
+                where = ";";
+                $(".query_tables .query_table").each(function (index, element) {
+                    tables +=
+                        "    " + $(this).find("option:selected").attr("name_table") + (tables_len - 1 == index ? "<br>" : "<br>INNER JOIN <br>")
+                });
+
+                $(".query_columns .query_column").each(function (index, element) {
+                    columns +=
+                        "    " + $(this).find("option:selected").attr("name_table")
+                        + "." +
+                        $(this).find("option:selected").attr("name_column") + (columns_len - 1 == index ? "<br>" : ", <br>")
+                });
+
+                if ($('#where_check').is(':checked')) {
+                    where = "<br>WHERE " + $scope.columnFilter + " " + $scope.methodFilter + " " + $scope.byValueFilter + ";";
+                }
 
                 modal.find('.modal-title')
-                    .html(
-                        'Result of <br>' +
-                            '<pre>' + 
-                                '<code>' +
-                                    $scope.query.toUpperCase() + " <br>" +
-                                    'FROM <br>' +
-                                '</code>' +
-                            '</pre>');
+                .html(
+                    'Result of <br>' +
+                    '<pre>' + 
+                        '<code>' +
+                            $scope.query.toUpperCase() + " <br>" +
+                            columns  +
+                            '<br>FROM <br>' +
+                            tables +
+                            where +
+                        '</code>' +
+                    '</pre>'
+                );
             });
         })
 
