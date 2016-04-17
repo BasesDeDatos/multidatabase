@@ -325,15 +325,27 @@
                 enableElements(el[i].children);
             }
         }
-        //Funcion que prepara el insert! jojojo 
-        $("#button_insertData").click(function () {
-            $(".insert_form").keyup(function () {
-                $(this).closest('tr').find("input").each(function () {
-                    alert(this.value)
-                });
-            });
-        });
        
+        $('.actualizar_datacolumn').change(function () {
+            var typeColumn = $(this).find("option:selected").attr("type");
+            $("#input_actualizar").hide();
+            if (typeColumn != "") {
+                switch (typeColumn) {
+                    case "string": $("#input_actualizar").show().attr("type", "text").attr("step", ""); break;
+                    case "entero": $("#input_actualizar").show().attr("type", "number").attr("step", "1"); break;
+                    case "doble": $("#input_actualizar").show().attr("type", "number").attr("step", "any"); break;
+                }
+            }
+        });
+
+        $('.query_table_insertdata').change(function () {
+            var id_tabla = $(this).val();
+            $(".query_columninsertdata").hide();
+            if (id_tabla != "") {
+                $(".query_columninsertdata." + id_tabla).show();
+            }
+        });
+
         $('.actualizar_datacolumn').change(function () {
             var typeColumn = $(this).find("option:selected").attr("type");
             $("#input_actualizar").hide();

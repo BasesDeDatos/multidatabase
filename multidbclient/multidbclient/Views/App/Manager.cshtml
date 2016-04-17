@@ -493,21 +493,20 @@
                             <thead>
                                 <!-- Se repiten las columnas y se muestra el nombre-->
                                 <tr>
-                                    <td ng-repeat="column in columns" id_column="{{column.ID}}" class="query_columninsertdata {{column.ID_tabla}}" ng-show="table_datainsert">
-                                       <small> <strong>{{column.column_type}}</strong></small> {{column.column_name}} 
+                                    <td ng-repeat="column in columns" id_column="{{column.ID}}" class="query_columninsertdata {{column.ID_tabla}}" ng-show="table_datainsert" style="display: none;">
+                                        <small> <strong>{{column.column_type}}</strong></small> {{column.column_name}}
                                     </td>
                                 </tr>
                             </thead>
                             <tbody class="table_body_columnsInsert">
                                 <!-- row de las inserciones -->
                                 <tr>
-                                    <td ng-repeat="column in columns" class="query_columninsertdata {{column.ID_tabla}}">
+                                    <td ng-repeat="column in columns" class="query_columninsertdata {{column.ID_tabla}}" style="display: none;">
                                         <input id_column="{{column.ID}}"
                                                class="form-control"
                                                type="{{column.column_type == 'string'? 'text': 'number'}}"
-                                               step="{{column.column_type == 'entero'? '1': 'any'}}" 
-                                               ng-required="column.column_null == 1" 
-                                               />
+                                               step="{{column.column_type == 'entero'? '1': 'any'}}"
+                                               ng-required="{{column.column_null == 1}}" />
                                     </td>
                                 </tr>
                             </tbody>
@@ -516,8 +515,7 @@
                 </div>
                 <div class="panel-footer">
                     <div class="text-center">
-                        <button id="button_insertData"
-                                type="submit"
+                        <button type="submit"
                                 form="insert_form"
                                 class="btn btn-primary"
                                 data-loading-text="
@@ -535,9 +533,9 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">UPDATE DATA</div>
+                
                 <div class="panel-body">
-
-                    <form ng-submit="queryAcutalizar" id="formUpdate">
+                    <form ng-submit="queryAcutalizar()" id="formUpdate">
                         <div class="input-group">
                             <span class="input-group-addon">Source</span>
                             <select ng-model="source_actualizar" class="query_DB form-control">
