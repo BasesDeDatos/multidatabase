@@ -489,7 +489,7 @@
                                 <!-- row de las inserciones -->
                                 <tr>
                                     <td ng-repeat="column in columns" class="query_columninsertdata {{column.ID_tabla}}">
-                                        <input class="form-control" type="{{column.column_type == 'string'? 'text': 'number'}}" />
+                                        <input id_column="{{column.ID}}" class="form-control" type="{{column.column_type == 'string'? 'text': 'number'}}" />
                                     </td>
                                 </tr>
                             </tbody>

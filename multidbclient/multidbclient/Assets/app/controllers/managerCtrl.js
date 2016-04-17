@@ -157,12 +157,15 @@
                 source: $scope.source_insertData,
                 valueXcolumn: [],
             }
-
+            
             $(".table_body_columnsInsert input").each(function () {
-                params.valueXcolumn.push({
-                    value: $(this).find("option:selected").attr("id_table"),
-                    column: $(this).find("option:selected").attr("id_column"),
+                if($(this).is(':visible') ){
+                    params.valueXcolumn.push({
+                    value: $(this).val(),
+                    column: $(this).attr("id_column"),
                 })
+                }
+                
             });
 
             web_services.post("executeQuery", params, $scope).finally(function () {
