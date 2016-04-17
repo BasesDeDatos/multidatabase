@@ -185,6 +185,33 @@
             modal.find('.modal-title').text('Tables of ' + database_name)
         })
 
+        $('#queryModal').on('show.bs.modal', function (event) {
+
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var database_ID = button.data('database_id') // Extract info from data-* attributes
+            var database_name = button.data('database_name')
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+
+            var $scope = angular.element(modal).scope();
+            $scope.$apply(function () {
+                tables = "";
+                columns = "";
+
+                modal.find('.modal-title')
+                    .html(
+                        'Result of <br>' +
+                            '<pre>' + 
+                                '<code>' +
+                                    $scope.query.toUpperCase() + " <br>" +
+                                    'FROM <br>' +
+                                '</code>' +
+                            '</pre>');
+            });
+        })
+
+
         init_eventosChange_query();
         function init_eventosChange_query(){
             $(".query_DB").change(function () {
