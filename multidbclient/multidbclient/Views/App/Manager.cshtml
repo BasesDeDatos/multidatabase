@@ -479,7 +479,7 @@
                                 <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
                             </select>
                         </div>
-                        <hr />
+                        <br />
                         <div class="input-group">
                             <span class="input-group-addon">Table</span>
                             <select class="query_table_insertdata form-control" ng-model="table_datainsert">
@@ -537,32 +537,55 @@
                 <div class="panel-heading">UPDATE DATA</div>
                 <div class="panel-body">
 
-                    <form ng-submit="" id="formUpdate">
+                    <form ng-submit="queryAcutalizar" id="formUpdate">
                         <div class="input-group">
                             <span class="input-group-addon">Source</span>
-                            <select ng-model="source_update" class="query_DB form-control">
+                            <select ng-model="source_actualizar" class="query_DB form-control">
                                 <option value="">Data Base</option>
                                 <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
                             </select>
                         </div>
-                        <hr />
+                        <br />
                         <div class="input-group">
                             <span class="input-group-addon">Table</span>
-                            <select class="query_table form-control">
+                            <select ng-form="table_actualizar" class="query_table form-control">
                                 <option value="">Table</option>
                                 <option ng-repeat="table in tables" value="{{table.ID_table}}" class="{{table.ID_database}}">{{table.DB_name}}.{{table.table_name}}</option>
                             </select>
                         </div>
-                        <hr />
+                        <br />
                         <div class="input-group">
                             <span class="input-group-addon">Column</span>
-                            <select ng-model="columnFilteractualizar" class="actualizar_datacolumn query_where_columns query_column form-control">
+                            <select ng-model="column_actualizar" class="actualizar_datacolumn query_where_columns query_column form-control">
                                 <option value="">column</option>
                                 <option ng-repeat="column in columns" type="{{column.column_type}}" value="{{column.ID}}" class="{{column.ID_tabla}}">({{column.column_type}})  {{column.table_name}}.{{column.column_name}}</option>
                             </select>
                         </div>
                         <br />
-                       <input/> 
+                        <div class="input-group">
+                            <span class="input-group-addon">New Value</span>
+                            <input ng-model="value_actualizar" class="form-control" id="input_actualizar" />
+                        </div>
+                        
+                        <hr />
+                        <div class="input-group margin-top-5">
+                            <span class="input-group-addon">Where</span>
+
+                            <select  ng-model="columnFilter_actualizar" class="query_where_columns query_column form-control">
+                                <option value="">column</option>
+                                <option ng-repeat="column in columns" type="{{column.column_type}}" value="{{column.ID}}" class="{{column.ID_tabla}}">({{column.column_type}})  {{column.table_name}}.{{column.column_name}}</option>
+                            </select>
+
+                            <select  ng-model="methodFilter_actualizar" class="input-group-addon text-center form-control">
+                                <option value="=">=</option>
+                                <option value="!=">!=</option>
+                                <option value="<"><</option>
+                                <option value=">">></option>
+                            </select>
+                            
+                            <input type="text" ng-model="byValueFilter_actualizar" class="byValueFilter form-control" >
+
+                        </div>
                     </form>
                 </div>
 

@@ -178,6 +178,28 @@
                 console.log("FINALLY QUERY!!!")
             });
         }
+
+        $scope.queryAcutalizar = function () {
+            var params = {
+                source: $scope.source_actualizar,
+                table: $scope.table_actualizar,
+                column: $scope.columnFilteractualizar,
+                value: $scope.value_actualizar,
+
+                filter: { //where 
+                    column: $scope.columnFilter_actualizar,
+                    method: $scope.methodFilter_actualizar,
+                    byValue: $scope.byValueFilter_actualizar,
+                }
+            }
+
+            $scope.columnsActive = [];
+            web_services.post("updateQuery", params, $scope).then(function (result) {
+            $scope.queryResult = JSON.stringify(result, null, 4);
+            console.log("FINALLY QUERY!!!")
+            });
+    }
+
         $('#tablesModal').on('show.bs.modal', function (event) {
 
             var button = $(event.relatedTarget) // Button that triggered the modal
@@ -312,11 +334,15 @@
             });
         });
        
-        $('.query_table_insertdata').change(function () {
-            var id_tabla = $(this).val();
-            $(".query_columninsertdata").hide();
-            if (id_tabla != "") {
-                $(".query_columninsertdata." + id_tabla).show();
+        $('.actualizar_datacolumn').change(function () {
+            var typeColumn = $(this).find("option:selected").attr("type");
+            $("#input_actualizar").hide();
+            if (typeColumn != "") {
+                switch (typeColumn) {
+                    case "string": $("#input_actualizar").show().attr("type", "text").attr("step", ""); break;
+                    case "entero": $("#input_actualizar").show().attr("type", "number").attr("step", "1"); break;
+                    case "doble": $("#input_actualizar").show().attr("type", "number").attr("step", "any"); break;
+                }
             }
         });
         
