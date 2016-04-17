@@ -201,7 +201,11 @@ namespace nsMultiDBService
                 SqlCommand cmd = new SqlCommand(query, connection);
                 SqlDataReader dataReader = cmd.ExecuteReader();
 
-                return returnObjectList(dataReader);
+                List<Dictionary<string, object>> resultList = returnObjectList(dataReader);
+
+                this.CloseConnection();
+
+                return resultList;
             }
             else
             {

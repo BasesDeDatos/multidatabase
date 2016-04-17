@@ -180,17 +180,39 @@ namespace nsMultiDBService
 
                     switch(resultado["database_type"].ToString()){
                         case "mariaDB":
-                            dataQuery = executeQueryMaria(resultado);
-                            value = dataQuery[0]["data"];
-                            break;
+                            try
+                            {
+                                dataQuery = executeQueryMaria(resultado);
+                                value = dataQuery[0]["data"];
+                                break;
+                            }
+                            catch
+                            {
+                                break;
+                            }
+                            
                         case "SQLServer":
-                            dataQuery = executeQueryServer(resultado);
-                            value = dataQuery[0]["data"];
-                            break;
+                            try
+                            {
+                                dataQuery = executeQueryServer(resultado);
+                                value = dataQuery[0]["data"];
+                                break;
+                            }
+                            catch
+                            {
+                                break;
+                            }
                         case "mongoDB":
-                            dataQuery = executeQueryMongo(resultado);
-                            value = dataQuery[0]["data"];
-                            break;
+                            try
+                            {
+                                dataQuery = executeQueryMongo(resultado);
+                                value = dataQuery[0]["data"];
+                                break;
+                            }
+                            catch
+                            {
+                                break;
+                            }
                     }
 
                     listaResultados[ID_tupla][column_name] = value;

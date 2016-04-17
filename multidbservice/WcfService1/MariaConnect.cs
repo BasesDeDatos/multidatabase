@@ -229,7 +229,11 @@ namespace nsMultiDBService
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
-                return returnObjectList(dataReader);
+                List < Dictionary < string, object>> resultList = returnObjectList(dataReader);
+
+                this.CloseConnection();
+
+                return resultList;
             }
             else
             {
