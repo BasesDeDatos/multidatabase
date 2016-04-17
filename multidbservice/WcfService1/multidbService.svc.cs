@@ -166,7 +166,8 @@ namespace nsMultiDBService
             MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
             string procedure;
 
-            Dictionary<int, Dictionary<string, object>> listaResultados = new Dictionary<int, Dictionary<string, object>>();
+            //Dictionary<int, Dictionary<string, object>> listaResultados = new Dictionary<int, Dictionary<string, object>>();
+            Dictionary<string, Dictionary<string, object>> listaResultados = new Dictionary<string, Dictionary<string, object>>();
 
             foreach (tableXcolumn txc in query.tableXcolumn)
             {
@@ -177,7 +178,8 @@ namespace nsMultiDBService
                     List<Dictionary<string, object>> dataQuery = new List<Dictionary<string, object>>();
                     Dictionary<string, object> row = new Dictionary<string, object>();
 
-                    int ID_tupla = Convert.ToInt32(resultado["ID_tupla"]);
+                    //int ID_tupla = Convert.ToInt32(resultado["ID_tupla"]);
+                    string ID_tupla = resultado["ID_tupla"].ToString();
                     string column_name = resultado["column_name"].ToString();
                     object value = new object();
 
@@ -208,6 +210,43 @@ namespace nsMultiDBService
             }
                 
             return JsonConvert.SerializeObject(listaResultados);
+        }
+
+        [WebInvoke(Method = "POST",
+                  ResponseFormat = WebMessageFormat.Json,
+                  RequestFormat = WebMessageFormat.Json,
+                  UriTemplate = "insertRow")]
+        public string insertRow(parametrosInsert insert)
+        {
+            try
+            {
+                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
+                //int row_id = Guid.NewGuid().GetHashCode();
+                string row_id = generateID();
+                foreach (valueXcolum valorXcolumna in insert.valueXcolumn)
+                {
+                    var data_id = db.GetValueFunction("add_tupla('" + row_id + "', '" + valorXcolumna.column + "');");
+                    string procedure = "get_connection(" + valorXcolumna.column + ");";
+                    List<Dictionary<string, object>> conexion = db.CallProcedure(procedure);
+                    switch (conexion[0]["database_type"].ToString())
+                    {
+                        case "mariaDB":
+                            insertMaria(conexion[0], valorXcolumna.value, data_id);
+                            break;
+                        case "SQLServer":
+                            
+                            break;
+                        case "mongoDB":
+                            
+                            break;
+                    }
+                }
+                return "{\"message\": \"" + "SE INSERTO LA FILA EXITOSAMENTE!" + "\"}";
+            }
+            catch (Exception ex)
+            {
+                return "{\"messageError\": \"" + ex.ToString() + "\"}";
+            }
         }
 
         public List<Dictionary<string, object>> executeQueryMaria(Dictionary<string, object> datos)
@@ -244,6 +283,61 @@ namespace nsMultiDBService
             MongoConnect db = new MongoConnect(server, database, uid, pass, port);
 
             return db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString());
+        }
+
+        public bool insertMaria(Dictionary<string, object> conexion, object dato, int data_id)
+        {
+            string server = conexion["server"].ToString();
+            string database = "multidb_datos";
+            string uid = conexion["user"].ToString();
+            string pass = conexion["pass"].ToString();
+            string port = conexion["port"].ToString();
+
+            MariaConnect db = new MariaConnect(server, database, uid, pass, port);
+
+            try
+            { 
+                //for (int i = 0; i < datos.Count; i++){
+                    db.NonQuery("INSERT INTO " + conexion["columna"] + "(data_id, data) VALUES ('" + data_id + "', '" + dato.ToString() + "');");
+                //}
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public List<Dictionary<string, object>> insertServer(Dictionary<string, object> datos)
+        {
+            string server = datos["server"].ToString();
+            string database = "multidb_datos";
+            string uid = datos["user"].ToString();
+            string pass = datos["pass"].ToString();
+            string port = datos["port"].ToString();
+
+            MongoConnect db = new MongoConnect(server, database, uid, pass, port);
+
+            return db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString());
+        }
+
+        public List<Dictionary<string, object>> insertMongo(Dictionary<string, object> datos)
+        {
+            string server = datos["server"].ToString();
+            string database = "multidb_datos";
+            string uid = datos["user"].ToString();
+            string pass = datos["pass"].ToString();
+            string port = datos["port"].ToString();
+
+            MongoConnect db = new MongoConnect(server, database, uid, pass, port);
+
+            return db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString());
+        }
+
+
+        public string generateID()
+        {
+            return Guid.NewGuid().ToString("N");
         }
     }
 
@@ -310,4 +404,15 @@ namespace nsMultiDBService
         public string byValue { get; set; }
     }
 
+    public class parametrosInsert
+    {
+        public string source { get; set; }
+        public List<valueXcolum> valueXcolumn { get; set; }
+    }
+
+    public class valueXcolum
+    {
+        public string value { get; set; }
+        public string column { get; set; }
+    }
 }

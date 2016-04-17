@@ -168,7 +168,7 @@
                 
             });
 
-            web_services.post("executeQuery", params, $scope).finally(function () {
+            web_services.post("insertRow", params, $scope).finally(function () {
                 console.log("FINALLY QUERY!!!")
             });
         }
