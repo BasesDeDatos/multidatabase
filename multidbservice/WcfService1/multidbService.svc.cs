@@ -33,18 +33,6 @@ namespace nsMultiDBService
                                                    + addDatabase.port + "','"
                                                    + addDatabase.alias + "');");
 
-                /*
-                MongoConnect db2 = new MongoConnect("localhost", "multidb_datos", "prueba", "prueba", "27017");
-                var documnt = new BsonDocument
-                {
-                    {"Brand","Dell"},
-                    {"Price","400"},
-                    {"Ram","8GB"},
-                    {"HardDisk","1TB"},
-                    {"Screen","16inch"}
-                };
-                db2.Insert(documnt, "string");
-                */
                 return "{\"message\": \"Conexion creada exitosamente\"}";
             }
             catch (Exception ex)
