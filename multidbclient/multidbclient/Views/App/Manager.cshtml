@@ -472,7 +472,6 @@
                 <div class="panel-body">
                     <form ng-submit="query_insertData()" class="insert_form" id="insert_form">
 
-
                         <div class="input-group">
                             <span class="input-group-addon">Source</span>
                             <select ng-model="source_insertData" class="query_DB form-control">
@@ -557,13 +556,13 @@
                         <hr />
                         <div class="input-group">
                             <span class="input-group-addon">Column</span>
-                            <select ng-model="columnFilter" class="query_where_columns query_column form-control">
+                            <select ng-model="columnFilteractualizar" class="actualizar_datacolumn query_where_columns query_column form-control">
                                 <option value="">column</option>
                                 <option ng-repeat="column in columns" type="{{column.column_type}}" value="{{column.ID}}" class="{{column.ID_tabla}}">({{column.column_type}})  {{column.table_name}}.{{column.column_name}}</option>
                             </select>
                         </div>
                         <br />
-                       <input /> 
+                       <input/> 
                     </form>
                 </div>
 
@@ -574,7 +573,7 @@
                                 class="btn btn-primary"
                                 data-loading-text="
                             <i class='fa fa-circle-o-notch fa-spin'></i>">
-                            INSERT
+                            UPDATE
                         </button>
                     </div>
                 </div>
