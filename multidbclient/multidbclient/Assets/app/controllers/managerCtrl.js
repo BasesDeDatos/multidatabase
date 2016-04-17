@@ -65,7 +65,6 @@
                     $scope.databases = response; //Assign data received to $scope.data
                 });
             });
-                
         }
             
         $scope.createTable = function () {
@@ -99,6 +98,10 @@
                     $scope.tables = response; //Assign data received to $scope.data
                 });
             });
+        }
+        $scope.dropTableModal = function (ID_table) {
+            $scope.drop_table_ID = ID_table;
+            $scope.dropTable();
         }
 
         $scope.addNewRow = function () {

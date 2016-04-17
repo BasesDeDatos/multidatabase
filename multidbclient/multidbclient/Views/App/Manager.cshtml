@@ -74,17 +74,17 @@
                                         <!--VIENE LA LISTA -->
                                         <ul class="list-group">
                                             <li class="list-group-item" ng-repeat="column in columns" ng-show="column.ID_tabla == table.ID_table"><strong><small>( {{ column.column_type}} )</small></strong> {{ column.column_name}}</li>
-
                                         </ul>
                                     </div>
                                     <div class="panel-footer">
                                         <div class="row text-center">
-                                            <form ng-submit="dropTable()">
-                                                <input type="hidden" ng-model="drop_table_ID" value="{{table.ID_table}}">
-                                                <button type="submit" class="btn btn-danger" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">
-                                                    DROP
-                                                </button>
-                                            </form>
+                                            <button ng-click="dropTableModal(table.ID_table)"
+                                                    type="button"
+                                                    class="btn btn-danger"
+                                                    data-loading-text="
+                                                <i class='fa fa-circle-o-notch fa-spin'></i>">
+                                                DROP
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -267,10 +267,10 @@
 
             </div>
         </div>
-        <!-- UPDATE COLUMN-->
+        <!-- RENAME COLUMN-->
         <div class="col-md-3">
             <div class="panel panel-default">
-                <div class="panel-heading">Update Column</div>
+                <div class="panel-heading">Rename Column</div>
                 <form ng-submit="">
                     <div class="panel-body">
                         <label>Connection</label>
@@ -289,7 +289,7 @@
                         <select class="form-control">
                             <option>Column</option>
                         </select>
-                        <label>New data</label>
+                        <label>New Name</label>
                         <input type="text" />
 
                     </div>
@@ -324,16 +324,16 @@
                     <form ng-submit="executeQuery()" id="formQuery">
 
                         <!--query  -->
-                        <div class="input-group">
+                        <!--div class="input-group">
                             <span class="input-group-addon">Query</span>
-                            <select ng-model="query" class="form-control">
+                            <select class="form-control">
                                 <option value="select">select</option>
                                 <option value="delete">delete</option>
                                 <option value="update">update</option>
-                                <option value="drop">drop</option>
                             </select>
-                        </div>
-                        <br />
+                        </!--div-->
+                        <input type="hidden" ng-model="query" name="query" ng-value="select" required="true" />
+
                         <!-- DATABASE -->
                         <div class="input-group">
                             <span class="input-group-addon">Source</span>
@@ -565,7 +565,6 @@
 
                             </table>
                         </div>
-
                     </form>
                 </div>
 
