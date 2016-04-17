@@ -429,8 +429,10 @@
                             </div>
                         </div>
                         <hr />
-                        <input type="checkbox" id="where_check" value="value" />
+                        <input id="chk" type="checkbox" id="where_check" value="value" />
                         <label for="chk">Where? </label>
+                        <input id="RAW" type="checkbox" ng-model="RAW" value="true" />
+                        <label for="RAW">RAW? </label>
                     </form>
                 </div>
 
@@ -585,7 +587,10 @@
             </div>
             <div class="modal-body">
                 <i ng-show="!queryResult" class="fa fa-circle-o-notch fa-spin fa-4x" style="width: 100%; text-align: center"></i>
-                <table class="table table-bordered table-hover" ng-show="queryResult">
+                <pre class="" ng-show="queryResult && ROW">
+                    {{queryResult}}
+                </pre>
+                <table class="table table-bordered table-hover" ng-show="queryResult && !ROW">
                     <thead>
                         <tr>
                             <th ng-repeat="column in columnsActive">{{column}}</th>

@@ -150,7 +150,11 @@
             });
 
             web_services.post("executeQuery", params, $scope).then(function (result) {
-                $scope.queryResult = result;
+                if ($scope.RAW === true) {
+                    $scope.queryResult = JSON.stringify(result);
+                } else {
+                    $scope.queryResult = result;
+                }
                 console.log("FINALLY QUERY!!!")
             });
         }
