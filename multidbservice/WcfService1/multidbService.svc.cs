@@ -156,6 +156,7 @@ namespace nsMultiDBService
 
             //Dictionary<int, Dictionary<string, object>> listaResultados = new Dictionary<int, Dictionary<string, object>>();
             Dictionary<string, Dictionary<string, object>> listaResultados = new Dictionary<string, Dictionary<string, object>>();
+            List<string> excludedRows = new List<string>();
 
             foreach (tableXcolumn txc in query.tableXcolumn)
             {
@@ -178,44 +179,65 @@ namespace nsMultiDBService
                         listaResultados.Add(ID_tupla, valor);
                     }
 
-                    switch(resultado["database_type"].ToString()){
-                        case "mariaDB":
-                            try
-                            {
-                                dataQuery = executeQueryMaria(resultado);
-                                value = dataQuery[0]["data"];
-                                break;
-                            }
-                            catch
-                            {
-                                break;
-                            }
-                            
-                        case "SQLServer":
-                            try
-                            {
-                                dataQuery = executeQueryServer(resultado);
-                                value = dataQuery[0]["data"];
-                                break;
-                            }
-                            catch
-                            {
-                                break;
-                            }
-                        case "mongoDB":
-                            try
-                            {
-                                dataQuery = executeQueryMongo(resultado);
-                                value = dataQuery[0]["data"];
-                                break;
-                            }
-                            catch
-                            {
-                                break;
-                            }
+                    string condition = "";
+
+                    //if (query.filter.method.ToString() != "")
+                    try
+                    {
+                        condition = "AND" + query.filter.method + " '" + query.filter.byValue + "'";
+                    }
+                    catch
+                    {
+
                     }
 
-                    listaResultados[ID_tupla][column_name] = value;
+                    if (!excludedRows.Contains(resultado["ID_tupla"].ToString()))
+                    {
+                        switch (resultado["database_type"].ToString()){
+                            case "mariaDB":
+                                try
+                                {
+                                    dataQuery = executeQueryMaria(resultado, condition);
+                                    if (dataQuery.Count > 0)
+                                    {
+                                        value = dataQuery[0]["data"];
+                                    }
+                                    else
+                                    {
+                                        excludedRows.Add(resultado["ID_tupla"].ToString());
+                                    }
+                                    break;
+                                }
+                                catch
+                                {
+                                    break;
+                                }
+                            
+                            case "SQLServer":
+                                try
+                                {
+                                    dataQuery = executeQueryServer(resultado);
+                                    value = dataQuery[0]["data"];
+                                    break;
+                                }
+                                catch
+                                {
+                                    break;
+                                }
+                            case "mongoDB":
+                                try
+                                {
+                                    dataQuery = executeQueryMongo(resultado);
+                                    value = dataQuery[0]["data"];
+                                    break;
+                                }
+                                catch
+                                {
+                                    break;
+                                }
+                        }
+                        listaResultados[ID_tupla][column_name] = value;
+                    }
                 }
             }
                 
@@ -259,7 +281,68 @@ namespace nsMultiDBService
             }
         }
 
-        public List<Dictionary<string, object>> executeQueryMaria(Dictionary<string, object> datos)
+        [WebInvoke(Method = "POST",
+                  ResponseFormat = WebMessageFormat.Json,
+                  RequestFormat = WebMessageFormat.Json,
+                  UriTemplate = "updateQuery")]
+        public string updateQuery(parametrosUpdate update)
+        {
+            try
+            {
+                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
+
+                string procedure = "get_tuplas(" + update.column + ");";
+                List<Dictionary<string, object>> tuplas = db.CallProcedure(procedure);
+
+                foreach (Dictionary<string, object> resultado in tuplas)
+                {
+                    object value = new object();
+                    string database_type = resultado["database_type"].ToString();
+                    string condition = update.filter.method + " '" + update.filter.byValue + "'";
+
+                    switch (database_type)
+                    {
+                        case "mariaDB":
+                            updateQueryMaria(resultado, condition, update.value);
+                            break;
+
+                        case "SQLServer":
+                            updateQueryMaria(resultado, condition, update.value);
+                            break;
+
+                        case "mongoDB":
+                            updateQueryMaria(resultado, condition, update.value);
+                            break;
+                    }
+
+                }
+                return "{\"message\": \"" + "SE ACTUALIZO LA FILA EXITOSAMENTE!" + "\"}";
+            }
+            catch (Exception ex)
+            {
+                return "{\"messageError\": \"" + ex.ToString() + "\"}";
+            }
+        }
+
+        public bool updateQueryMaria(Dictionary<string, object> datos, string condition, string value)
+        {
+            string server = datos["server"].ToString();
+            string database = "multidb_datos";
+            string uid = datos["user"].ToString();
+            string pass = datos["pass"].ToString();
+            string port = datos["port"].ToString();
+            
+            MariaConnect db = new MariaConnect(server, database, uid, pass, port);
+
+            //update string set data = 'holi' WHERE data_id = 1 AND data = 'pi';
+            
+            db.NonQuery("UPDATE " + datos["column_type"].ToString() + " SET data = '" + value +
+                        "' WHERE data_id = " + datos["ID_data"] + " AND data " + condition + ";");
+
+            return true;
+        }
+
+        public List<Dictionary<string, object>> executeQueryMaria(Dictionary<string, object> datos, string condition)
         {
             string server = datos["server"].ToString();
             string database = "multidb_datos";
@@ -268,7 +351,7 @@ namespace nsMultiDBService
             string port = datos["port"].ToString();
 
             MariaConnect db = new MariaConnect(server, database, uid, pass, port);
-            return db.SelectListDictionary(datos["column_type"].ToString(), "data_id = " + datos["ID_data"]);
+            return db.SelectListDictionary(datos["column_type"].ToString(), "data_id = " + datos["ID_data"] + condition);
         }
         public List<Dictionary<string, object>> executeQueryServer(Dictionary<string, object> datos)
         {
@@ -410,7 +493,7 @@ namespace nsMultiDBService
     {
         public string source { get; set; }
         public List<tableXcolumn> tableXcolumn { get; set; }
-        public List<filter> filter { get; set; }
+        public filter filter { get; set; }
         public List<order> order { get; set; }
     }
 
@@ -443,5 +526,13 @@ namespace nsMultiDBService
     {
         public string value { get; set; }
         public string column { get; set; }
+    }
+
+    public class parametrosUpdate
+    {
+        public string source { get; set; }
+        public string column  { get; set; }
+        public string value { get; set; }
+        public filter filter { get; set; }
     }
 }

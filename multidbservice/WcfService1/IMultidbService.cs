@@ -39,13 +39,7 @@ namespace nsMultiDBService
         string insertRow(parametrosInsert insert);
 
         [OperationContract]
-        List<Dictionary<string, object>> executeQueryMaria(Dictionary<string, object> datos);
-
-        [OperationContract]
-        List<Dictionary<string, object>> executeQueryServer(Dictionary<string, object> datos);
-
-        [OperationContract]
-        List<Dictionary<string, object>> executeQueryMongo(Dictionary<string, object> datos);
+        string updateQuery(parametrosUpdate update);
     }
 
 

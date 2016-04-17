@@ -182,7 +182,6 @@
         $scope.queryAcutalizar = function () {
             var params = {
                 source: $scope.source_actualizar,
-                table: $scope.table_actualizar,
                 column: $scope.column_actualizar,
                 value: $scope.value_actualizar,
 
@@ -195,7 +194,6 @@
 
             $scope.columnsActive = [];
             web_services.post("updateQuery", params, $scope).then(function (result) {
-            $scope.queryResult = JSON.stringify(result, null, 4);
             console.log("FINALLY QUERY!!!")
             });
     }
