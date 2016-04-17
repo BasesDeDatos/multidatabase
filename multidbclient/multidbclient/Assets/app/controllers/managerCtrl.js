@@ -183,7 +183,7 @@
             var params = {
                 source: $scope.source_actualizar,
                 table: $scope.table_actualizar,
-                column: $scope.columnFilteractualizar,
+                column: $scope.column_actualizar,
                 value: $scope.value_actualizar,
 
                 filter: { //where 
