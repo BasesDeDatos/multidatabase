@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Threading.Tasks;
 using MongoDB.Driver.Core;
+using Newtonsoft.Json;
 
 namespace nsMultiDBService
 {
@@ -40,6 +41,12 @@ namespace nsMultiDBService
             
             client = new MongoClient(connectionString);
             databaseInstance = client.GetDatabase(database);
+        }
+
+        public string isConnected()
+        {
+            string connection = client.Cluster.Description.State.ToString();
+            return connection;
         }
 
         /*var documnt = new BsonDocument
@@ -83,6 +90,22 @@ namespace nsMultiDBService
             }
             resultado += "}";
             return resultado;
+        }
+
+        public List<Dictionary<string, object>> SelectListDictionary(string table, string conditional)
+        {
+            var collection = databaseInstance.GetCollection<BsonDocument>(table);
+            var filter = Builders<BsonDocument>.Filter.Eq("data_id", conditional);
+            var selectResult = collection.Find(filter).Project(Builders<BsonDocument>.Projection.Exclude("_id")).ToListAsync();
+            List<Dictionary<string, object>> resultado = new List<Dictionary<string, object>>();
+
+            for (int i = 0; i < selectResult.Result.Count; i++)
+            {
+                resultado.Add(JsonConvert.DeserializeObject<Dictionary<string, object>>(selectResult.Result[i].ToString()));
+            }
+
+            return resultado;
+
         }
     }
 }

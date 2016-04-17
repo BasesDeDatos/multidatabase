@@ -33,6 +33,18 @@ namespace nsMultiDBService
                                                    + addDatabase.port + "','"
                                                    + addDatabase.alias + "');");
 
+                /*
+                MongoConnect db2 = new MongoConnect("localhost", "multidb_datos", "prueba", "prueba", "27017");
+                var documnt = new BsonDocument
+                {
+                    {"Brand","Dell"},
+                    {"Price","400"},
+                    {"Ram","8GB"},
+                    {"HardDisk","1TB"},
+                    {"Screen","16inch"}
+                };
+                db2.Insert(documnt, "string");
+                */
                 return "{\"message\": \"Conexion creada exitosamente\"}";
             }
             catch (Exception ex)
@@ -151,56 +163,51 @@ namespace nsMultiDBService
                   UriTemplate = "executeQuery")]
         public string executeQuery(parametrosQuery query)
         {
-            //try
-            //{
-                MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
-                string procedure;
+            MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
+            string procedure;
 
-                Dictionary<int, Dictionary<string, object>> listaResultados = new Dictionary<int, Dictionary<string, object>>();
+            Dictionary<int, Dictionary<string, object>> listaResultados = new Dictionary<int, Dictionary<string, object>>();
 
-                foreach (tableXcolumn txc in query.tableXcolumn)
-                {
-                    procedure= "get_tuplas(" + txc.column + ")";
-                    List<Dictionary<string, object> > resultados = db.CallProcedure(procedure);
-                    foreach (Dictionary<string, object> resultado in resultados)
-                    {
-                        List<Dictionary<string, object>> dataQuery = new List<Dictionary<string, object>>();
-                        Dictionary<string, object> row = new Dictionary<string, object>();
-
-                        int ID_tupla = Convert.ToInt32(resultado["ID_tupla"]);
-                        string column_name = resultado["column_name"].ToString();
-                        object value = new object();
-
-                        //Si la entrada ID_tupla no se ha agregado al diccionario, se crea una entrada Dictionary<string, object> y se agrega
-                        if (!listaResultados.TryGetValue(ID_tupla, out row))
-                        {
-                            Dictionary<string, object> valor = new Dictionary<string, object>();
-                            listaResultados.Add(ID_tupla, valor);
-                        }
-
-                        switch(resultado["database_type"].ToString()){
-                            case "mariaDB":
-                                dataQuery = executeQueryMaria(resultado);
-                                value = dataQuery[0]["data"];
-                                break;
-                            case "SQLServer":
-                                dataQuery = executeQueryServer(resultado);
-                                value = dataQuery[0]["data"];
-                                break;
-                            case "mongoDB":
-                                break;
-                        }
-
-                        listaResultados[ID_tupla][column_name] = value;
-                    }
-                }
-                
-                return JsonConvert.SerializeObject(listaResultados);
-            //}
-            /*catch (Exception ex)
+            foreach (tableXcolumn txc in query.tableXcolumn)
             {
-                throw ex;
-            }*/
+                procedure= "get_tuplas(" + txc.column + ")";
+                List<Dictionary<string, object> > resultados = db.CallProcedure(procedure);
+                foreach (Dictionary<string, object> resultado in resultados)
+                {
+                    List<Dictionary<string, object>> dataQuery = new List<Dictionary<string, object>>();
+                    Dictionary<string, object> row = new Dictionary<string, object>();
+
+                    int ID_tupla = Convert.ToInt32(resultado["ID_tupla"]);
+                    string column_name = resultado["column_name"].ToString();
+                    object value = new object();
+
+                    //Si la entrada ID_tupla no se ha agregado al diccionario, se crea una entrada Dictionary<string, object> y se agrega
+                    if (!listaResultados.TryGetValue(ID_tupla, out row))
+                    {
+                        Dictionary<string, object> valor = new Dictionary<string, object>();
+                        listaResultados.Add(ID_tupla, valor);
+                    }
+
+                    switch(resultado["database_type"].ToString()){
+                        case "mariaDB":
+                            dataQuery = executeQueryMaria(resultado);
+                            value = dataQuery[0]["data"];
+                            break;
+                        case "SQLServer":
+                            dataQuery = executeQueryServer(resultado);
+                            value = dataQuery[0]["data"];
+                            break;
+                        case "mongoDB":
+                            dataQuery = executeQueryMongo(resultado);
+                            value = dataQuery[0]["data"];
+                            break;
+                    }
+
+                    listaResultados[ID_tupla][column_name] = value;
+                }
+            }
+                
+            return JsonConvert.SerializeObject(listaResultados);
         }
 
         public List<Dictionary<string, object>> executeQueryMaria(Dictionary<string, object> datos)
@@ -223,7 +230,20 @@ namespace nsMultiDBService
             string port = datos["port"].ToString();
 
             ServerConnect db = new ServerConnect(server, database, uid, pass, port);
+
             return db.SelectListDictionary(datos["column_type"].ToString(), "data_id = " + datos["ID_data"]);
+        }
+        public List<Dictionary<string, object>> executeQueryMongo(Dictionary<string, object> datos)
+        {
+            string server = datos["server"].ToString();
+            string database = "multidb_datos";
+            string uid = datos["user"].ToString();
+            string pass = datos["pass"].ToString();
+            string port = datos["port"].ToString();
+
+            MongoConnect db = new MongoConnect(server, database, uid, pass, port);
+
+            return db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString());
         }
     }
 
