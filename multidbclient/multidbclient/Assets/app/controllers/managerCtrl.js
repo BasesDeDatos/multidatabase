@@ -200,13 +200,13 @@
             $scope.$apply(function () {
                 $scope.queryResult = false;
                 tables = "";
-                tables_len = $(".query_columns .query_column").length;
+                tables_len = $(".query_tables .query_table").length;
                 columns = "";
-                columns_len = $(".query_tables .query_table").length;
+                columns_len = $(".query_columns .query_column").length;
                 where = ";";
                 $(".query_tables .query_table").each(function (index, element) {
                     tables +=
-                        "    " + $(this).find("option:selected").attr("name_table") + (tables_len - 1 == index ? "<br>" : "<br>INNER JOIN <br>")
+                        "    " + $(this).find("option:selected").attr("name_table") + (tables_len - 1 == index ? "" : "<br>INNER JOIN <br>")
                 });
 
                 $(".query_columns .query_column").each(function (index, element) {
@@ -217,7 +217,7 @@
                 });
 
                 if ($('#where_check').is(':checked')) {
-                    where = "<br>WHERE " + $scope.columnFilter + " " + $scope.methodFilter + " " + $scope.byValueFilter + ";";
+                    where = "<br><br>WHERE " + $scope.columnFilter + " " + $scope.methodFilter + " " + $scope.byValueFilter + ";";
                 }
 
                 modal.find('.modal-title')
