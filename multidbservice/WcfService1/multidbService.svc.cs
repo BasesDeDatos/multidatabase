@@ -33,18 +33,6 @@ namespace nsMultiDBService
                                                    + addDatabase.port + "','"
                                                    + addDatabase.alias + "');");
 
-                /*
-                MongoConnect db2 = new MongoConnect("localhost", "multidb_datos", "prueba", "prueba", "27017");
-                var documnt = new BsonDocument
-                {
-                    {"Brand","Dell"},
-                    {"Price","400"},
-                    {"Ram","8GB"},
-                    {"HardDisk","1TB"},
-                    {"Screen","16inch"}
-                };
-                db2.Insert(documnt, "string");
-                */
                 return "{\"message\": \"Conexion creada exitosamente\"}";
             }
             catch (Exception ex)
@@ -234,10 +222,10 @@ namespace nsMultiDBService
                             insertMaria(conexion[0], valorXcolumna.value, data_id);
                             break;
                         case "SQLServer":
-                            
+                            insertServer(conexion[0], valorXcolumna.value, data_id);
                             break;
                         case "mongoDB":
-                            
+                            insertMongo(conexion[0], valorXcolumna.value, data_id);
                             break;
                     }
                 }
@@ -297,9 +285,7 @@ namespace nsMultiDBService
 
             try
             { 
-                //for (int i = 0; i < datos.Count; i++){
-                    db.NonQuery("INSERT INTO " + conexion["columna"] + "(data_id, data) VALUES ('" + data_id + "', '" + dato.ToString() + "');");
-                //}
+                db.NonQuery("INSERT INTO " + conexion["columna"] + "(data_id, data) VALUES ('" + data_id + "', '" + dato.ToString() + "');");
                 return true;
             }
             catch
@@ -308,30 +294,51 @@ namespace nsMultiDBService
             }
         }
 
-        public List<Dictionary<string, object>> insertServer(Dictionary<string, object> datos)
+        public bool insertServer(Dictionary<string, object> conexion, object dato, int data_id)
         {
-            string server = datos["server"].ToString();
+            string server = conexion["server"].ToString();
             string database = "multidb_datos";
-            string uid = datos["user"].ToString();
-            string pass = datos["pass"].ToString();
-            string port = datos["port"].ToString();
+            string uid = conexion["user"].ToString();
+            string pass = conexion["pass"].ToString();
+            string port = conexion["port"].ToString();
 
-            MongoConnect db = new MongoConnect(server, database, uid, pass, port);
+            ServerConnect db = new ServerConnect(server, database, uid, pass, port);
 
-            return db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString());
+            try
+            {
+                db.NonQuery("INSERT INTO " + conexion["columna"] + "(data_id, data) VALUES ('" + data_id + "', '" + dato.ToString() + "');");
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public List<Dictionary<string, object>> insertMongo(Dictionary<string, object> datos)
+        public bool insertMongo(Dictionary<string, object> conexion, object dato, int data_id)
         {
-            string server = datos["server"].ToString();
+            string server = conexion["server"].ToString();
             string database = "multidb_datos";
-            string uid = datos["user"].ToString();
-            string pass = datos["pass"].ToString();
-            string port = datos["port"].ToString();
+            string uid = conexion["user"].ToString();
+            string pass = conexion["pass"].ToString();
+            string port = conexion["port"].ToString();
 
             MongoConnect db = new MongoConnect(server, database, uid, pass, port);
 
-            return db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString());
+            try
+            {
+                var row = new BsonDocument
+                {
+                    {"data_id",data_id.ToString()},
+                    {"data", dato.ToString()}
+                };
+                db.Insert(row, conexion["columna"].ToString());
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
 
