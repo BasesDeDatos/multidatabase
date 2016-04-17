@@ -429,10 +429,22 @@
                             </div>
                         </div>
                         <hr />
+                        <div id="group_div" class="margin-top-5">
+                            <div class="input-group margin-top-5">
+                                <span class="input-group-addon">Group By</span>
+                                <select disabled ng-model="groupFilter" class="query_where_columns query_column form-control">
+                                    <option value="">column</option>
+                                    <option ng-repeat="column in columns" type="{{column.column_type}}" value="{{column.ID}}" class="{{column.ID_tabla}}">({{column.column_type}})  {{column.table_name}}.{{column.column_name}}</option>
+                                </select>
+                            </div>
+                        </div>                        
+                        <hr />
                         <input id="chk" type="checkbox" id="where_check" value="value" />
                         <label for="chk">Where? </label>
                         <input id="RAW" type="checkbox" ng-model="RAW" value="true" />
                         <label for="RAW">RAW? </label>
+                        <input id="chk_groupby" type="checkbox" ng-model="group_by" value="true" />
+                        <label for="chk_groupby">Group By</label>
                     </form>
                 </div>
 
@@ -453,6 +465,7 @@
 
             </div>
         </div>
+        <!--- INSERT DATA -->
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">INSERT DATA</div>
@@ -461,12 +474,13 @@
 
 
                         <div class="input-group">
+                            <span class="input-group-addon">Source</span>
                             <select ng-model="source_insertData" class="query_DB form-control">
                                 <option value="">Data Base</option>
                                 <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
                             </select>
                         </div>
-                        <br />
+                        <hr />
                         <div class="input-group">
                             <span class="input-group-addon">Table</span>
                             <select class="query_table_insertdata form-control" ng-model="table_datainsert">
@@ -518,6 +532,7 @@
 
             </div>
         </div>
+        <!---UPDATE DATA -->
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">UPDATE DATA</div>
@@ -525,12 +540,13 @@
 
                     <form ng-submit="" id="formUpdate">
                         <div class="input-group">
-                            <select ng-model="source_updatedata" class="query_DB form-control">
+                            <span class="input-group-addon">Source</span>
+                            <select ng-model="source_update" class="query_DB form-control">
                                 <option value="">Data Base</option>
                                 <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
                             </select>
                         </div>
-                        <br />
+                        <hr />
                         <div class="input-group">
                             <span class="input-group-addon">Table</span>
                             <select class="query_table form-control">
@@ -538,31 +554,16 @@
                                 <option ng-repeat="table in tables" value="{{table.ID_table}}" class="{{table.ID_database}}">{{table.DB_name}}.{{table.table_name}}</option>
                             </select>
                         </div>
+                        <hr />
+                        <div class="input-group">
+                            <span class="input-group-addon">Column</span>
+                            <select ng-model="columnFilter" class="query_where_columns query_column form-control">
+                                <option value="">column</option>
+                                <option ng-repeat="column in columns" type="{{column.column_type}}" value="{{column.ID}}" class="{{column.ID_tabla}}">({{column.column_type}})  {{column.table_name}}.{{column.column_name}}</option>
+                            </select>
+                        </div>
                         <br />
-                            <table class="table table-condensed  table-responsive">
-                                <thead>
-                                    <tr>
-                                        <!-- Row del nombre de las columnas-->
-                                        <th>Column 1</th>
-                                        <th>Column 2</th>
-                                        <th>Column 3</th>
-                                    </tr>
-                                </thead>
-
-                                <tr>
-                                    <td>
-                                        <input type="number" />
-                                    </td>
-                                    <td>
-                                        <input type="text" />
-
-                                    </td>
-                                    <td>
-                                        <input type="number" />
-                                    </td>
-                                </tr>
-
-                            </table>
+                       <input /> 
                     </form>
                 </div>
 
