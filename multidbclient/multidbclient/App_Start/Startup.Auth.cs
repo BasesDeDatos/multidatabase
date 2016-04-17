@@ -7,7 +7,6 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using nsMultiDBClient.Providers;
 using nsMultiDBClient.Models;
 
 namespace nsMultiDBClient
@@ -31,12 +30,10 @@ namespace nsMultiDBClient
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
                 TokenEndpointPath = new PathString("/Token"),
-                Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 //If the AccessTokenExpireTimeSpan is changed, also change the ExpiresUtc in the RefreshTokenProvider.cs.
                 AccessTokenExpireTimeSpan = TimeSpan.FromHours(2),
                 AllowInsecureHttp = true,
-                RefreshTokenProvider = new RefreshTokenProvider()
             };
 
             // Enable the application to use bearer tokens to authenticate users

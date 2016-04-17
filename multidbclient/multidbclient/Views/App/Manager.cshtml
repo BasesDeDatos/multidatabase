@@ -58,7 +58,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="tablesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal fade" id="tablesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"> 
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -345,27 +345,30 @@
                         </div>
                         <hr />
                         <!-- TABLA -->
-                        <div class="input-group">
-                            <span class="input-group-addon">From</span>
-                            <div class="cont_query_table">
-                                <select class="query_table form-control">
-                                    <option value="">Table</option>
-                                    <option ng-repeat="table in tables" value="{{table.ID_table}}" class="{{table.ID_database}}">{{table.DB_name}}.{{table.table_name}}</option>
-                                </select>
+                        <div class="query_tables">
+                            <div class="input-group">
+                                <span class="input-group-addon">From</span>
+                                <div class="cont_query_table">
+                                    <select class="query_table form-control">
+                                        <option value="">Table</option>
+                                        <option ng-repeat="table in tables" value="{{table.ID_table}}" name_table="{{table.table_name}}" class="{{table.ID_database}}">{{table.DB_name}}.{{table.table_name}}</option>
+                                    </select>
+                                </div>
+                                <span class="table_ input-group-addon btn btn-primary"
+                                      id="basic-addon1"
+                                      ng-click="addNewRowTable()"
+                                      data-loading-text="
+                                    <i class='fa fa-circle-o-notch fa-spin'></i>"
+                                    >
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> join
+                                </span>
                             </div>
-                            <span class="table_ input-group-addon btn btn-primary"
-                                    id="basic-addon1"
-                                    ng-click="addNewRowTable()"
-                                    data-loading-text="
-                                <i class='fa fa-circle-o-notch fa-spin'></i>"
-                                >
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> join
-                            </span>
+                            <div class="cont_new_query_table"></div>
                         </div>
-                        <div class="cont_new_query_table"></div>
                         <hr />
                         <!-- COLUMNA -->
-                            <div class="input-group">
+                        <div class="query_columns">
+                            <div class="input-group ">
                                 <span class="input-group-addon">Column</span>
                                 <div class="cont_query_column">
                                     <select class="query_column form-control">
@@ -374,24 +377,27 @@
                                                 value="{{column.ID}}"
                                                 class="{{column.ID_tabla}}"
                                                 id_table="{{column.ID_tabla}}"
-                                                id_column="{{column.ID}}">
+                                                name_table="{{column.table_name}}"
+                                                id_column="{{column.ID}}"
+                                                name_column="{{column.column_name}}">
                                             {{column.table_name}}.{{column.column_name}}
                                         </option>
                                     </select>
                                 </div>
                                 <span class="input-group-addon btn btn-primary"
-                                        id="basic-addon1"
-                                        ng-click="addNewRowColumn()"
-                                        data-loading-text="
+                                      id="basic-addon1"
+                                      ng-click="addNewRowColumn()"
+                                      data-loading-text="
                                     <i class='fa fa-circle-o-notch fa-spin'></i>"
                                     >
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                 </span>
                             </div>
                             <div class="cont_new_query_column"></div>
+                        </div>
                         <hr />
                         <!-- Where -->
-                        
+
                         <div id="where_div" class="margin-top-5">
                             <div class="input-group margin-top-5">
                                 <span class="input-group-addon">Where</span>
@@ -411,9 +417,9 @@
                                 <input type="text" ng-model="byValueFilter" class="byValueFilter form-control" disabled>
 
                                 <span class="input-group-addon btn btn-primary"
-                                        id="basic-addon1"
-                                        ng-click="addNewRow()"
-                                        data-loading-text="
+                                      id="basic-addon1"
+                                      ng-click="addNewRow()"
+                                      data-loading-text="
                                     <i class='fa fa-circle-o-notch fa-spin'></i>"
                                     >
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -431,10 +437,9 @@
                         <button type="submit"
                                 form="formQuery"
                                 class="btn btn-danger"
-                                id="load"
-                                data-loading-text="
-                            <i class='fa fa-circle-o-notch fa-spin'></i>"
-                            >
+                                data-toggle="modal"
+                                data-target="#queryModal"
+                                data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">
                             SUBMIT
                         </button>
                     </div>
@@ -442,6 +447,7 @@
 
             </div>
         </div>
+
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">INSERT DATA</div>
@@ -462,40 +468,42 @@
                                 <option ng-repeat="table in tables" value="{{table.ID_table}}" class="{{table.ID_database}}">{{table.DB_name}}.{{table.table_name}}</option>
                             </select>
                         </div>
-                        </div>
-                        <br />
-                        <div class="center-block">
-                            <table class="table table-bordered">
-                                <thead> <!-- Se repiten llas columnas y se muetras el nombre-->
-                                    <tr ng-repeat="" id_column="{{column.ID}}">
-                                        {{column.column_name}}
-                                    </tr>
-                                </thead>
+                </div>
+                <br />
+                <div class="center-block">
+                    <table class="table table-bordered">
+                        <thead>
+                            <!-- Se repiten llas columnas y se muetras el nombre-->
+                            <tr ng-repeat="" id_column="{{column.ID}}">
+                                {{column.column_name}}
+                            </tr>
+                        </thead>
 
-                                <tr ng-repeat=""> <!-- Se repite n columnas veces que tenga la tabla seleccionada-->
-                                   <td><input /></td> 
-                                </tr>
+                        <tr ng-repeat="">
+                            <!-- Se repite n columnas veces que tenga la tabla seleccionada-->
+                            <td><input /></td>
+                        </tr>
 
-                            </table>
-                        </div>
-
-                    </form>
+                    </table>
                 </div>
 
-                <div class="panel-footer">
-                    <div class="text-center">
-                        <button type="submit"
-                                form="formInsert"
-                                class="btn btn-primary"
-                                data-loading-text="
-                            <i class='fa fa-circle-o-notch fa-spin'></i>">
-                            INSERT
-                        </button>
-                    </div>
-                </div>
-
+                </form>
             </div>
+
+            <div class="panel-footer">
+                <div class="text-center">
+                    <button type="submit"
+                            form="formInsert"
+                            class="btn btn-primary"
+                            data-loading-text="
+                        <i class='fa fa-circle-o-notch fa-spin'></i>">
+                        INSERT
+                    </button>
+                </div>
+            </div>
+
         </div>
+
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">UPDATE DATA</div>
@@ -517,30 +525,30 @@
                             </select>
                         </div>
                         <br />
-                            <table class="table table-condensed  table-responsive">
-                                <thead>
-                                    <tr>
-                                        <!-- Row del nombre de las columnas-->
-                                        <th>Column 1</th>
-                                        <th>Column 2</th>
-                                        <th>Column 3</th>
-                                    </tr>
-                                </thead>
-
+                        <table class="table table-condensed  table-responsive">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        <input type="number" />
-                                    </td>
-                                    <td>
-                                        <input type="text" />
-
-                                    </td>
-                                    <td>
-                                        <input type="number" />
-                                    </td>
+                                    <!-- Row del nombre de las columnas-->
+                                    <th>Column 1</th>
+                                    <th>Column 2</th>
+                                    <th>Column 3</th>
                                 </tr>
+                            </thead>
 
-                            </table>
+                            <tr>
+                                <td>
+                                    <input type="number" />
+                                </td>
+                                <td>
+                                    <input type="text" />
+
+                                </td>
+                                <td>
+                                    <input type="number" />
+                                </td>
+                            </tr>
+
+                        </table>
                     </form>
                 </div>
 
@@ -560,4 +568,20 @@
         </div>
     </div>
 </section>
-<!-- PARA INSERTAR DATOS-->
+
+<div class="modal fade" id="queryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

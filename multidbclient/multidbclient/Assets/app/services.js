@@ -17,11 +17,15 @@
         .error(function (data, status, headers, config) {
             console.log(rute + " error:");
             console.log(data);
-            var data = jQuery.parseJSON(data);
-            $scope.warningMessage = "Rute: " + rute + " Status: " + data.message + response.error_description.replace(/["']{1}/gi, "");
-            $scope.showWarningMessage = true;
-
-            return data
+            try{
+                var data = jQuery.parseJSON(data);
+                $scope.warningMessage = "Rute: " + rute + " Status: " + data.message + data.error_description.replace(/["']{1}/gi, "");
+                $scope.showWarningMessage = true;
+            }
+            catch(e) {
+                $scope.warningMessage = "Rute: " + rute + " Status: " + data + data.error_description.replace(/["']{1}/gi, "");
+                $scope.showWarningMessage = true;
+            }
         })
         .finally(function () {
             $('.btn').button('reset');
