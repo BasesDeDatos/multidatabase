@@ -151,7 +151,7 @@
 
             web_services.post("executeQuery", params, $scope).then(function (result) {
                 if ($scope.RAW === true) {
-                    $scope.queryResult = JSON.stringify(result);
+                    $scope.queryResult = JSON.stringify(result, null, 4);
                 } else {
                     $scope.queryResult = result;
                 }
