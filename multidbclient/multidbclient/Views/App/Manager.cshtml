@@ -492,7 +492,9 @@
                                         <input id_column="{{column.ID}}"
                                                class="form-control"
                                                type="{{column.column_type == 'string'? 'text': 'number'}}"
-                                               step="{{column.column_type == 'entero'? '1': 'any'}}" />
+                                               step="{{column.column_type == 'entero'? '1': 'any'}}" 
+                                               ng-required="column.column_null == 1" 
+                                               />
                                     </td>
                                 </tr>
                             </tbody>
