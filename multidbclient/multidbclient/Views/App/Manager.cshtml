@@ -74,17 +74,17 @@
                                         <!--VIENE LA LISTA -->
                                         <ul class="list-group">
                                             <li class="list-group-item" ng-repeat="column in columns" ng-show="column.ID_tabla == table.ID_table"><strong><small>( {{ column.column_type}} )</small></strong> {{ column.column_name}}</li>
+
                                         </ul>
                                     </div>
                                     <div class="panel-footer">
                                         <div class="row text-center">
-                                            <button ng-click="dropTableModal(table.ID_table)"
-                                                    type="button"
-                                                    class="btn btn-danger"
-                                                    data-loading-text="
-                                                <i class='fa fa-circle-o-notch fa-spin'></i>">
-                                                DROP
-                                            </button>
+                                            <form ng-submit="dropTable()">
+                                                <input type="hidden" ng-model="drop_table_ID" value="{{table.ID_table}}">
+                                                <button type="submit" class="btn btn-danger" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">
+                                                    DROP
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -267,10 +267,10 @@
 
             </div>
         </div>
-        <!-- RENAME COLUMN-->
+        <!-- UPDATE COLUMN-->
         <div class="col-md-3">
             <div class="panel panel-default">
-                <div class="panel-heading">Rename Column</div>
+                <div class="panel-heading">Update Column</div>
                 <form ng-submit="">
                     <div class="panel-body">
                         <label>Connection</label>
@@ -289,7 +289,7 @@
                         <select class="form-control">
                             <option>Column</option>
                         </select>
-                        <label>New Name</label>
+                        <label>New data</label>
                         <input type="text" />
 
                     </div>
@@ -316,7 +316,7 @@
 <section>
     <!-- QUERIES -->
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Queries</div>
 
@@ -324,16 +324,16 @@
                     <form ng-submit="executeQuery()" id="formQuery">
 
                         <!--query  -->
-                        <!--div class="input-group">
+                        <div class="input-group">
                             <span class="input-group-addon">Query</span>
-                            <select class="form-control">
+                            <select ng-model="query" class="form-control">
                                 <option value="select">select</option>
                                 <option value="delete">delete</option>
                                 <option value="update">update</option>
+                                <option value="drop">drop</option>
                             </select>
-                        </!--div-->
-                        <input type="hidden" ng-model="query" name="query" ng-value="select" required="true" />
-
+                        </div>
+                        <br />
                         <!-- DATABASE -->
                         <div class="input-group">
                             <span class="input-group-addon">Source</span>
@@ -441,55 +441,38 @@
 
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">INSERT DATA</div>
                 <div class="panel-body">
 
                     <form ng-submit="" id="formInsert">
                         <div class="input-group">
-                            <span class="input-group-addon">Connection</span>
-                            <select class="form-control">
-                                <option>Connection</option>
-                            </select>
-                        </div>
-                        <br />
-                        <div class="input-group">
-                            <span class="input-group-addon">Data Base</span>
-                            <select class="form-control">
-                                <option>DB</option>
+                            <select ng-model="source" class="query_DB form-control">
+                                <option value="">Data Base</option>
+                                <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
                             </select>
                         </div>
                         <br />
                         <div class="input-group">
                             <span class="input-group-addon">Table</span>
-                            <select class="form-control">
-                                <option>Table</option>
+                            <select class="query_table form-control">
+                                <option value="">Table</option>
+                                <option ng-repeat="table in tables" value="{{table.ID_table}}" class="{{table.ID_database}}">{{table.DB_name}}.{{table.table_name}}</option>
                             </select>
+                        </div>
                         </div>
                         <br />
                         <div class="center-block">
                             <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <!-- Row del nombre de las columnas-->
-                                        <th>Column 1</th>
-                                        <th>Column 2</th>
-                                        <th>Column 3</th>
+                                <thead> <!-- Se repiten llas columnas y se muetras el nombre-->
+                                    <tr ng-repeat="" id_column="{{column.ID}}">
+                                        {{column.column_name}}
                                     </tr>
                                 </thead>
 
-                                <tr>
-                                    <td>
-                                        <input type="number" />
-                                    </td>
-                                    <td>
-                                        <input type="text" />
-
-                                    </td>
-                                    <td>
-                                        <input type="number" />
-                                    </td>
+                                <tr ng-repeat=""> <!-- Se repite n columnas veces que tenga la tabla seleccionada-->
+                                   <td><input /></td> 
                                 </tr>
 
                             </table>
@@ -512,35 +495,28 @@
 
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">UPDATE DATA</div>
                 <div class="panel-body">
 
                     <form ng-submit="" id="formUpdate">
                         <div class="input-group">
-                            <span class="input-group-addon">Connection</span>
-                            <select class="form-control">
-                                <option>Connection</option>
-                            </select>
-                        </div>
-                        <br />
-                        <div class="input-group">
-                            <span class="input-group-addon">Data Base</span>
-                            <select class="form-control">
-                                <option>DB</option>
+                            <select ng-model="source" class="query_DB form-control">
+                                <option value="">Data Base</option>
+                                <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
                             </select>
                         </div>
                         <br />
                         <div class="input-group">
                             <span class="input-group-addon">Table</span>
-                            <select class="form-control">
-                                <option>Table</option>
+                            <select class="query_table form-control">
+                                <option value="">Table</option>
+                                <option ng-repeat="table in tables" value="{{table.ID_table}}" class="{{table.ID_database}}">{{table.DB_name}}.{{table.table_name}}</option>
                             </select>
                         </div>
                         <br />
-                        <div class="center-block">
-                            <table class="table table-bordered">
+                            <table class="table table-condensed  table-responsive">
                                 <thead>
                                     <tr>
                                         <!-- Row del nombre de las columnas-->
@@ -564,7 +540,6 @@
                                 </tr>
 
                             </table>
-                        </div>
                     </form>
                 </div>
 
@@ -585,6 +560,3 @@
     </div>
 </section>
 <!-- PARA INSERTAR DATOS-->
-<section>
-    
-</section>
