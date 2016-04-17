@@ -585,20 +585,18 @@
             </div>
             <div class="modal-body">
                 <i ng-show="!queryResult" class="fa fa-circle-o-notch fa-spin fa-4x" style="width: 100%; text-align: center"></i>
-                <div ng-show="queryResult">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th ng-repeat="header in queryResult.headers">{{header}}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="row in queryResult.rows">
-                                <td ng-repeat="column in row">{{column}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <table class="table table-bordered table-hover" ng-show="queryResult">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="column in columnsActive">{{column}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in queryResult">
+                            <td ng-repeat="column in columnsActive">{{row[column]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>

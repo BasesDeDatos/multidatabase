@@ -139,11 +139,14 @@
                 order: [],
             }
 
+            $scope.columnsActive = [];
+
             $(".query_columns .query_column").each(function () {
                 params.tableXcolumn.push({
                     table: $(this).find("option:selected").attr("id_table"),
                     column: $(this).find("option:selected").attr("id_column"),
                 })
+                $scope.columnsActive.push($(this).find("option:selected").attr("name_table")+"."+$(this).find("option:selected").attr("name_column"))
             });
 
             web_services.post("executeQuery", params, $scope).then(function (result) {
@@ -161,11 +164,10 @@
             $(".table_body_columnsInsert input").each(function () {
                 if($(this).is(':visible') ){
                     params.valueXcolumn.push({
-                    value: $(this).val(),
-                    column: $(this).attr("id_column"),
-                })
+                        value: $(this).val(),
+                        column: $(this).attr("id_column"),
+                    })
                 }
-                
             });
 
             web_services.post("insertRow", params, $scope).finally(function () {

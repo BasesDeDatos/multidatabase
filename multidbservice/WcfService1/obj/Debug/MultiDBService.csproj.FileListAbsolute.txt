@@ -71,6 +71,5 @@ E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidb
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbservice\WcfService1\bin\MongoDB.Bson.xml
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbservice\WcfService1\bin\MongoDB.Driver.xml
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbservice\WcfService1\bin\Newtonsoft.Json.xml
-E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbservice\WcfService1\obj\Debug\MultiDBService.csprojResolveAssemblyReference.cache
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbservice\WcfService1\obj\Debug\multidbservice.dll
 E:\OneDrive - Estudiantes ITCR\_U\BASES DE DATOS II\Proyectos\Proyecto 1\multidbservice\WcfService1\obj\Debug\multidbservice.pdb
