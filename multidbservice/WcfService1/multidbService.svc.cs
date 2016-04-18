@@ -202,7 +202,7 @@ namespace nsMultiDBService
                                 dataQuery = executeQueryServer(resultado, condition);
                                 break;
                             case "mongoDB":
-                                dataQuery = executeQueryMongo(resultado, condition);
+                                dataQuery = executeQueryMongo(resultado, query.filter.byValue);
                                 break;
                         }
 
@@ -355,7 +355,7 @@ namespace nsMultiDBService
 
             Debug.WriteLine(datos["column_type"].ToString() + "data_id" + condition + value);
             
-            db.Update(datos["column_type"].ToString(), "data_id", datos["ID_data"].ToString(), value, condition);
+            db.Update(datos["column_type"].ToString(), datos["ID_data"].ToString(), value, condition);
 
             return true;
         }
@@ -393,7 +393,8 @@ namespace nsMultiDBService
             string port = datos["port"].ToString();
 
             MongoConnect db = new MongoConnect(server, database, uid, pass, port);
-            return db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString());
+            Debug.WriteLine(datos["column_type"].ToString()+datos["ID_data"].ToString()+condition);
+            return db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString(), condition);
         }
 
         public bool insertMaria(Dictionary<string, object> conexion, object dato, int data_id)
