@@ -169,13 +169,14 @@ namespace nsMultiDBService
                     string column_name = resultado["table_name"].ToString() + "." + resultado["column_name"].ToString();
                     object value = new object();
                     string condition = "";
+                    string mongoCondition = null;
 
-                    //if (query.filter.method.ToString() != "")
                     try
                     {   // Si la columna que se está obteniendo información coincide con la del where, se filtra
                         if (resultado["ID_column"].ToString() == query.filter.column) 
                         {
                             condition = " AND  data" + query.filter.method + " '" + query.filter.byValue + "'";
+                            mongoCondition = query.filter.byValue;
                         }
                     }
                     catch {}
@@ -199,7 +200,7 @@ namespace nsMultiDBService
                                 dataQuery = executeQueryServer(resultado, condition);
                                 break;
                             case "mongoDB":
-                                dataQuery = executeQueryMongo(resultado, query.filter.byValue);
+                                dataQuery = executeQueryMongo(resultado, mongoCondition);
                                 break;
                         }
 
