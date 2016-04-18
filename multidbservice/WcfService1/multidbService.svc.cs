@@ -307,11 +307,11 @@ namespace nsMultiDBService
                             break;
 
                         case "SQLServer":
-                            updateQueryMaria(resultado, condition, update.value);
+                            updateQueryServer(resultado, condition, update.value);
                             break;
 
                         case "mongoDB":
-                            updateQueryMaria(resultado, condition, update.value);
+                            updateQueryMongo(resultado, update.filter.byValue, update.value);
                             break;
                     }
 
@@ -338,6 +338,41 @@ namespace nsMultiDBService
             
             db.NonQuery("UPDATE " + datos["column_type"].ToString() + " SET data = '" + value +
                         "' WHERE data_id = " + datos["ID_data"] + " AND data " + condition + ";");
+
+            return true;
+        }
+
+        public bool updateQueryServer(Dictionary<string, object> datos, string condition, string value)
+        {
+            string server = datos["server"].ToString();
+            string database = "multidb_datos";
+            string uid = datos["user"].ToString();
+            string pass = datos["pass"].ToString();
+            string port = datos["port"].ToString();
+
+            ServerConnect db = new ServerConnect(server, database, uid, pass, port);
+
+            //update string set data = 'holi' WHERE data_id = 1 AND data = 'pi';
+
+            db.NonQuery("UPDATE " + datos["column_type"].ToString() + " SET data = '" + value +
+                        "' WHERE data_id = " + datos["ID_data"] + " AND data " + condition + ";");
+
+            return true;
+        }
+
+        public bool updateQueryMongo(Dictionary<string, object> datos, string condition, string value)
+        {
+            string server = datos["server"].ToString();
+            string database = "multidb_datos";
+            string uid = datos["user"].ToString();
+            string pass = datos["pass"].ToString();
+            string port = datos["port"].ToString();
+
+            MongoConnect db = new MongoConnect(server, database, uid, pass, port);
+
+            Debug.WriteLine(datos["column_type"].ToString() + "data_id" + condition + value);
+            
+            db.Update(datos["column_type"].ToString(), "data_id", datos["ID_data"].ToString(), value, condition);
 
             return true;
         }
