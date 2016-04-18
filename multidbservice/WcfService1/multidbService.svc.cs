@@ -153,8 +153,6 @@ namespace nsMultiDBService
         {
             MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
             string procedure;
-
-            //Dictionary<int, Dictionary<string, object>> listaResultados = new Dictionary<int, Dictionary<string, object>>();
             Dictionary<string, Dictionary<string, object>> listaResultados = new Dictionary<string, Dictionary<string, object>>();
             List<string> excludedRows = new List<string>();
 
@@ -181,7 +179,6 @@ namespace nsMultiDBService
                         }
                     }
                     catch {}
-                    //Debug.WriteLine("DEBUG: " + condition);
 
                     //Si el Row del column a consultar ya se excluyó entonces no se consultan los datos
                     if (!excludedRows.Contains(resultado["ID_tupla"].ToString()))
@@ -336,11 +333,11 @@ namespace nsMultiDBService
                             break;
 
                         case "SQLServer":
-                            //deleteQueryServer(resultado, condition);
+                            hasBeenDeleted = deleteQueryServer(resultado, condition);
                             break;
 
                         case "mongoDB":
-                            //deleteQueryMongo(resultado, delete.filter.byValue, delete.value);
+                            hasBeenDeleted = deleteQueryMongo(resultado, delete.filter.byValue);
                             break;
                     }
 
@@ -353,8 +350,15 @@ namespace nsMultiDBService
 
                 foreach (string id_tupla in deletedRows)
                 {
+                    List<Dictionary<string, object>> dataTuplas = db.CallProcedure("CALL get_tupla('" + id_tupla + "')");
+                    foreach (Dictionary<string, object> column in dataTuplas)
+                    {
+                        switch (deletedID[0]["column_type"].ToString())
+                        {
+
+                        }
+                    }
                     db.NonQuery("DELETE FROM tuplas WHERE ID_tupla = '" + id_tupla + "';");
-                    Debug.WriteLine(id_tupla);
                 }
 
                 return "{\"message\": \"" + "SE BORRO LA FILA EXITOSAMENTE!" + "\"}";
@@ -378,12 +382,12 @@ namespace nsMultiDBService
             try
             {
                 List<Dictionary<string, object>> select =  db.SelectListDictionary(datos["column_type"].ToString(), "data_id = " + datos["ID_data"] + " AND data " + condition + ";");
-                Debug.WriteLine(datos["column_type"].ToString()+"data_id = " + datos["ID_data"] + " AND data " + condition);
-                bool exist = select.Count > 0;
-                if (exist)
+                bool exist = false;
+                if (select.Count > 0) exist = true;
+                /*if (exist)
                 {
                     db.NonQuery("DELETE FROM " + datos["column_type"].ToString() + " WHERE data_id = '" + datos["ID_data"].ToString() + "';");
-                }
+                }*/
 
                 return exist;
             }
@@ -394,7 +398,7 @@ namespace nsMultiDBService
             }
         }
 
-        public bool deleteQueryServer(Dictionary<string, object> datos, string condition, string value)
+        public bool deleteQueryServer(Dictionary<string, object> datos, string condition)
         {
             string server = datos["server"].ToString();
             string database = "multidb_datos";
@@ -402,14 +406,56 @@ namespace nsMultiDBService
             string pass = datos["pass"].ToString();
             string port = datos["port"].ToString();
 
-            MariaConnect db = new MariaConnect(server, database, uid, pass, port);
+            ServerConnect db = new ServerConnect(server, database, uid, pass, port);
 
-            //update string set data = 'holi' WHERE data_id = 1 AND data = 'pi';
+            try
+            {
+                List<Dictionary<string, object>> select = db.SelectListDictionary(datos["column_type"].ToString(), "data_id = " + datos["ID_data"] + " AND data " + condition + ";");
+                bool exist = false;
+                if (select.Count > 0) exist = true;
+                /*if (exist)
+                {
+                    db.NonQuery("DELETE FROM " + datos["column_type"].ToString() + " WHERE data_id = '" + datos["ID_data"].ToString() + "';");
+                }*/
 
-            db.NonQuery("UPDATE " + datos["column_type"].ToString() + " SET data = '" + value +
-                        "' WHERE data_id = " + datos["ID_data"] + " AND data " + condition + ";");
+                return exist;
+            }
 
-            return true;
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool deleteQueryMongo(Dictionary<string, object> datos, string condition)
+        {
+            string server = datos["server"].ToString();
+            string database = "multidb_datos";
+            string uid = datos["user"].ToString();
+            string pass = datos["pass"].ToString();
+            string port = datos["port"].ToString();
+
+            MongoConnect db = new MongoConnect(server, database, uid, pass, port);
+
+            try
+            {
+                List<Dictionary<string, object>> select = db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString(), condition);
+                Debug.WriteLine("select.Count = " + select.Count.ToString());
+                bool exist = false;
+                if (select.Count > 0) exist = true;
+                /*if (exist)
+                {
+                    Debug.WriteLine(datos["column_type"].ToString()+" "+datos["ID_data"].ToString());
+                    db.Delete(datos["column_type"].ToString(), datos["ID_data"].ToString());
+                }*/
+
+                return exist;
+            }
+
+            catch
+            {
+                return false;
+            }
         }
 
         public bool updateQueryMaria(Dictionary<string, object> datos, string condition, string value)
@@ -457,8 +503,6 @@ namespace nsMultiDBService
             string port = datos["port"].ToString();
 
             MongoConnect db = new MongoConnect(server, database, uid, pass, port);
-
-            Debug.WriteLine(datos["column_type"].ToString() + "data_id" + condition + value);
             
             db.Update(datos["column_type"].ToString(), datos["ID_data"].ToString(), value, condition);
 
@@ -476,6 +520,7 @@ namespace nsMultiDBService
             MariaConnect db = new MariaConnect(server, database, uid, pass, port);
             return db.SelectListDictionary(datos["column_type"].ToString(), "data_id = " + datos["ID_data"] + condition + ";");
         }
+
         public List<Dictionary<string, object>> executeQueryServer(Dictionary<string, object> datos, string condition)
         {
             string server = datos["server"].ToString();
@@ -488,7 +533,6 @@ namespace nsMultiDBService
             return db.SelectListDictionary(datos["column_type"].ToString(), "data_id = " + datos["ID_data"] + condition + ";");
         }
 
-
         public List<Dictionary<string, object>> executeQueryMongo(Dictionary<string, object> datos, string condition)
         {
             string server = datos["server"].ToString();
@@ -498,7 +542,7 @@ namespace nsMultiDBService
             string port = datos["port"].ToString();
 
             MongoConnect db = new MongoConnect(server, database, uid, pass, port);
-            Debug.WriteLine(datos["column_type"].ToString()+datos["ID_data"].ToString()+condition);
+
             return db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString(), condition);
         }
 

@@ -64,10 +64,11 @@ namespace nsMultiDBService
             collection.InsertOneAsync(document);
         }
 
-        public void Delete(string table, string column, string condition)
+        public void Delete(string table, string conditional_id)
         {
             var collection = databaseInstance.GetCollection<BsonDocument>(table);
-            var filter = Builders<BsonDocument>.Filter.Eq(column, condition);
+            var builder = Builders<BsonDocument>.Filter;
+            var filter = builder.Eq("data_id", conditional_id);
             collection.DeleteManyAsync(filter);
         }
 
