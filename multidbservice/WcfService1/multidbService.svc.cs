@@ -167,28 +167,25 @@ namespace nsMultiDBService
                     List<Dictionary<string, object>> dataQuery = new List<Dictionary<string, object>>();
                     Dictionary<string, object> row = new Dictionary<string, object>();
 
-                    //int ID_tupla = Convert.ToInt32(resultado["ID_tupla"]);
                     string ID_tupla = resultado["ID_tupla"].ToString();
                     string column_name = resultado["table_name"].ToString() + "." + resultado["column_name"].ToString();
                     object value = new object();
-
                     string condition = "";
 
                     //if (query.filter.method.ToString() != "")
                     try
-                    {
-                        if (resultado["ID_column"].ToString() == query.filter.column) //Si la columna que se está obteniendo información coincide con la del where, se filtra
-
+                    {   // Si la columna que se está obteniendo información coincide con la del where, se filtra
+                        if (resultado["ID_column"].ToString() == query.filter.column) 
                         {
                             condition = " AND  data" + query.filter.method + " '" + query.filter.byValue + "'";
                         }
                     }
                     catch {}
-                    Debug.WriteLine("DEBUG: " + condition);
+                    //Debug.WriteLine("DEBUG: " + condition);
 
+                    //Si el Row del column a consultar ya se excluyó entonces no se consultan los datos
                     if (!excludedRows.Contains(resultado["ID_tupla"].ToString()))
                     { 
- 
                         //Si la entrada ID_tupla no se ha agregado al diccionario, se crea una entrada Dictionary<string, object> y se agrega
                         if (!listaResultados.TryGetValue(ID_tupla, out row))
                         {
@@ -196,50 +193,27 @@ namespace nsMultiDBService
                             listaResultados.Add(ID_tupla, valor);
                         } 
 
-                        bool is_valid_value = new bool();
-                        is_valid_value = false;
                         switch (resultado["database_type"].ToString())
                         {
                             case "mariaDB":
-                                {
-                                    dataQuery = executeQueryMaria(resultado, condition);
-                                    if (dataQuery.Count > 0)
-                                    {
-                                        is_valid_value = true;
-                                        value = dataQuery[0]["data"];
-                                    }
-                                    else
-                                    {
-                                        excludedRows.Add(resultado["ID_tupla"].ToString());
-                                    }
-                                    break;
-                                }
-                            
+                                dataQuery = executeQueryMaria(resultado, condition);
+                                break;
                             case "SQLServer":
-                                try
-                                {
-                                    dataQuery = executeQueryServer(resultado);
-                                    value = dataQuery[0]["data"];
-                                    break;
-                                }
-                                catch
-                                {
-                                    break;
-                                }
+                                dataQuery = executeQueryServer(resultado, condition);
+                                break;
                             case "mongoDB":
-                                try
-                                {
-                                    dataQuery = executeQueryMongo(resultado);
-                                    value = dataQuery[0]["data"];
-                                    break;
-                                }
-                                catch
-                                {
-                                    break;
-                                }
+                                dataQuery = executeQueryMongo(resultado, condition);
+                                break;
                         }
-                        if (is_valid_value) {
-                            listaResultados[ID_tupla][column_name] = value;
+
+                        if (dataQuery.Count > 0)
+                        {
+                            value = dataQuery[0]["data"];
+                            listaResultados[ID_tupla][column_name] = value; //Se el resultado a la lista que se retornará
+                        }
+                        else
+                        {
+                            excludedRows.Add(resultado["ID_tupla"].ToString()); //Se agrega el ID de la tupla que se va a excluir del resultado
                         }
                     }
                 }
@@ -397,7 +371,7 @@ namespace nsMultiDBService
             MariaConnect db = new MariaConnect(server, database, uid, pass, port);
             return db.SelectListDictionary(datos["column_type"].ToString(), "data_id = " + datos["ID_data"] + condition + ";");
         }
-        public List<Dictionary<string, object>> executeQueryServer(Dictionary<string, object> datos)
+        public List<Dictionary<string, object>> executeQueryServer(Dictionary<string, object> datos, string condition)
         {
             string server = datos["server"].ToString();
             string database = "multidb_datos";
@@ -406,10 +380,11 @@ namespace nsMultiDBService
             string port = datos["port"].ToString();
 
             ServerConnect db = new ServerConnect(server, database, uid, pass, port);
-
-            return db.SelectListDictionary(datos["column_type"].ToString(), "data_id = " + datos["ID_data"]);
+            return db.SelectListDictionary(datos["column_type"].ToString(), "data_id = " + datos["ID_data"] + condition + ";");
         }
-        public List<Dictionary<string, object>> executeQueryMongo(Dictionary<string, object> datos)
+
+
+        public List<Dictionary<string, object>> executeQueryMongo(Dictionary<string, object> datos, string condition)
         {
             string server = datos["server"].ToString();
             string database = "multidb_datos";
@@ -418,7 +393,6 @@ namespace nsMultiDBService
             string port = datos["port"].ToString();
 
             MongoConnect db = new MongoConnect(server, database, uid, pass, port);
-
             return db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString());
         }
 
