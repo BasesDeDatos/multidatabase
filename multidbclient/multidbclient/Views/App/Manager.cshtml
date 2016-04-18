@@ -355,14 +355,14 @@
                                     </option>
                                 </select>
 
-                                <select disabled ng-model="methodFilter" class="input-group-addon text-center form-control">
+                                <select disabled id='wherediv_where_condition'ng-model="methodFilter" class="input-group-addon text-center form-control">
                                     <option value="=" selected>=</option>
                                     <option value="!=">!=</option>
                                     <option value="<"><</option>
                                     <option value=">">></option>
                                 </select>
 
-                                <input type="text" ng-model="byValueFilter" class="byValueFilter form-control" disabled>
+                                <input id="wherediv_input" type="text" ng-model="byValueFilter" class="byValueFilter form-control" disabled>
 
                                 <span class="input-group-addon btn btn-primary"
                                         id="basic-addon1"
@@ -375,10 +375,11 @@
                             </div>
                         </div>
                         <hr />
-                        <div id="group_div" class="margin-top-5">
+                        <!--GROUP BY!-->
+                        <div id="groupby_div" class="margin-top-5">
                             <div class="input-group margin-top-5">
                                 <span class="input-group-addon">Group By</span>
-                                <select disabled ng-model="groupFilter" class="query_where_columns query_column form-control">
+                                <select disabled id="group_by_slect" ng-model="groupFilter" class="query_where_columns query_column form-control">
                                     <option value="">column</option>
                                     <option ng-repeat="column in columns"
                                             type="{{column.column_type}}"
@@ -393,7 +394,7 @@
                         <input  type="checkbox" id="where_check" value="value" />
                         <label for="where_check">Where? </label>
                         <input id="RAW" type="checkbox" ng-model="RAW" value="true" />
-                        <label for="    ">RAW? </label>
+                        <label for="">RAW? </label>
                         <input id="chk_groupby" type="checkbox" ng-model="group_by" value="true" />
                         <label for="chk_groupby">Group By</label>
                     </form>
