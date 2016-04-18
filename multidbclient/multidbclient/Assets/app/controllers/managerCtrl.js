@@ -318,9 +318,9 @@
             if ($('#where_check').is(':checked')) {
                 enableElements($('#where_div').children());
             } else {
-                $('#executeQuery_column').prop('selectedIndex', 0);    // para el de la columna
-                $('#wherediv_where_condition').prop('selectedIndex', 0); // para el de la condicion 
-                document.getElementById('#wherediv_input').reset();      // para el de la input
+                $('#executeQuery_column').val("");    // para el de la columna
+                $('#wherediv_where_condition').val(""); // para el de la condicion 
+                $('#wherediv_input').val("");      // para el de la input
                 disableElements($('#where_div').children());
             }
         });
