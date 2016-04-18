@@ -71,20 +71,13 @@ namespace nsMultiDBService
             collection.DeleteManyAsync(filter);
         }
 
-        public void Update(string table, string column, string condition, string value, string where)
+        public void Update(string table, string conditional_id, string value, string conditional_value)
         {
-            /*var filter = Builders<BsonDocument>.Filter.Eq("name", "Juni");
-            var update = Builders<BsonDocument>.Update
-                .Set("cuisine", "American (New)")
-                .CurrentDate("lastModified");
-            var result = await collection.UpdateOneAsync(filter, update);*/
-
             var builder = Builders<BsonDocument>.Filter;
-            //var filter = builder.Eq("cuisine", "Italian") & builder.Eq("address.zipcode", "10075")
 
             var collection = databaseInstance.GetCollection<BsonDocument>(table);
             var update = Builders<BsonDocument>.Update.Set("data", value);
-            var filter = builder.Eq(column, condition) & builder.Eq(column, condition);
+            var filter = builder.Eq("data_id", conditional_id) & builder.Eq("data", conditional_value);
             collection.UpdateOneAsync(filter, update);
         }
 
@@ -102,10 +95,12 @@ namespace nsMultiDBService
             return resultado;
         }
 
-        public List<Dictionary<string, object>> SelectListDictionary(string table, string conditional)
+        public List<Dictionary<string, object>> SelectListDictionary(string table, string conditional_id, string conditional_value)
         {
             var collection = databaseInstance.GetCollection<BsonDocument>(table);
-            var filter = Builders<BsonDocument>.Filter.Eq("data_id", conditional);
+            var builder = Builders<BsonDocument>.Filter;
+            var filter = builder.Eq("data_id", conditional_id);
+            if (conditional_value != null) filter = filter & builder.Eq("data", conditional_value);
             var selectResult = collection.Find(filter).Project(Builders<BsonDocument>.Projection.Exclude("_id")).ToListAsync();
             List<Dictionary<string, object>> resultado = new List<Dictionary<string, object>>();
 
