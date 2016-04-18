@@ -246,16 +246,17 @@
                 });
 
                 if ($('#where_check').is(':checked')) {
-                    where = "<br><br>WHERE " + $scope.columnFilter + " " + $scope.methodFilter + " " + $scope.byValueFilter + ";";
+                    var column = $("#executeQuery_column").find("option:selected").attr("column_name");
+                    where = "<br><br>WHERE " + column + " " + $scope.methodFilter + " " + $scope.byValueFilter + ";";
                 }
 
                 modal.find('.modal-title')
                 .html(
                     'Result of <br>' +
-                    '<pre>' + 
+                    '<pre>' +
                         '<code>' +
-                            $scope.query.toUpperCase() + " <br>" +
-                            columns  +
+                            "SELECT <br>" +
+                            columns +
                             '<br>FROM <br>' +
                             tables +
                             where +
@@ -340,8 +341,20 @@
         $('.query_table_insertdata').change(function () {
             var id_tabla = $(this).val();
             $(".query_columninsertdata").hide();
+            $(".query_columninsertdata input").removeAttr("required");
             if (id_tabla != "") {
                 $(".query_columninsertdata." + id_tabla).show();
+
+                $(".query_columninsertdata." + id_tabla + ":visible input").each(function () {
+
+                    var is_required = $(this).attr("is_required");
+                    if (is_required == "true") {
+                        $(this).attr("required", is_required);
+                    } else {
+                        $(this).removeAttr("required");
+                    }
+  
+                });
             }
         });
 

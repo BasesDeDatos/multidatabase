@@ -404,9 +404,18 @@
                             <div class="input-group margin-top-5">
                                 <span class="input-group-addon">Where</span>
 
-                                <select disabled ng-model="columnFilter" class="query_where_columns query_column form-control">
+                                <select disabled
+                                        id="executeQuery_column"
+                                        ng-model="columnFilter"
+                                        class="query_where_columns query_column form-control">
                                     <option value="">column</option>
-                                    <option ng-repeat="column in columns" type="{{column.column_type}}" value="{{column.ID}}" class="{{column.ID_tabla}}">({{column.column_type}})  {{column.table_name}}.{{column.column_name}}</option>
+                                    <option ng-repeat="column in columns"
+                                            type="{{column.column_type}}"
+                                            column_name="{{column.table_name}}.{{column.column_name}}"
+                                            value="{{column.ID}}"
+                                            class="{{column.ID_tabla}}">
+                                        ({{column.column_type}})  {{column.table_name}}.{{column.column_name}}
+                                    </option>
                                 </select>
 
                                 <select disabled ng-model="methodFilter" class="input-group-addon text-center form-control">
@@ -434,7 +443,12 @@
                                 <span class="input-group-addon">Group By</span>
                                 <select disabled ng-model="groupFilter" class="query_where_columns query_column form-control">
                                     <option value="">column</option>
-                                    <option ng-repeat="column in columns" type="{{column.column_type}}" value="{{column.ID}}" class="{{column.ID_tabla}}">({{column.column_type}})  {{column.table_name}}.{{column.column_name}}</option>
+                                    <option ng-repeat="column in columns"
+                                            type="{{column.column_type}}"
+                                            value="{{column.ID}}"
+                                            class="{{column.ID_tabla}}">
+                                        ({{column.column_type}})  {{column.table_name}}.{{column.column_name}}
+                                    </option>
                                 </select>
                             </div>
                         </div>                        
@@ -494,7 +508,7 @@
                                 <!-- Se repiten las columnas y se muestra el nombre-->
                                 <tr>
                                     <td ng-repeat="column in columns" id_column="{{column.ID}}" class="query_columninsertdata {{column.ID_tabla}}" ng-show="table_datainsert" style="display: none;">
-                                        <small> <strong>{{column.column_type}}</strong></small> {{column.column_name}}
+                                        <small> <strong>{{column.column_type}}</strong></small> {{column.column_name}}{{column.column_null != 1 ? "*" : ""}}
                                     </td>
                                 </tr>
                             </thead>
@@ -506,7 +520,7 @@
                                                class="form-control"
                                                type="{{column.column_type == 'string'? 'text': 'number'}}"
                                                step="{{column.column_type == 'entero'? '1': 'any'}}"
-                                               ng-required="{{column.column_null == 1}}" />
+                                               is_required="{{column.column_null != 1}}" />
                                     </td>
                                 </tr>
                             </tbody>
@@ -571,7 +585,10 @@
 
                             <select  ng-model="columnFilter_actualizar" class="query_where_columns query_column form-control">
                                 <option value="">column</option>
-                                <option ng-repeat="column in columns" type="{{column.column_type}}" value="{{column.ID}}" class="{{column.ID_tabla}}">({{column.column_type}})  {{column.table_name}}.{{column.column_name}}</option>
+                                <option ng-repeat="column in columns" 
+                                        type="{{column.column_type}}" 
+                                        value="{{column.ID}}" 
+                                        class="{{column.ID_tabla}}">({{column.column_type}})  {{column.table_name}}.{{column.column_name}}</option>
                             </select>
 
                             <select  ng-model="methodFilter_actualizar" class="input-group-addon text-center form-control">
