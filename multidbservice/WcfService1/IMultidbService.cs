@@ -31,7 +31,6 @@ namespace nsMultiDBService
         [OperationContract]
         string dropTable(parametroID dropTable);
 
-
         [OperationContract]
         string executeQuery(parametrosQuery query);
 
@@ -40,6 +39,9 @@ namespace nsMultiDBService
 
         [OperationContract]
         string updateQuery(parametrosUpdate update);
+
+        [OperationContract]
+        string query_deleteRow(parametrosDelete delete);
     }
 
 

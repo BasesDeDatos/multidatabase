@@ -198,11 +198,11 @@
         $scope.queryBorrar = function () {
             var params = {
                 source: $scope.source_eliminar, // base de datos
-                tabla: $scope.table_eliminar,   // tabla de donde se elimina
+                tabla: '',   // tabla de donde se elimina
                 filter: { // WHERE
                     column: $scope.columnFilter_eliminar, 
                     method: $scope.methodFilter_eliminar, 
-                    value: $scope.byValueFilter_eliminar 
+                    byValue: $scope.byValueFilter_eliminar 
                 }
             }
             web_services.post("query_deleteRow", params, $scope).then(function (result) {
