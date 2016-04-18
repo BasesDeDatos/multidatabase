@@ -204,7 +204,9 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Assets\app\app.js" />
     <Content Include="Assets\app\controllers\homeCtrl.js" />
-    <Content Include="Assets\app\controllers\managerCtrl.js" />
+    <Content Include="C:\Users\Kako-C\Documents\managerCtrl.js">
+      <Link>Assets\app\controllers\managerCtrl.js</Link>
+    </Content>
     <Content Include="Assets\app\controllers\registerCtrl.js" />
     <Content Include="Assets\app\services.js" />
     <Content Include="Assets\bootstrap\css\bootstrap-theme.css" />

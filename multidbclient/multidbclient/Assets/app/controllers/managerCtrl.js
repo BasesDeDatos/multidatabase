@@ -312,6 +312,7 @@
         function disableElements(el) {
             for (var i = 0; i < el.length; i++) {
                 el[i].disabled = true;
+                el[i].val() = "";
                 disableElements(el[i].children);
             }
         }
