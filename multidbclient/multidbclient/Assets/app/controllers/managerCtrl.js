@@ -191,12 +191,24 @@
                     byValue: $scope.byValueFilter_actualizar,
                 }
             }
-
-            $scope.columnsActive = [];
             web_services.post("updateQuery", params, $scope).then(function (result) {
             console.log("FINALLY QUERY!!!")
             });
-    }
+        }
+        $scope.queryBorrar = function () {
+            var params = {
+                source: $scope.source_eliminar, // base de datos
+                tabla: $scope.table_eliminar,   // tabla de donde se elimina
+                filter: { // WHERE
+                    column: $scope.columnFilter_eliminar, 
+                    method: $scope.methodFilter_eliminar, 
+                    value: $scope.byValueFilter_eliminar 
+                }
+            }
+            web_services.post("query_deleteRow", params, $scope).then(function (result) {
+                console.log("ROW DELETE SUCCESFULLY!");
+            });
+        }
 
         $('#tablesModal').on('show.bs.modal', function (event) {
 
