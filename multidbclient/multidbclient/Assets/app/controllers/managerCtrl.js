@@ -318,14 +318,26 @@
             if ($('#where_check').is(':checked')) {
                 enableElements($('#where_div').children());
             } else {
+                $('#executeQuery_column').prop('selectedIndex', 0);    // para el de la columna
+                $('#wherediv_where_condition').prop('selectedIndex', 0); // para el de la condicion 
+                document.getElementById('#wherediv_input').reset();      // para el de la input
                 disableElements($('#where_div').children());
+            }
+        });
+
+        $('#chk_groupby').change(function () {
+            if ($('#chk_groupby').is(':checked')) {
+                enableElements($('#groupby_div').children());
+            } else {
+                $('#group_by_slect').prop('selectedIndex', 0);
+                disableElements($('#groupby_div')).children();
+               
             }
         });
 
         function disableElements(el) {
             for (var i = 0; i < el.length; i++) {
                 el[i].disabled = true;
-                el[i].val() = "";
                 disableElements(el[i].children);
             }
         }
@@ -333,7 +345,6 @@
         function enableElements(el) {
             for (var i = 0; i < el.length; i++) {
                 el[i].disabled = false;
-
                 enableElements(el[i].children);
             }
         }
