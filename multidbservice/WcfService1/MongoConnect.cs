@@ -71,11 +71,21 @@ namespace nsMultiDBService
             collection.DeleteManyAsync(filter);
         }
 
-        public void Update(string table, string column, string condition, BsonDocument document)
+        public void Update(string table, string column, string condition, string value, string where)
         {
+            /*var filter = Builders<BsonDocument>.Filter.Eq("name", "Juni");
+            var update = Builders<BsonDocument>.Update
+                .Set("cuisine", "American (New)")
+                .CurrentDate("lastModified");
+            var result = await collection.UpdateOneAsync(filter, update);*/
+
+            var builder = Builders<BsonDocument>.Filter;
+            //var filter = builder.Eq("cuisine", "Italian") & builder.Eq("address.zipcode", "10075")
+
             var collection = databaseInstance.GetCollection<BsonDocument>(table);
-            var filter = Builders<BsonDocument>.Filter.Eq(column, condition);
-            collection.ReplaceOneAsync(filter, document);
+            var update = Builders<BsonDocument>.Update.Set("data", value);
+            var filter = builder.Eq(column, condition) & builder.Eq(column, condition);
+            collection.UpdateOneAsync(filter, update);
         }
 
         public string Select(string table)
