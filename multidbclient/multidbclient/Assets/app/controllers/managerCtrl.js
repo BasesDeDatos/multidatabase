@@ -316,38 +316,23 @@
 
         $('#where_check').change(function () {
             if ($('#where_check').is(':checked')) {
-                enableElements($('#where_div').children());
+                $("#where_div").find("input, select").prop("disabled", false);
+                $("#where_div").show();
             } else {
-                $('#executeQuery_column').val("");    // para el de la columna
-                $('#wherediv_where_condition').val(""); // para el de la condicion 
-                $('#wherediv_input').val("");      // para el de la input
-                disableElements($('#where_div').children());
+                $("#where_div").find("input, select").prop("disabled", true).val("");
+                $("#where_div").hide();
             }
         });
 
         $('#chk_groupby').change(function () {
             if ($('#chk_groupby').is(':checked')) {
-                enableElements($('#groupby_div').children());
+                $("#groupby_div").find("input, select").prop("disabled", false);
+                $("#groupby_div").show();
             } else {
-                $('#group_by_slect').prop('selectedIndex', 0);
-                disableElements($('#groupby_div')).children();
-               
+                $("#groupby_div").find("input, select").prop("disabled", true).val("");
+                $("#groupby_div").hide();
             }
         });
-
-        function disableElements(el) {
-            for (var i = 0; i < el.length; i++) {
-                el[i].disabled = true;
-                disableElements(el[i].children);
-            }
-        }
-
-        function enableElements(el) {
-            for (var i = 0; i < el.length; i++) {
-                el[i].disabled = false;
-                enableElements(el[i].children);
-            }
-        }
        
         $('.actualizar_datacolumn').change(function () {
             var typeColumn = $(this).find("option:selected").attr("type");

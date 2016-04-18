@@ -335,9 +335,10 @@
                             <div class="cont_new_query_column"></div>
                         </div>
 
-                        <hr />
+                        
                         <!-- Where -->
-                        <div id="where_div" class="margin-top-5">
+                        <div id="where_div" class="margin-top-5" style="display: none;">
+                            <hr />
                             <div class="input-group margin-top-5">
                                 <span class="input-group-addon">Where</span>
 
@@ -374,9 +375,10 @@
                                 </span>
                             </div>
                         </div>
-                        <hr />
+                        
                         <!--GROUP BY!-->
-                        <div id="groupby_div" class="margin-top-5">
+                        <div id="groupby_div" class="margin-top-5" style="display: none;">
+                            <hr />
                             <div class="input-group margin-top-5">
                                 <span class="input-group-addon">Group By</span>
                                 <select disabled id="group_by_slect" ng-model="groupFilter" class="query_where_columns query_column form-control">
@@ -393,10 +395,10 @@
                         <hr />
                         <input  type="checkbox" id="where_check" value="value" />
                         <label for="where_check">Where? </label>
-                        <input id="RAW" type="checkbox" ng-model="RAW" value="true" />
-                        <label for="">RAW? </label>
                         <input id="chk_groupby" type="checkbox" ng-model="group_by" value="true" />
                         <label for="chk_groupby">Group By</label>
+                        <input id="RAW" type="checkbox" ng-model="RAW" value="true" />
+                        <label for="">RAW? </label>
                     </form>
                 </div>
 

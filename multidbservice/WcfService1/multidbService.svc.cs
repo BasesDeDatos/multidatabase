@@ -329,15 +329,15 @@ namespace nsMultiDBService
                     switch (database_type)
                     {
                         case "mariaDB":
-                            hasBeenDeleted = deleteQueryMaria(resultado, condition);
+                            hasBeenDeleted = hasBeenDeletedMaria(resultado, condition);
                             break;
 
                         case "SQLServer":
-                            hasBeenDeleted = deleteQueryServer(resultado, condition);
+                            hasBeenDeleted = hasBeenDeletedServer(resultado, condition);
                             break;
 
                         case "mongoDB":
-                            hasBeenDeleted = deleteQueryMongo(resultado, delete.filter.byValue);
+                            hasBeenDeleted = hasBeenDeletedMongo(resultado, delete.filter.byValue);
                             break;
                     }
 
@@ -351,17 +351,30 @@ namespace nsMultiDBService
                 foreach (string id_tupla in deletedRows)
                 {
                     List<Dictionary<string, object>> dataTuplas = db.CallProcedure("CALL get_tupla('" + id_tupla + "')");
+
+                    bool validDelete = true;
                     foreach (Dictionary<string, object> column in dataTuplas)
                     {
-                        switch (deletedID[0]["column_type"].ToString())
+                        switch (column["column_type"].ToString())
                         {
+                            case "mariaDB":
+                                validDelete = validDelete && deleteDataMaria(column);
+                                break;
 
+                            case "SQLServer":
+                                validDelete = validDelete && deleteDataServer(column);
+                                break;
+
+                            case "mongoDB":
+                                validDelete = validDelete && deleteDataMongo(column);
+                                break;
                         }
                     }
-                    db.NonQuery("DELETE FROM tuplas WHERE ID_tupla = '" + id_tupla + "';");
+                    if (validDelete)
+                        db.NonQuery("DELETE FROM tuplas WHERE ID_tupla = '" + id_tupla + "';");
                 }
 
-                return "{\"message\": \"" + "SE BORRO LA FILA EXITOSAMENTE!" + "\"}";
+                return "{\"message\": \"" + "SE BORRON " + deletedRows.Count + " FILAS EXITOSAMENTE!" + "\"}";
             }
             catch (Exception ex)
             {
@@ -369,7 +382,81 @@ namespace nsMultiDBService
             }
         }
 
-        public bool deleteQueryMaria(Dictionary<string, object> datos, string condition)
+        public bool deleteDataMaria(Dictionary<string, object> datos)
+        {
+            string server = datos["server"].ToString();
+            string database = "multidb_datos";
+            string uid = datos["user"].ToString();
+            string pass = datos["pass"].ToString();
+            string port = datos["port"].ToString();
+
+            MariaConnect db = new MariaConnect(server, database, uid, pass, port);
+
+            try
+            {
+                db.NonQuery("DELETE FROM " + datos["column_type"].ToString() + " WHERE data_id = '" + datos["ID_data"].ToString() + "';");
+                return true;
+            }
+
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool deleteDataServer(Dictionary<string, object> datos)
+        {
+            string server = datos["server"].ToString();
+            string database = "multidb_datos";
+            string uid = datos["user"].ToString();
+            string pass = datos["pass"].ToString();
+            string port = datos["port"].ToString();
+
+            ServerConnect db = new ServerConnect(server, database, uid, pass, port);
+
+            try
+            {
+                db.NonQuery("DELETE FROM " + datos["column_type"].ToString() + " WHERE data_id = '" + datos["ID_data"].ToString() + "';");
+                return exist;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool deleteDataMongo(Dictionary<string, object> datos)
+        {
+            string server = datos["server"].ToString();
+            string database = "multidb_datos";
+            string uid = datos["user"].ToString();
+            string pass = datos["pass"].ToString();
+            string port = datos["port"].ToString();
+
+            MongoConnect db = new MongoConnect(server, database, uid, pass, port);
+
+            try
+            {
+                List<Dictionary<string, object>> select = db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString(), condition);
+                Debug.WriteLine("select.Count = " + select.Count.ToString());
+                bool exist = false;
+                if (select.Count > 0) exist = true;
+                /*if (exist)
+                {
+                    Debug.WriteLine(datos["column_type"].ToString()+" "+datos["ID_data"].ToString());
+                    db.Delete(datos["column_type"].ToString(), datos["ID_data"].ToString());
+                }*/
+
+                return exist;
+            }
+
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool hasBeenDeletedMaria(Dictionary<string, object> datos, string condition)
         {
             string server = datos["server"].ToString();
             string database = "multidb_datos";
@@ -398,7 +485,7 @@ namespace nsMultiDBService
             }
         }
 
-        public bool deleteQueryServer(Dictionary<string, object> datos, string condition)
+        public bool hasBeenDeletedServer(Dictionary<string, object> datos, string condition)
         {
             string server = datos["server"].ToString();
             string database = "multidb_datos";
@@ -427,7 +514,7 @@ namespace nsMultiDBService
             }
         }
 
-        public bool deleteQueryMongo(Dictionary<string, object> datos, string condition)
+        public bool hasBeenDeletedMongo(Dictionary<string, object> datos, string condition)
         {
             string server = datos["server"].ToString();
             string database = "multidb_datos";
