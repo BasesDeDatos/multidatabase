@@ -366,7 +366,7 @@
                                 </select>
 
                                 <select disabled ng-model="methodFilter" class="input-group-addon text-center form-control">
-                                    <option value="=">=</option>
+                                    <option value="=" selected>=</option>
                                     <option value="!=">!=</option>
                                     <option value="<"><</option>
                                     <option value=">">></option>
@@ -538,8 +538,8 @@
                                         class="{{column.ID_tabla}}">({{column.column_type}})  {{column.table_name}}.{{column.column_name}}</option>
                             </select>
 
-                            <select  ng-model="methodFilter_actualizar" class="input-group-addon text-center form-control">
-                                <option value="=">=</option>
+                            <select ng-model="methodFilter_actualizar" class="input-group-addon text-center form-control">
+                                <option value="=" selected>=</option>
                                 <option value="!=">!=</option>
                                 <option value="<"><</option>
                                 <option value=">">></option>
@@ -598,7 +598,7 @@
                             </select>
 
                             <select ng-model="methodFilter_eliminar" class="input-group-addon text-center form-control">
-                                <option value="=">=</option>
+                                <option value="=" selected>=</option>
                                 <option value="!=">!=</option>
                                 <option value="<"><</option>
                                 <option value=">">></option>
