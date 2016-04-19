@@ -259,6 +259,12 @@
     <Content Include="Assets\ng\angular.min.js.map" />
     <Content Include="Views\Main\Index.cshtml" />
     <Content Include="Views\App\Home.cshtml" />
+    <Content Include="Views\App\Register.cshtml" />
+    <Content Include="Views\App\SignIn.cshtml" />
+    <Content Include="Views\App\TodoManager.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\App\dfg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\App\Manager.cshtml" />

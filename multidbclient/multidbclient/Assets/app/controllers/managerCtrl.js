@@ -228,21 +228,56 @@
             modal.find('.modal-title').text('Tables of ' + database_name)
         })
 
-        $scope.$watch(
-            "showSuccessMessage",
-            function handleFooChange(newValue, oldValue) {
-                if (newValue)
-                    $('#alertModal').modal('show');
-            }
-        );
+        $('#queryModal').on('show.bs.modal', function (event) {
 
-        $scope.$watch(
-            "showWarningMessage",
-            function handleFooChange(newValue, oldValue) {
-                if (newValue)
-                    $('#alertModal').modal('show');
-            }
-        );
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var database_ID = button.data('database_id') // Extract info from data-* attributes
+            var database_name = button.data('database_name')
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+
+            var $scope = angular.element(modal).scope();
+            $scope.$apply(function () {
+                $scope.queryResult = false;
+                tables = "";
+                tables_len = $(".query_tables .query_table").length;
+                columns = "";
+                columns_len = $(".query_columns .query_column").length;
+                where = ";";
+                $(".query_tables .query_table").each(function (index, element) {
+                    tables +=
+                        "    " + $(this).find("option:selected").attr("name_table") + (tables_len - 1 == index ? "" : "<br>INNER JOIN <br>")
+                });
+
+                $(".query_columns .query_column").each(function (index, element) {
+                    columns +=
+                        "    " + $(this).find("option:selected").attr("name_table")
+                        + "." +
+                        $(this).find("option:selected").attr("name_column") + (columns_len - 1 == index ? "<br>" : ", <br>")
+                });
+
+                if ($('#where_check').is(':checked')) {
+                    var column = $("#executeQuery_column").find("option:selected").attr("column_name");
+                    where = "<br><br>WHERE " + column + " " + $scope.methodFilter + " " + $scope.byValueFilter + ";";
+                }
+
+                modal.find('.modal-title')
+                .html(
+                    'Result of <br>' +
+                    '<pre>' +
+                        '<code>' +
+                            "SELECT <br>" +
+                            columns +
+                            '<br>FROM <br>' +
+                            tables +
+                            where +
+                        '</code>' +
+                    '</pre>'
+                );
+            });
+        })
+
 
         init_eventosChange_query();
         function init_eventosChange_query(){
@@ -298,7 +333,7 @@
                 $("#groupby_div").hide();
             }
         });
-
+       
         $('.actualizar_datacolumn').change(function () {
             var typeColumn = $(this).find("option:selected").attr("type");
             $("#input_actualizar").hide();

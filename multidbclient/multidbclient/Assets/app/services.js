@@ -4,8 +4,6 @@
     function $HTTPCALL(rute, method, params, $scope) {
         $scope.showSuccessMessage = false;
         $scope.showWarningMessage = false;
-        $scope.warningMessage = "Error no especificado, intente de nuevo";
-        $scope.successMessage = "Estado no especificado";
         console.log(rute + " params:");
         console.log(params);
 
@@ -21,20 +19,16 @@
             console.log(data);
             try{
                 var data = jQuery.parseJSON(data);
-                $scope.warningMessage = "Rute: " + rute + " Status: " + status;
+                $scope.warningMessage = "Rute: " + rute + " Status: " + data.message + data.message.replace(/["']{1}/gi, "");
                 $scope.showWarningMessage = true;
             }
             catch(e) {
-                $scope.warningMessage = "Rute: " + rute + " Status: " + status;
+                $scope.warningMessage = "Rute: " + rute + " Status: " + data + data.replace(/["']{1}/gi, "");
                 $scope.showWarningMessage = true;
             }
         })
         .finally(function () {
             $('.btn').button('reset');
-            $(':input')
-             .not(':button, :submit, :reset, :hidden')
-             .val('')
-             .removeAttr('selected');
         })
         .then(function (data) { //wrap it inside another promise using then
             console.log(rute + " then:");
@@ -43,25 +37,16 @@
             try {
                 var data = jQuery.parseJSON(data.data);
 
-                if (data.hasOwnProperty("message")) {
+                if (data.message != "") {
                     $scope.successMessage = "Rute:" + rute + " Message: " + data.message;
                     $scope.showSuccessMessage = true;
-                } else if (data.hasOwnProperty("messageError")) {
+                } else if (data.messageError != "") {
                     $scope.warningMessage = "Rute:" + rute + " Error: " + data.messageError;
                     $scope.showWarningMessage = true;
                 }
             }
             catch (e) {
-                data = data.data;
-                console.log("then catch");
-
-                if (data.hasOwnProperty("message")) {
-                    $scope.warningMessage = "Rute:" + rute + " Message: " + data.message;
-                } else if (data.hasOwnProperty("messageError")) {
-                    $scope.warningMessage = "Rute:" + rute + " Error: " + data.messageError;
-                } else {
-                    $scope.warningMessage = data;
-                }
+                $scope.warningMessage = e + " " + data;
                 $scope.showWarningMessage = true;
             }
 
