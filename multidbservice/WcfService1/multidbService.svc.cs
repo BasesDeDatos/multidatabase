@@ -170,6 +170,7 @@ namespace nsMultiDBService
                     object value = new object();
                     string condition = "";
                     string mongoCondition = null;
+                    string mongoMethod = null;
 
                     try
                     {   // Si la columna que se está obteniendo información coincide con la del where, se filtra
@@ -177,6 +178,7 @@ namespace nsMultiDBService
                         {
                             condition = " AND  data" + query.filter.method + " '" + query.filter.byValue + "'";
                             mongoCondition = query.filter.byValue;
+                            mongoMethod = query.filter.method;
                         }
                     }
                     catch {}
@@ -200,7 +202,7 @@ namespace nsMultiDBService
                                 dataQuery = executeQueryServer(resultado, condition);
                                 break;
                             case "mongoDB":
-                                dataQuery = executeQueryMongo(resultado, mongoCondition);
+                                dataQuery = executeQueryMongo(resultado, mongoCondition, mongoMethod);
                                 break;
                         }
 
@@ -292,7 +294,7 @@ namespace nsMultiDBService
                             break;
 
                         case "mongoDB":
-                            updateQueryMongo(resultado, update.filter.byValue, update.value);
+                            updateQueryMongo(resultado, update.filter.byValue, update.value, update.filter.method);
                             break;
                     }
 
@@ -338,7 +340,7 @@ namespace nsMultiDBService
                             break;
 
                         case "mongoDB":
-                            hasBeenDeleted = hasBeenDeletedMongo(resultado, delete.filter.byValue);
+                            hasBeenDeleted = hasBeenDeletedMongo(resultado, delete.filter.byValue, delete.filter.method);
                             break;
                     }
 
@@ -507,7 +509,7 @@ namespace nsMultiDBService
             }
         }
 
-        public bool hasBeenDeletedMongo(Dictionary<string, object> datos, string condition)
+        public bool hasBeenDeletedMongo(Dictionary<string, object> datos, string condition, string method)
         {
             string server = datos["server"].ToString();
             string database = "multidb_datos";
@@ -519,7 +521,7 @@ namespace nsMultiDBService
 
             try
             {
-                List<Dictionary<string, object>> select = db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString(), condition);
+                List<Dictionary<string, object>> select = db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString(), condition, method);
                 Debug.WriteLine("select.Count = " + select.Count.ToString());
                 bool exist = false;
                 if (select.Count > 0) exist = true;
@@ -574,7 +576,7 @@ namespace nsMultiDBService
             return true;
         }
 
-        public bool updateQueryMongo(Dictionary<string, object> datos, string condition, string value)
+        public bool updateQueryMongo(Dictionary<string, object> datos, string condition, string value, string method)
         {
             string server = datos["server"].ToString();
             string database = "multidb_datos";
@@ -584,7 +586,7 @@ namespace nsMultiDBService
 
             MongoConnect db = new MongoConnect(server, database, uid, pass, port);
             
-            db.Update(datos["column_type"].ToString(), datos["ID_data"].ToString(), value, condition);
+            db.Update(datos["column_type"].ToString(), datos["ID_data"].ToString(), value, condition, method);
 
             return true;
         }
@@ -613,7 +615,7 @@ namespace nsMultiDBService
             return db.SelectListDictionary(datos["column_type"].ToString(), "data_id = " + datos["ID_data"] + condition + ";");
         }
 
-        public List<Dictionary<string, object>> executeQueryMongo(Dictionary<string, object> datos, string condition)
+        public List<Dictionary<string, object>> executeQueryMongo(Dictionary<string, object> datos, string condition, string conditional_method)
         {
             string server = datos["server"].ToString();
             string database = "multidb_datos";
@@ -623,7 +625,7 @@ namespace nsMultiDBService
 
             MongoConnect db = new MongoConnect(server, database, uid, pass, port);
 
-            return db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString(), condition);
+            return db.SelectListDictionary(datos["column_type"].ToString(), datos["ID_data"].ToString(), condition, conditional_method);
         }
 
         public bool insertMaria(Dictionary<string, object> conexion, object dato, int data_id)

@@ -72,13 +72,28 @@ namespace nsMultiDBService
             collection.DeleteManyAsync(filter);
         }
 
-        public void Update(string table, string conditional_id, string value, string conditional_value)
+        public void Update(string table, string conditional_id, string value, string conditional_value, string conditional_method)
         {
             var builder = Builders<BsonDocument>.Filter;
 
             var collection = databaseInstance.GetCollection<BsonDocument>(table);
             var update = Builders<BsonDocument>.Update.Set("data", value);
-            var filter = builder.Eq("data_id", conditional_id) & builder.Eq("data", conditional_value);
+            var filter = builder.Eq("data_id", conditional_id);// & builder.Eq("data", conditional_value);
+            switch (conditional_method)
+            {
+                case "=":
+                    filter = filter & builder.Eq("data", conditional_value);
+                    break;
+                case "!=":
+                    filter = filter & builder.Ne("data", conditional_value);
+                    break;
+                case "<":
+                    filter = filter & builder.Lt("data", conditional_value);
+                    break;
+                case ">":
+                    filter = filter & builder.Gt("data", conditional_value);
+                    break;
+            }
             collection.UpdateOneAsync(filter, update);
         }
 
@@ -96,12 +111,29 @@ namespace nsMultiDBService
             return resultado;
         }
 
-        public List<Dictionary<string, object>> SelectListDictionary(string table, string conditional_id, string conditional_value)
+        public List<Dictionary<string, object>> SelectListDictionary(string table, string conditional_id, string conditional_value, string conditional_method)
         {
             var collection = databaseInstance.GetCollection<BsonDocument>(table);
             var builder = Builders<BsonDocument>.Filter;
             var filter = builder.Eq("data_id", conditional_id);
-            if (conditional_value != null) filter = filter & builder.Eq("data", conditional_value);
+            if (conditional_value != null && conditional_method != null)
+            {
+                switch (conditional_method)
+                {
+                    case "=":
+                        filter = filter & builder.Eq("data", conditional_value);
+                        break;
+                    case "!=":
+                        filter = filter & builder.Ne("data", conditional_value);
+                        break;
+                    case "<":
+                        filter = filter & builder.Lt("data", conditional_value);
+                        break;
+                    case ">":
+                        filter = filter & builder.Gt("data", conditional_value);
+                        break;
+                }
+            }
             var selectResult = collection.Find(filter).Project(Builders<BsonDocument>.Projection.Exclude("_id")).ToListAsync();
             List<Dictionary<string, object>> resultado = new List<Dictionary<string, object>>();
 
