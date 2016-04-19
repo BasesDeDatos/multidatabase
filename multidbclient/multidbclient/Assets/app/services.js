@@ -52,7 +52,7 @@
                 }
             }
             catch (e) {
-                var data = jQuery.parseJSON(data.data);
+                data = data.data;
                 console.log("then catch");
 
                 if (data.hasOwnProperty("message")) {
