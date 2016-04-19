@@ -327,6 +327,46 @@
                             </div>
                             <div class="cont_new_query_column"></div>
                         </div>
+                        <!-- Where -->
+                        <div id="where_div" class="margin-top-5" style="display: none;">
+                            <hr />
+                            <div class="input-group margin-top-5">
+                                <span class="input-group-addon">Where</span>
+
+                                <select ng-model="columnOnA"
+                                        class="query_where_columns query_column form-control">
+                                    <option value="">column</option>
+                                    <option ng-repeat="column in columns"
+                                            type="{{column.column_type}}"
+                                            column_name="{{column.table_name}}.{{column.column_name}}"
+                                            value="{{column.ID}}"
+                                            class="{{column.ID_tabla}}">
+                                        ({{column.column_type}})  {{column.table_name}}.{{column.column_name}}
+                                    </option>
+                                </select>
+
+                                <select id='wherediv_where_condition' 
+                                        ng-model="methodOn" 
+                                        class="input-group-addon text-center form-control">
+                                    <option value="=" selected>=</option>
+                                    <option value="!=">!=</option>
+                                    <option value="<"><</option>
+                                    <option value=">">></option>
+                                </select>
+
+                                <select ng-model="columnOnA"
+                                        class="query_where_columns query_column form-control">
+                                    <option value="">column</option>
+                                    <option ng-repeat="column in columns"
+                                            type="{{column.column_type}}"
+                                            column_name="{{column.table_name}}.{{column.column_name}}"
+                                            value="{{column.ID}}"
+                                            class="{{column.ID_tabla}}">
+                                        ({{column.column_type}})  {{column.table_name}}.{{column.column_name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
 
                         
                         <!-- Where -->
