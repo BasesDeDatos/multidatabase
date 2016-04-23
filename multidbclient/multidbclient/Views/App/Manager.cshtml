@@ -169,7 +169,7 @@
                             <option ng-repeat="DB in databases" value="{{DB.ID}}">{{DB.name}}</option>
                         </select>
                         <hr />
-                        <table class="table">
+                        <table class="table" id="createTable">
                             <thead>
                                 <tr>
                                     <th>Alias Connection</th>
@@ -354,7 +354,7 @@
                                     <option value=">">></option>
                                 </select>
 
-                                <select ng-model="columnOnA"
+                                <select ng-model="columnOnB"
                                         class="query_where_columns query_column form-control">
                                     <option value="">column</option>
                                     <option ng-repeat="column in columns"

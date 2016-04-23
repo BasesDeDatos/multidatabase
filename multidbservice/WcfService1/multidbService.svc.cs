@@ -166,6 +166,7 @@ namespace nsMultiDBService
                 {
                     List<Dictionary<string, object>> dataQuery = new List<Dictionary<string, object>>();
                     Dictionary<string, object> row = new Dictionary<string, object>();
+                    Dictionary<string, Dictionary<string, object>> table = new Dictionary<string, Dictionary<string, object>>();
 
                     string ID_tupla = resultado["ID_tupla"].ToString();
                     string column_name = resultado["table_name"].ToString() + "." + resultado["column_name"].ToString();
@@ -189,7 +190,7 @@ namespace nsMultiDBService
                     if (!excludedRows.Contains(resultado["ID_tupla"].ToString()))
                     { 
                         //Si la entrada ID_table no se ha agregado al diccionario, se crea una entrada Dictionary<string, object> y se agrega
-                        if (!listaResultados[ID_table].TryGetValue(ID_tupla, out row))
+                        if (!listaResultados.TryGetValue(ID_table, out table))
                         {
                             Dictionary<string, Dictionary<string, object>> valor = new Dictionary<string, Dictionary<string, object>>();
                             listaResultados.Add(ID_table, valor);
@@ -199,7 +200,7 @@ namespace nsMultiDBService
                         if (!listaResultados[ID_table].TryGetValue(ID_tupla, out row))
                         {
                             Dictionary<string, object> valor = new Dictionary<string, object>();
-                            listaResultados[ID_tupla].Add(ID_tupla, valor);
+                            listaResultados[ID_table].Add(ID_tupla, valor);
                         } 
 
                         switch (resultado["database_type"].ToString())
@@ -252,7 +253,9 @@ namespace nsMultiDBService
                         Dictionary<string, object> tuplaAV = tuplaA.Value;
                         Dictionary<string, object> tuplaBV = tuplaB.Value;
                         bool cumple = false;
-                        switch(query.on.method){
+                        Debug.WriteLine("query.on.columnTableA: " + query.on.columnTableA);
+                        Debug.WriteLine("query.on.columnTableB: " + query.on.columnTableB);
+                        switch (query.on.method){
                             case "=" :
                                 cumple = tuplaA.Value[query.on.columnTableA] == tuplasTableB.Value[query.on.columnTableB];
                                 break;
@@ -285,7 +288,7 @@ namespace nsMultiDBService
             }
 
 
-            return JsonConvert.SerializeObject(listaResultados);
+            return JsonConvert.SerializeObject(newListaResultados);
         }
 
         [WebInvoke(Method = "POST",
