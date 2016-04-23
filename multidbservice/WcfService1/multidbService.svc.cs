@@ -153,14 +153,12 @@ namespace nsMultiDBService
         {
             MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
             string procedure;
-            Dictionary<string, Dictionary<string, Dictionary<string, object>>> listaResultados = new Dictionary<string, Dictionary<string, Dictionary<string, object>>>();
+            Dictionary<string, Dictionary<string, object>> listaResultados = new Dictionary<string, Dictionary<string, object>>();
             List<string> excludedRows = new List<string>();
 
             foreach (tableXcolumn txc in query.tableXcolumn)
             {
                 procedure= "get_tuplas(" + txc.column + ")";
-                string ID_table = txc.table;
-
                 List<Dictionary<string, object> > resultados = db.CallProcedure(procedure);
                 foreach (Dictionary<string, object> resultado in resultados)
                 {
@@ -188,18 +186,11 @@ namespace nsMultiDBService
                     //Si el Row del column a consultar ya se excluyó entonces no se consultan los datos
                     if (!excludedRows.Contains(resultado["ID_tupla"].ToString()))
                     { 
-                        //Si la entrada ID_table no se ha agregado al diccionario, se crea una entrada Dictionary<string, object> y se agrega
-                        if (!listaResultados[ID_table].TryGetValue(ID_tupla, out row))
-                        {
-                            Dictionary<string, Dictionary<string, object>> valor = new Dictionary<string, Dictionary<string, object>>();
-                            listaResultados.Add(ID_table, valor);
-                        }
-
-                        //Si la entrada table no se ha agregado al diccionario, se crea una entrada Dictionary<string, object> y se agrega
-                        if (!listaResultados[ID_table].TryGetValue(ID_tupla, out row))
+                        //Si la entrada ID_tupla no se ha agregado al diccionario, se crea una entrada Dictionary<string, object> y se agrega
+                        if (!listaResultados.TryGetValue(ID_tupla, out row))
                         {
                             Dictionary<string, object> valor = new Dictionary<string, object>();
-                            listaResultados[ID_tupla].Add(ID_tupla, valor);
+                            listaResultados.Add(ID_tupla, valor);
                         } 
 
                         switch (resultado["database_type"].ToString())
@@ -218,7 +209,7 @@ namespace nsMultiDBService
                         if (dataQuery.Count > 0)
                         {
                             value = dataQuery[0]["data"];
-                            listaResultados[ID_table][ID_tupla][column_name] = value; //Se el resultado a la lista que se retornará
+                            listaResultados[ID_tupla][column_name] = value; //Se el resultado a la lista que se retornará
                         }
                         else
                         {
@@ -229,61 +220,9 @@ namespace nsMultiDBService
             }
 
             //Se borran los rows que no coinciden con el WHERE
-            foreach (var key in excludedRows)
-            {
-                foreach (KeyValuePair<string, Dictionary<string, Dictionary<string, object>>> table in listaResultados)
-                {
-                    table.Value.Remove(key);
-                    //table.Remove(key);
-                }
+            foreach (var key in excludedRows){
+                listaResultados.Remove(key);
             }
-
-            //Se hace el join
-            int contador = 0;
-            Dictionary<string, Dictionary<string, object>> newListaResultados = new Dictionary<string, Dictionary<string, object>>();
-            if (listaResultados.Count == 2)
-            {
-                KeyValuePair<string, Dictionary<string, Dictionary<string, object>>> tuplasTableA = listaResultados.ElementAt(0);
-                KeyValuePair<string, Dictionary<string, Dictionary<string, object>>> tuplasTableB = listaResultados.ElementAt(1);
-                foreach (KeyValuePair<string, Dictionary<string, object>> tuplaA in tuplasTableA.Value)
-                {
-                    foreach (KeyValuePair<string, Dictionary<string, object>> tuplaB in tuplasTableB.Value)
-                    {
-                        Dictionary<string, object> tuplaAV = tuplaA.Value;
-                        Dictionary<string, object> tuplaBV = tuplaB.Value;
-                        bool cumple = false;
-                        switch(query.on.method){
-                            case "=" :
-                                cumple = tuplaA.Value[query.on.columnTableA] == tuplasTableB.Value[query.on.columnTableB];
-                                break;
-                            case "!=" :
-                                cumple = tuplaA.Value[query.on.columnTableA] != tuplasTableB.Value[query.on.columnTableB];
-                                break;
-                            case ">" :
-                                cumple = 
-                                    Int32.Parse(tuplaA.Value[query.on.columnTableA].ToString())
-                                    > 
-                                    Int32.Parse(tuplasTableB.Value[query.on.columnTableB].ToString());
-                                break;
-                            case "<" :
-                                cumple =
-                                    Int32.Parse(tuplaA.Value[query.on.columnTableA].ToString())
-                                    <
-                                    Int32.Parse(tuplasTableB.Value[query.on.columnTableB].ToString());
-                                break;
-                        }
-                        if(cumple){
-                            Dictionary<string, object> concat_tupla = tuplaAV.Concat(tuplaBV).ToDictionary(x=>x.Key,x=>x.Value);
-                            newListaResultados.Add(contador.ToString(), concat_tupla);
-                            contador++;
-                        }
-                    }
-                }
-            }
-            else {
-                newListaResultados = listaResultados.ElementAt(0).Value;
-            }
-
 
             return JsonConvert.SerializeObject(listaResultados);
         }
@@ -762,8 +701,6 @@ namespace nsMultiDBService
         {
             return Guid.NewGuid().ToString("N");
         }
-
-
     }
 
     public class parametrosAddDatabase
@@ -807,15 +744,8 @@ namespace nsMultiDBService
     {
         public string source { get; set; }
         public List<tableXcolumn> tableXcolumn { get; set; }
-        public on on { get; set; }
         public filter filter { get; set; }
         public List<order> order { get; set; }
-    }
-
-    public class on {
-        public string columnTableA { get; set; }
-        public string method { get; set; }
-        public string columnTableB { get; set; }
     }
 
     public class tableXcolumn
