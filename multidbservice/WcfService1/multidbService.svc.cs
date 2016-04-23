@@ -274,7 +274,7 @@ namespace nsMultiDBService
             {
                 MariaConnect db = new MariaConnect("localhost", "TEST", "prueba", "prueba", "3306");
 
-                string procedure = "get_tuplas(" + update.column + ");";
+                string procedure = "get_tuplas(" + update.filter.column + ");";
                 List<Dictionary<string, object>> tuplas = db.CallProcedure(procedure);
 
                 foreach (Dictionary<string, object> resultado in tuplas)

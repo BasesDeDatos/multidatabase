@@ -73,13 +73,13 @@
                 database_id: $scope.database_id,
                 columns: [],
             }
-            $("table tbody tr").each(function () {
+            $("#createTable tbody tr").each(function () {
                 $row = $(this);
                 params.columns.push({
                     DB_alias: $row.find(".table_alias").val(),
                     column_name: $row.find(".table_name").val(),
                     Type: $row.find(".table_type").val(),
-                    Null: $row.find(".table_null").val()
+                    Null: $row.find(".table_null").val() == "1" ? "1" : "0"
                 })
             })
             web_services.post("createTable", params, $scope).finally(function () {
